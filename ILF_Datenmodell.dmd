@@ -1,0 +1,8 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="ILF_Datenmodell" id="7AA17CDC-31C4-F6EB-EBF9-79B63CAEFE2A" version="3.5">
+<createdBy>gaspe</createdBy>
+<createdTime>2018-11-04 11:58:40 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<capitalNames>false</capitalNames>
+<designId>7AA17CDC-31C4-F6EB-EBF9-79B63CAEFE2A</designId>
+</OSDM_Design>

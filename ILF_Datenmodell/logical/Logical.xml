@@ -1,0 +1,7 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<LogicalDesign class="oracle.dbtools.crest.model.design.logical.LogicalDesign" name="Logical" id="C3EFCC5B-194E-6DB5-C67F-A08C4AABE1B4" mainViewID="66B5DEF7-F71D-B910-1062-68F734A6D6B9">
+<createdBy>gaspe</createdBy>
+<createdTime>2018-11-04 11:58:40 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<shouldBeOpen>false</shouldBeOpen>
+</LogicalDesign>

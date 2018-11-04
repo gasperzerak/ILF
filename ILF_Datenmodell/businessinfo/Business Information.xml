@@ -1,0 +1,7 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<BusinessInfoDesign class="oracle.dbtools.crest.model.businessinfo.BusinessInfoDesign" name="Business Information" id="DB3D6628-D05C-4E4A-1BC2-97EC6CE5E66D">
+<createdBy>gaspe</createdBy>
+<createdTime>2018-11-04 11:58:40 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<shouldBeOpen>false</shouldBeOpen>
+</BusinessInfoDesign>
