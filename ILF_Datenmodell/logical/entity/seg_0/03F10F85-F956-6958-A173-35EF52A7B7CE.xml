@@ -1,7 +1,7 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="7913F133-22F1-792D-19FB-BE00866178C5" name="Planner">
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="03F10F85-F956-6958-A173-35EF52A7B7CE" name="Abteilung">
 <createdBy>gaspe</createdBy>
-<createdTime>2018-11-04 12:05:56 UTC</createdTime>
+<createdTime>2018-11-18 20:51:10 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>

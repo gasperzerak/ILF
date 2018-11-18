@@ -1,5 +1,5 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="5261D6C6-ED93-F763-7BFD-943B4D9B6D93" name="Arbeitsauftrag(Task)">
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="5261D6C6-ED93-F763-7BFD-943B4D9B6D93" name="Arbeitsauftrag">
 <createdBy>gaspe</createdBy>
 <createdTime>2018-11-04 12:26:54 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>

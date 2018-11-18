@@ -1,0 +1,18 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="Relation_13" directorySegmentName="seg_0" id="47DB6901-0853-E1A7-5DD2-9ED316932C6C">
+<createdBy>gaspe</createdBy>
+<createdTime>2018-11-18 20:57:52 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<identifying>true</identifying>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>9B5BCC21-6A0C-CE62-88C4-3DA1FED073DB</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>AC462FAE-C6B4-E80A-5843-68B367A35B22</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

@@ -1,5 +1,5 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="C8EB9644-121E-DB56-EC83-70CAFD4228B0" name="FaktSecurity_Projektbeteiligte">
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="C8EB9644-121E-DB56-EC83-70CAFD4228B0" name="Security_Projektbeteiligte">
 <createdBy>gaspe</createdBy>
 <createdTime>2018-11-04 12:05:16 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
