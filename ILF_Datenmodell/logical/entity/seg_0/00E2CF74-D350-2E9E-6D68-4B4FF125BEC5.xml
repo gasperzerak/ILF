@@ -14,4 +14,180 @@
 <maxVolumes>9999999</maxVolumes>
 <minVolumes>0</minVolumes>
 <normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="Ressource_Firmencode" id="5365025E-9D63-3AE2-1890-C60BDDFE0DEC">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 09:07:37 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Ressourcennr" id="88FB95A5-4F26-B9DB-9943-D30FDD331C3E">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 09:10:02 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Ressource_Stammkostenstelle" id="8B9C9A3B-767A-D366-8000-FBF4C49A7F4D">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 09:10:16 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="AbteilungCode" id="994AF077-75E8-A05E-A4D9-BE0838C0BDAF">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 09:10:41 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Ressource_Eintritt " id="C3F3D5EB-B345-D5C7-3D7E-E3F9BA209520">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 09:41:56 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Ressource_Austritt " id="5BD9B2CC-3B4A-B9DA-F485-4FE87C6A9FA8">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 09:43:20 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Ressource_KOREKat " id="CF390D11-812E-A242-8BA9-CB6313A96337">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 09:43:27 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Ressource_MAKat " id="66AC4253-F888-D847-931E-71E880D1852B">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 10:00:07 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Ressource_Faktor2_Code " id="048D21A9-BDD6-6DBC-7038-C08CCB24BBA0">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 09:43:51 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Ressource_Faktor2_Name_DE " id="406D0B6C-FB2F-6CF8-381B-FFCBA6E581DA">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 09:47:29 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Ressource_Faktor2_Name_EN " id="96783824-33FC-6B8D-79CE-0E062D790253">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 09:47:39 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Ressource_Standort " id="577E739D-5F31-40C4-5F2D-C25E2C24B5B0">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 09:47:58 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Ressourcename " id="0D6B8A61-3795-E233-977C-58450177122B">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 09:48:05 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Ressource_Art  " id="BC8D3BEB-F330-5A20-6E1B-56AE75C64C24">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 09:48:11 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Ressource_Art_Prozent " id="28A73BEE-F149-5D8B-96E1-D83D64C7C4F7">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 09:48:26 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="SystemCode " id="DCE2C0E6-C995-4435-D888-D6D1B39FBAF9">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 09:48:40 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
 </Entity>

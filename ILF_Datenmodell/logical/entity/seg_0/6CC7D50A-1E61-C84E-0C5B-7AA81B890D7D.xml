@@ -14,4 +14,170 @@
 <maxVolumes>9999999</maxVolumes>
 <minVolumes>0</minVolumes>
 <normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="Firmencode" id="766F26C2-B0F0-93A4-1707-A67E7ADBBFBE">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 12:00:44 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Firma" id="8672C2A5-429D-0809-A546-BC242CF237B8">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 12:01:06 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="FirmenName" id="0B43ECDB-36EA-A7A0-2189-D5F0F74BF08A">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 12:01:19 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Firma_Hauswaehrung" id="F94FFB5A-F480-8CE9-5A4D-28279944143F">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 12:01:28 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Firma_Kurzname" id="90774673-7439-ACFD-CDAD-C8E883526B82">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 12:01:34 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Firma_IMSName" id="D60D0AFC-5116-8A8E-0EAD-F8419723A8C1">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 12:01:42 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Firma_Kurzname_IMSName" id="50FD7A0E-BE02-ADB4-757C-7D28C5BF2B96">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 12:01:48 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Firma_Gruppe_Org" id="F16CCD5D-CC52-E2E9-E37A-4DB54C2A844B">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 12:01:56 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Firma_Gruppe_Recht" id="D0301184-EB00-15D2-8EF2-B99FF24A3650">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 12:02:02 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Firma_Land" id="214182B0-FD0B-85DC-E073-0DC9032789EF">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 12:02:09 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Firma_Ort" id="121E7588-0A57-19FB-65D4-357ED922E7CB">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 12:02:15 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Firma_PLZ" id="18F0F2D8-7DF3-5CDC-214F-897402EF45B0">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 12:02:32 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Firma_Adresse" id="169E5660-AF5D-FE72-0608-55D6EBCADDE3">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 12:02:42 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Firma_AktuellePeriode" id="2DAD67EF-F6CB-F60E-E9E1-311EB62331B6">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 12:02:47 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="SystemCode" id="3A43D752-CC6F-D176-B3CC-DE206FFBD192">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 12:02:53 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
 </Entity>

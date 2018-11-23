@@ -14,4 +14,184 @@
 <maxVolumes>9999999</maxVolumes>
 <minVolumes>0</minVolumes>
 <normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="Hauptprojekt_Firmencode " id="DE932555-5423-BB61-6F02-A10E3B0C4910">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 10:06:31 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Hauptprojektnr " id="F8D9C026-245A-8100-8D1C-D0E1921C85A3">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 10:06:34 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Unterprojektnr " id="FA062A1B-FCE3-1ED9-3845-D2018B817B68">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 11:39:53 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Unterprojektname_DE " id="70553B13-B5C2-6320-C0A9-1BE6E41E29CD">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 11:50:55 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Unterprojektname_EN " id="2181976D-CF7C-FC2A-8DA8-01C5016D5815">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 11:51:09 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Unterprojekt_Abteilung  " id="BAAE3647-7EBF-C448-6D38-D4FD1E003652">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 11:51:14 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Unterprojekt_Start  " id="77E5882B-8A36-DA7B-0D48-5228D5BB1051">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 11:51:23 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Unterprojekt_Ende  " id="45A749FE-A0A8-9C3F-00BC-4138598F4F1D">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 11:51:30 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Unterprojekt_Plan_Ende  " id="22B098E2-FD68-D9CC-4484-2F7BE9AEF650">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 11:51:36 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Unterprojekt_Projektleiternr  " id="67F41152-F542-C0AC-BD40-0F022B163D0E">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 11:51:41 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Unterprojekt_Projektleitername  " id="D927916C-8DA8-E1D2-3487-7529EF8A94A8">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 11:51:47 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Unterprojekt_Projektstatus  " id="15302FC3-0B7F-B370-A313-73F9176C67FA">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 11:51:53 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Unterprojekt_Fertigstatus  " id="0EB6B610-6ECF-BB49-8F2E-A42BE5AEE0BD">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 11:51:58 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Unterprojekt_Projektstatus_IFRS  " id="4AC62636-1F3F-9091-1D67-72859BE728F1">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 11:52:03 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="SystemCode " id="757EF48A-DF44-ADB8-0517-E99138C66621">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 11:52:09 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="34F9BB2A-FE98-D1EF-8A83-7DFF73ACFE9F" name="Unterprojekt PK">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 10:07:09 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>F8D9C026-245A-8100-8D1C-D0E1921C85A3</attributeRef>
+<attributeRef>DE932555-5423-BB61-6F02-A10E3B0C4910</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
 </Entity>

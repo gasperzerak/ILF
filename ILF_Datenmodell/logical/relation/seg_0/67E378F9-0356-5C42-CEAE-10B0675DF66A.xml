@@ -1,7 +1,7 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="Relation_4" directorySegmentName="seg_0" id="CDED391A-7CF0-3374-A252-E6FE2EAFEE7C">
-<createdBy>gaspe</createdBy>
-<createdTime>2018-11-04 13:04:37 UTC</createdTime>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="Relation_60" directorySegmentName="seg_0" id="67E378F9-0356-5C42-CEAE-10B0675DF66A">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-23 15:05:47 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
@@ -10,9 +10,9 @@
 <optionalSource>true</optionalSource>
 <optionalTarget>false</optionalTarget>
 <sourceCardinality>1</sourceCardinality>
-<sourceEntity>0CEDD068-695F-EF0F-1AD0-E9ABEDF45383</sourceEntity>
+<sourceEntity>6CC7D50A-1E61-C84E-0C5B-7AA81B890D7D</sourceEntity>
 <targetCardinalityString>*</targetCardinalityString>
-<targetEntity>AFF05228-0BC5-55BF-8A29-40705841DFA7</targetEntity>
+<targetEntity>AF1FA9CE-03B9-4E37-7557-32B086712E2A</targetEntity>
 <transferable>true</transferable>
 <deleteRule>NO ACTION</deleteRule>
 </Relation>

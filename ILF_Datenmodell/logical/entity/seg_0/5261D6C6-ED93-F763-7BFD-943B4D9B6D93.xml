@@ -14,4 +14,105 @@
 <maxVolumes>9999999</maxVolumes>
 <minVolumes>0</minVolumes>
 <normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="Hauptprojektnr " id="4E0BA396-39DA-4FCA-C015-D7F551A4CCA8">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 10:23:03 UTC</createdTime>
+<generatorID>3EDB7A09-672D-739A-F741-7317E3E05C94</generatorID>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<referedAttribute>F8D9C026-245A-8100-8D1C-D0E1921C85A3</referedAttribute>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Hauptprojekt_Firmencode " id="94DAC217-14A5-2831-DA82-7CDD82D4F740">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 10:23:15 UTC</createdTime>
+<generatorID>3EDB7A09-672D-739A-F741-7317E3E05C94</generatorID>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<referedAttribute>DE932555-5423-BB61-6F02-A10E3B0C4910</referedAttribute>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Unterprojektnr " id="FFFACDE0-FF64-6620-888C-9EF74F08B472">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-23 13:35:11 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Arbeitsauftragsnr  " id="1CBE702A-DB98-A40C-4173-9A8137A0BE4F">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-23 13:35:16 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Arbeitsauftragsname " id="10B95154-7C50-2FBA-BA4D-7BB31DB78E67">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-23 13:35:21 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Arbeitsauftrag_Projektstatus  " id="8638063B-A899-C0E7-A4F2-C2AFE4ED8352">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-23 13:35:25 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Arbeitsauftrag_Fertigstatus  " id="C1707DE7-A943-D34F-7E25-D9B46A4295A1">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-23 13:35:30 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Arbeitsauftrag_Projektstatus_IFRS  " id="19BE4C46-59F0-2F59-A546-34EE1CB39FEA">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-23 13:35:33 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="SystemCode " id="0CBBC746-3ED7-D006-174C-4F2F71040F97">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-23 13:35:36 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
 </Entity>

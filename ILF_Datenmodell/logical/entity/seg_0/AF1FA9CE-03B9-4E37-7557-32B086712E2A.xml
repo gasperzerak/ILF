@@ -14,4 +14,70 @@
 <maxVolumes>9999999</maxVolumes>
 <minVolumes>0</minVolumes>
 <normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="SystemCode" id="DD3BD5CB-4F28-601F-FA8C-EC1E46A8C377">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-23 14:43:09 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Firmencode " id="2F0737EC-3459-42F4-3E2E-4907FDB3BAC6">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-23 14:43:15 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Buchungsperiode " id="59486660-CD10-FAE0-85EA-E3C6A8EEAF9C">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-23 14:43:24 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="IstBuchungsperiodeGeschlossen " id="ED5CD72D-6416-319B-DDD6-CCCBFB709D0B">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-23 14:43:28 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="BuchungsperiodeGeschlossenDatum " id="A740D138-538E-C678-F70B-AEE442C6E870">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-23 14:43:33 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="SystemCode1" id="E97F8609-B694-A355-D1D1-15B8B4075F3A">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-23 14:43:37 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
 </Entity>

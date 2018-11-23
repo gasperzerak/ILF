@@ -14,4 +14,235 @@
 <maxVolumes>9999999</maxVolumes>
 <minVolumes>0</minVolumes>
 <normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="Konto_Firmencode " id="83E1733D-05C4-C991-0BA8-FB2B362CBE6C">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-23 13:41:47 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Kontonr " id="C6AC565E-B586-9119-66DC-478D36986206">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-23 13:41:51 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Konto_ZSUPRnr " id="C7D346A0-B92C-DB9F-9B52-A2A80F8BA12B">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-23 13:41:59 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Konto_ZSUPRname_DE " id="442144AC-6A6F-0E9F-D4D0-3D2E29D180B0">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-23 13:42:02 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Konto_ZSUPRname_EN " id="4A61EE2D-4844-35D2-B846-1F0A8A4874C8">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-23 13:42:06 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Konto_ZSUPR01nr " id="801B389F-F15E-BD26-E3EC-2B334ABF8A55">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-23 13:42:08 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Konto_ZSUPR01name_DE " id="9EB8DCA5-47BD-4123-B8F3-4FEF2131005F">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-23 13:42:11 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Konto_ZSUPR01name_EN " id="46524E81-0FD2-BC46-8E5E-EF86527F3825">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-23 13:42:18 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Konto_ZSUPR02nr " id="739BCF49-D3CB-0FE8-EA13-A6ADF2F0D23A">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-23 13:42:23 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Konto_ZSUPR02name_DE " id="CB7F0CEC-BE0B-6AB5-9673-97CAF14F91F8">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-23 13:42:26 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Konto_ZSUPR02name_EN " id="78471EED-A731-3061-742F-5ECFFDACA062">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-23 13:43:06 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Kontoname_DE " id="186A801C-84A9-EC89-6019-D2C41890D0C1">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-23 13:43:11 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Kontoname_EN " id="EDDABF52-3160-2295-AF68-01C27295E2F2">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-23 13:43:13 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Konto_IstIntercompany " id="53FF2F65-D379-A998-604D-0B80536C04CB">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-23 13:43:16 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Konto_IstKalkulatorisch " id="4500C638-A149-9767-F045-27A4F318C706">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-23 13:43:36 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Konto_Aggregattyp " id="8C452AF0-1A00-654A-B331-8E969AF3DD05">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-23 13:43:42 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Konto_Multiplikator_OffenePosten " id="3EFE5D94-95CE-D811-BECE-BAE3E3602510">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-23 13:43:46 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Konto_IC_Empfaenger " id="D80DAE8C-63CD-AE37-550D-9ADE21697E44">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-23 13:43:49 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Konto_Kontotyp " id="F3C2F8A6-5371-2895-B18F-CD3B0BDCFAED">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-23 13:43:52 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Konto_CR_Position " id="33F33BEC-7EDC-494A-CFD4-1FB38B9FFAF8">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-23 13:43:55 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="SystemCode " id="FB494D89-773B-E9C2-7CD0-65BCE6F2B178">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-23 13:44:01 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
 </Entity>
