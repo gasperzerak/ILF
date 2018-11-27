@@ -1,0 +1,104 @@
+<Event Name="OnPreExecute" EventType="OnPreExecute" ConstraintMode="Parallel">
+	<Tasks>
+		<Expression Name="GetCurrentDate" Expression="@[User::CurrentDate] = GETDATE()"></Expression>
+		<ExecuteSQL Name="CommitExecutionStatus" ConnectionName="DWHMTA" BypassPrepare="true">
+			<PrecedenceConstraints LogicalType="And">
+				<Inputs>
+					<Input Expression="@[System::SourceName] == @[System::PackageName]" EvaluationOperation="Expression" OutputPathName="GetCurrentDate.Output"/>
+				</Inputs>
+			</PrecedenceConstraints>
+			<Parameters>
+				<Parameter Name="0" VariableName="User.PackageSID" DataType="Int32" Direction="Output"/>
+				<Parameter Name="1" VariableName="<#=packageName#>.LoadID" DataType="Int64" Direction="Input"/>
+				<Parameter Name="2" VariableName="System.ExecutionInstanceGUID" DataType="Guid" Direction="Input"/>
+				<Parameter Name="3" VariableName="<#=packageName#>.ParentPackageSID" DataType="Int32" Direction="Input"/>
+				<Parameter Name="4" VariableName="System.PackageName" DataType="String" Direction="Input"/>
+				<Parameter Name="5" VariableName="User.ExecutionStatus" DataType="String" Direction="Input"/>
+				<Parameter Name="6" VariableName="System.StartTime" DataType="DateTime" Direction="Input"/>
+			</Parameters>
+			<DirectInput>exec ? = [logging].[SetPackageExecution]?,?,?,?,?,?</DirectInput>
+		</ExecuteSQL>
+		<Expression Name="SetExecutionStatus" Expression="@[User::ExecutionStatus] = &quot;ended&quot;">
+			<PrecedenceConstraints LogicalType="And">
+				<Inputs>
+					<Input OutputPathName="CommitExecutionStatus.Output"/>
+				</Inputs>
+			</PrecedenceConstraints>
+		</Expression>
+	</Tasks>
+</Event>
+<Event Name="OnError" EventType="OnError" ConstraintMode="Linear">
+	<Tasks>
+		<Expression Name="SetExecutionStatus" Expression="@[User::ExecutionStatus] = &quot;aborted&quot;" />
+		<ExecuteSQL Name="SetExecutionError" ConnectionName="DWHMTA" BypassPrepare="true">
+			<Parameters>
+				<Parameter Name="0" VariableName="System.ExecutionInstanceGUID" DataType="Guid" Direction="Input"/>
+				<Parameter Name="1" VariableName="System.SourceName" DataType="String" Direction="Input"/>
+				<Parameter Name="2" VariableName="System.ErrorCode" DataType="Int32" Direction="Input"/>
+				<Parameter Name="3" VariableName="System.ErrorDescription" DataType="String" Direction="Input"/>
+			</Parameters>
+			<DirectInput>
+			    INSERT INTO [logging].[PackageExecutionError] (
+                 [PackageExecutionGUID]
+                ,[SSISErrorSourceName]
+                ,[SSISErrorCode]
+                ,[SSISErrorDescription]
+                ) VALUES (
+                 ?
+                ,?
+                ,?
+                ,?
+                );
+			</DirectInput>
+		</ExecuteSQL>    
+	</Tasks>
+</Event>
+<Event Name="OnPostExecute" EventType="OnPostExecute" ConstraintMode="Parallel">
+	<Tasks>
+		<Expression Name="GetCurrentDate" Expression="@[User::CurrentDate] = GETDATE()" />
+		
+		<!-- This is executed in case that data was processed -->
+		<ExecuteSQL Name="CommitExecutionStatusEnded" ConnectionName="DWHMTA" BypassPrepare="true">
+			<PrecedenceConstraints LogicalType="And">
+				<Inputs>
+					<Input Expression="(@[System::SourceName] == @[System::PackageName]) &amp;&amp; (@[User::ExecutionStatus] == &quot;ended&quot;)" EvaluationOperation="Expression" OutputPathName="GetCurrentDate.Output"/>
+				</Inputs>
+			</PrecedenceConstraints>
+			<Parameters>
+				<Parameter Name="0" VariableName="User.PackageSID" DataType="Int32" Direction="Output"/>
+				<Parameter Name="1" VariableName="<#=packageName#>.LoadID" DataType="Int64" Direction="Input"/>
+				<Parameter Name="2" VariableName="System.ExecutionInstanceGUID" DataType="Guid" Direction="Input"/>
+				<Parameter Name="3" VariableName="<#=packageName#>.ParentPackageSID" DataType="Int32" Direction="Input"/>
+				<Parameter Name="4" VariableName="System.PackageName" DataType="String" Direction="Input"/>
+				<Parameter Name="5" VariableName="User.ExecutionStatus" DataType="String" Direction="Input"/>
+				<Parameter Name="6" VariableName="User.CurrentDate" DataType="DateTime" Direction="Input"/>
+				<Parameter Name="7" VariableName="User.Operation" DataType="String" Direction="Input" />
+                <Parameter Name="8" VariableName="User.OperationRowCount" DataType="Int64" Direction="Input" />
+                <Parameter Name="9" VariableName="User.SourceRowCount" DataType="Int64" Direction="Input" />
+                <Parameter Name="10" VariableName="User.FinalRows" DataType="Int64" Direction="Input" />
+                <Parameter Name="11" VariableName="User.FinalBytes" DataType="Int64" Direction="Input" />   
+			</Parameters>
+			<DirectInput>exec ? = [logging].[SetPackageExecution] ?,?,?,?,?,?,?,?,?,?,?</DirectInput>
+		</ExecuteSQL>
+		
+		<!-- This is executed in case that there was an error -->
+		<ExecuteSQL Name="CommitExecutionStatusAborted" ConnectionName="DWHMTA" BypassPrepare="true">
+			<PrecedenceConstraints LogicalType="And">
+				<Inputs>
+					<Input Expression="(@[System::SourceName] == @[System::PackageName]) &amp;&amp; (@[User::ExecutionStatus] == &quot;aborted&quot;)" EvaluationOperation="Expression" OutputPathName="GetCurrentDate.Output"/>
+				</Inputs>
+			</PrecedenceConstraints>
+			<Parameters>
+				<Parameter Name="0" VariableName="User.PackageSID" DataType="Int32" Direction="Output"/>
+				<Parameter Name="1" VariableName="<#=packageName#>.LoadID" DataType="Int64" Direction="Input"/>
+				<Parameter Name="2" VariableName="System.ExecutionInstanceGUID" DataType="Guid" Direction="Input"/>
+				<Parameter Name="3" VariableName="<#=packageName#>.ParentPackageSID" DataType="Int32" Direction="Input"/>
+				<Parameter Name="4" VariableName="System.PackageName" DataType="String" Direction="Input"/>
+				<Parameter Name="5" VariableName="User.ExecutionStatus" DataType="String" Direction="Input"/>
+				<Parameter Name="6" VariableName="User.CurrentDate" DataType="DateTime" Direction="Input"/>
+			</Parameters>
+			<DirectInput>exec ? = [logging].[SetPackageExecution] ?,?,?,?,?,?,null,null,null,null,null</DirectInput>
+		</ExecuteSQL>
+		    
+	</Tasks>
+</Event>

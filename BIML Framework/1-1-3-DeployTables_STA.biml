@@ -1,0 +1,89 @@
+<Biml xmlns="http://schemas.varigence.com/biml.xsd">
+	<Packages>
+		<Package Name="MasterTableDeploy_STA" ConstraintMode="Parallel">
+			<Tasks>
+            <# var metadataConnectionString = ((AstDbConnectionNode)RootNode.Connections["DWHMTA"]).ConnectionString; #>
+            <# var tables = ExternalDataAccess.GetDataTable(metadataConnectionString,"SELECT [ConnectionName] FROM [structure].[Connection] WHERE ConnectionType = 'Stage'"); #>
+            <# foreach (DataRow DataBaseRow in tables.Rows) { #>
+				<Container ConstraintMode="Linear" Name="<#=DataBaseRow["ConnectionName"]#>">
+					<Tasks>
+					    <# foreach (var table in RootNode.Tables.Where(t => (t.Schema.Database.Name.Equals(DataBaseRow["ConnectionName"]) && t.Schema.Name.Equals("sta")))) { #>
+					    <# string srcSchemaQualifiedName = table.GetTag("SourceSchemaQualifiedName").ToString();
+					       srcSchemaQualifiedName = srcSchemaQualifiedName.Replace(".", "_");
+					    #>
+				        <Container ConstraintMode="Linear" Name="<#=table.GetTag("PureDatabaseName")#>_<#=srcSchemaQualifiedName#>">
+				            <Tasks>
+						        <ExecuteSQL Name="Create DWHSTG_<#=table.GetTag("PureDatabaseName")#>_sta_<#=table.Name#>" ConnectionName="<#=table.Connection.Name#>">
+						        	<DirectInput>
+						        		if object_id('[<#=table.Schema.Name#>].[<#=table.Name#>]', 'U') is not null drop table [<#=table.Schema.Name#>].[<#=table.Name#>];
+						        		create table [<#=table.Schema.Name#>].[<#=table.Name#>] (
+						        		 [Load_ID] bigint not null	
+						        		<# foreach (var column in table.Columns) { #>
+						        		<#=HelperMethods.getColumnSql(column)#>
+						        		<# } #>
+						        		,[SourceSystem] nvarchar(30)
+						        		<# if (table.GetTag("IsDimensionTable").Equals("true")) { #>
+						        		,[IsDeletedFromSource] smallint
+						        		<# } #>
+						        		,[FileName] nvarchar(4000)
+						        		) ON [STA];
+						        	</DirectInput>
+						        </ExecuteSQL>
+				            <# if(table.GetTag("SCDType").Equals("1")) { #>						        
+						        <ExecuteSQL Name="Create DWHSTG_<#=table.GetTag("PureDatabaseName")#>_psta_<#=table.Name#>" ConnectionName="<#=table.Connection.Name#>">
+						        	<DirectInput>
+						        		if object_id('psta.[<#=table.Name#>]', 'U') is not null drop table psta.[<#=table.Name#>];
+						        		create table psta.[<#=table.Name#>] (
+						        		 [Create_Load_ID] bigint not null
+						        		,[Change_Load_ID] bigint not null
+						        		<# foreach (var column in table.Columns) { #>
+						        		<#=HelperMethods.getColumnSql(column)#>
+						        		<# } #>
+						        		,[SourceSystem] nvarchar(30)
+						        		<# if (table.GetTag("IsDimensionTable").Equals("true")) { #>
+						        		,[IsDeletedFromSource] smallint
+						        		<# } #>
+						        		,[FileName] nvarchar(4000)
+						        		) ON [PSTA];
+						        	</DirectInput>
+						        </ExecuteSQL>
+				            <# } else if(table.GetTag("SCDType").Equals("2")) { #>	
+						        <ExecuteSQL Name="Create DWHSTG_<#=table.GetTag("PureDatabaseName")#>.hsta.<#=table.Name#>" ConnectionName="<#=table.Connection.Name#>">
+						        	<DirectInput>
+						        		if object_id('hsta.[<#=table.Name#>]', 'U') is not null drop table hsta.[<#=table.Name#>];
+						        		create table hsta.[<#=table.Name#>] (
+						        		 [Create_Load_ID] bigint not null
+						        		,[Change_Load_ID] bigint not null
+						        		,[IsCurrent] bit not null
+						        		,[IsFirst] bit not null
+						        		,[IsLast] bit not null
+						        		,[LogBeg] datetime not null
+						        		,[LogEnd] datetime not null
+						        		,[DwhBeg] datetime not null
+						        		,[DwhEnd] datetime not null
+						        		<# foreach (var column in table.Columns) { #>
+						        		<#=HelperMethods.getColumnSql(column)#>
+						        		<# } #>
+						        		,[SourceSystem] nvarchar(30)
+						        		<# if (table.GetTag("IsDimensionTable").Equals("true")) { #>
+						        		,[IsDeletedFromSource] smallint
+						        		,[FileName] nvarchar(4000)
+						        		<# } #>
+						        		) ON [HSTA];
+						        	</DirectInput>
+						        </ExecuteSQL>
+						    <# } #>
+						    </Tasks>
+						</Container>
+                   	<# } #>
+					</Tasks>
+				</Container>
+			<# } #>
+			</Tasks>
+		</Package>
+	</Packages>
+</Biml>
+<#@ import namespace="System.Data" #>
+<#@ import namespace="System.Data.SqlClient" #>
+<#@ code file="HelperMethods.cs" #>
+<#@ template tier="3" #>

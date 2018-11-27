@@ -1,0 +1,18 @@
+<Biml xmlns="http://schemas.varigence.com/biml.xsd">
+	<#  
+		string debugFileName = "myBimlFile.xml";
+		string debugFileOutputPath = @"C:\Temp";
+		string xBiml = RootNode.GetBiml();  
+		XmlDocument xmlDoc = new XmlDocument();  
+		xmlDoc.LoadXml(xBiml);  
+		string sFile = System.IO.Path.Combine(debugFileOutputPath, debugFileName);  
+		
+		xmlDoc.Save(sFile);  
+	#>
+</Biml>
+
+<!--Directives:-->
+<#@ template tier="99" #>
+<#@ import namespace="System.Xml" #>
+
+<!--BIML Code to save the compiled BIML to file: SaveCompiledBiml.biml-->

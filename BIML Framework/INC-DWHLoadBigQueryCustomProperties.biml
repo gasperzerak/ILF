@@ -1,0 +1,6 @@
+<CustomProperties>
+    <CustomProperty Name="AccessMode" DataType="Int32" TypeConverter="CData.SSIS.GoogleBigQuery.AccessModeToStringConverter, CData.SSIS2016.GoogleBigQuery, Version=1.2016.0.0, Culture=neutral, PublicKeyToken=cdc168f89cffe9cf">1</CustomProperty>
+	<CustomProperty DataType="Null" Name="TableOrView" UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version= 10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />    
+    <CustomProperty Name="ExecStoredProcedure" DataType="Boolean">false</CustomProperty>
+    <CustomProperty Name="SQLStatement" DataType="String"><#=table.GetTag("DataFilter")#></CustomProperty>
+</CustomProperties>

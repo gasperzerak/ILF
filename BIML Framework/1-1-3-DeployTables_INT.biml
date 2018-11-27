@@ -1,0 +1,42 @@
+<Biml xmlns="http://schemas.varigence.com/biml.xsd">
+	<Packages>
+		<Package Name="MasterTableDeploy_INT" ConstraintMode="Parallel">
+			<Tasks>
+            <# var metadataConnectionString = ((AstDbConnectionNode)RootNode.Connections["DWHMTA"]).ConnectionString; #>
+            <# var tables = ExternalDataAccess.GetDataTable(metadataConnectionString,"SELECT [ConnectionName] FROM [structure].[Connection] WHERE ConnectionType = 'Integration Data'"); #>
+            <# foreach (DataRow DataBaseRow in tables.Rows) { #>
+				<Container ConstraintMode="Linear" Name="<#=DataBaseRow["ConnectionName"]#>">
+					<Tasks>
+					    <# foreach (var table in RootNode.Tables.Where(t => (t.Schema.Database.Name.Equals(DataBaseRow["ConnectionName"]) ))) { #>
+					    <# Console.WriteLine(table.Name); #>
+					    <# string srcSchemaQualifiedName = table.GetTag("SourceSchemaQualifiedName").ToString();
+					       srcSchemaQualifiedName = srcSchemaQualifiedName.Replace(".", "_");
+					    #>
+				        <Container ConstraintMode="Linear" Name="<#=table.GetTag("PureDatabaseName")#>_<#=srcSchemaQualifiedName#>">
+				            <Tasks>
+						        <ExecuteSQL Name="Create DWHINT_<#=table.GetTag("PureDatabaseName")#>_<#=table.Name#>" ConnectionName="<#=table.Connection.Name#>">
+						        	<DirectInput>
+						        		if object_id('[<#=table.Schema.Name#>].[<#=table.Name#>]', 'U') is not null drop table [<#=table.Schema.Name#>].[<#=table.Name#>];
+						        		create table [<#=table.Schema.Name#>].[<#=table.Name#>] (
+						        		 [Load_ID] bigint not null	
+						        		 ,[IsInferred] bigint not null	
+						        		<# foreach (var column in table.Columns) { #>
+						        		<#=HelperMethods.getColumnSql(column)#>
+						        		<# } #>
+						        		) ON [PRIMARY];
+						        	</DirectInput>
+						        </ExecuteSQL>
+						    </Tasks>
+						</Container>
+                   	<# } #>
+					</Tasks>
+				</Container>
+			<# } #>
+			</Tasks>
+		</Package>
+	</Packages>
+</Biml>
+<#@ import namespace="System.Data" #>
+<#@ import namespace="System.Data.SqlClient" #>
+<#@ code file="HelperMethods.cs" #>
+<#@ template tier="3" #>
