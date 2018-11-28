@@ -15,30 +15,6 @@
 <minVolumes>0</minVolumes>
 <normalForm>Third</normalForm>
 <attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
-<Attribute name="Hauptprojektnr " id="8422480F-C54B-C552-619B-C6668EE84CF9">
-<createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 10:23:03 UTC</createdTime>
-<generatorID>FD89F9F1-EEA1-827E-58E0-DFB7279580FF</generatorID>
-<ownerDesignName>ILF_Datenmodell</ownerDesignName>
-<engineerTo>
-<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
-</engineerTo>
-<referedAttribute>F8D9C026-245A-8100-8D1C-D0E1921C85A3</referedAttribute>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="Hauptprojekt_Firmencode " id="529EB01E-8DEE-44BD-7CAE-9ED514D8D839">
-<createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 10:23:15 UTC</createdTime>
-<generatorID>FD89F9F1-EEA1-827E-58E0-DFB7279580FF</generatorID>
-<ownerDesignName>ILF_Datenmodell</ownerDesignName>
-<engineerTo>
-<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
-</engineerTo>
-<referedAttribute>DE932555-5423-BB61-6F02-A10E3B0C4910</referedAttribute>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
 <Attribute name="Buchdatum " id="BC8743AB-81F5-2489-3B36-BFCD1C446D1D">
 <createdBy>fmarkoja</createdBy>
 <createdTime>2018-11-21 12:30:54 UTC</createdTime>
@@ -46,6 +22,28 @@
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
 </engineerTo>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Firmencode " id="3B1A9872-8E00-020E-6776-97B628AD8D94">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-28 09:40:46 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Hauptprojektnr " id="E682B8F5-41E4-57B7-9360-367900F6EC89">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-28 08:34:35 UTC</createdTime>
+<generatorID>FD89F9F1-EEA1-827E-58E0-DFB7279580FF</generatorID>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<referedAttribute>F8D9C026-245A-8100-8D1C-D0E1921C85A3</referedAttribute>
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
@@ -59,9 +57,9 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="Kostenkategorie  " id="AC72D85C-86C6-55D6-B544-BBE3C494CB36">
+<Attribute name="Kostenkategorie" id="DD1DC083-68B5-9724-4F9C-E8414E307ADB">
 <createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 12:31:09 UTC</createdTime>
+<createdTime>2018-11-28 09:41:11 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
@@ -70,9 +68,9 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="Kostenstellencode " id="4206F0D9-6A6E-E6A8-C00B-3288EA51426C">
+<Attribute name="Kostenstellencode" id="2CDB19C7-F991-1074-9145-102BF30133A0">
 <createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 12:31:12 UTC</createdTime>
+<createdTime>2018-11-28 09:41:15 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
@@ -80,9 +78,9 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="KundeLieferant_Typ  " id="376AC6ED-D753-706D-2D7E-663DEB27D998">
+<Attribute name="Lieferant_Firmencode " id="B9CB1F87-EA39-1477-3BBE-E130DA03FFE3">
 <createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 12:31:15 UTC</createdTime>
+<createdTime>2018-11-28 09:41:23 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
@@ -90,9 +88,9 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="KundeLieferantennr " id="69A90B5F-D82B-4430-9445-D51D10D5D884">
+<Attribute name="Lieferant_Typ  " id="1FB04128-B6A0-C844-B58B-476CC5ED7A13">
 <createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 12:31:18 UTC</createdTime>
+<createdTime>2018-11-28 09:41:29 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
@@ -100,53 +98,9 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="Restaufwand_BW " id="C0BF7CE7-6285-A3B2-2609-02198EC5D1AE">
+<Attribute name="Lieferantennr " id="E28392E5-4222-25A2-26E0-439F0F106CD6">
 <createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 12:31:21 UTC</createdTime>
-<ownerDesignName>ILF_Datenmodell</ownerDesignName>
-<engineerTo>
-<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
-</engineerTo>
-<nullsAllowed>true</nullsAllowed>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="Restaufwand_EUR " id="F80817B3-E780-9E5C-8A43-1C1055B5B0FB">
-<createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 12:31:25 UTC</createdTime>
-<ownerDesignName>ILF_Datenmodell</ownerDesignName>
-<engineerTo>
-<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
-</engineerTo>
-<nullsAllowed>true</nullsAllowed>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="Restaufwand_HW " id="B50FC376-C79E-922F-DBB3-401A4FB3B657">
-<createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 12:31:29 UTC</createdTime>
-<ownerDesignName>ILF_Datenmodell</ownerDesignName>
-<engineerTo>
-<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
-</engineerTo>
-<nullsAllowed>true</nullsAllowed>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="Restaufwand_USD " id="B9972DEC-5C98-A6D4-460E-16A0E538AE5C">
-<createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 12:31:31 UTC</createdTime>
-<ownerDesignName>ILF_Datenmodell</ownerDesignName>
-<engineerTo>
-<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
-</engineerTo>
-<nullsAllowed>true</nullsAllowed>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="Unterprojektnr " id="26CB83F7-227F-3C0D-0894-1A10EE961E7D">
-<createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 12:31:36 UTC</createdTime>
+<createdTime>2018-11-28 09:41:27 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
@@ -154,9 +108,9 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="Waehrung " id="D88EAF44-DA00-C176-B99F-DE06E5543A54">
+<Attribute name="Kunde_Firmencode " id="B2DE2D75-4DFA-6F63-B27B-9600D08D4672">
 <createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 12:31:40 UTC</createdTime>
+<createdTime>2018-11-28 09:42:46 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
@@ -164,9 +118,29 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="Auftragswert_HW " id="F9BFFD00-EB1B-FDC2-4AE7-7E6F44222336">
+<Attribute name="Kunde_Typ  " id="AC3AC9F0-CABC-E18A-6DAA-802AF5393568">
 <createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 12:31:43 UTC</createdTime>
+<createdTime>2018-11-28 09:42:59 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Kundennr " id="A0AB87FE-8D55-488C-1D60-CCF71BAA77DE">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-28 09:43:06 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Restaufwand_BW" id="C18360A1-8CD1-8A07-7EFF-27D18A519E6B">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-28 09:43:10 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
@@ -175,9 +149,9 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="Auftragswert_USD " id="FD66E41A-F15F-1942-DE5E-5516A764B3F7">
+<Attribute name="Restaufwand_EUR" id="1EB48F6F-A99B-5150-FD9B-511761CC474C">
 <createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 12:31:47 UTC</createdTime>
+<createdTime>2018-11-28 09:43:13 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
@@ -186,9 +160,9 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="Belegnr " id="7AF88E4D-A8E2-8570-9A27-90B53EDF7621">
+<Attribute name="Restaufwand_HW" id="78118EA6-1A3D-B788-7761-30D6C77DBB35">
 <createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 12:31:50 UTC</createdTime>
+<createdTime>2018-11-28 09:43:18 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
@@ -197,9 +171,29 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="Belegtyp " id="5C1D8E00-8E34-66F5-C894-D1CE11C93E14">
+<Attribute name="Unterprojektnr" id="4CB088CF-877C-E9CE-CF31-B768D5970191">
 <createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 12:31:56 UTC</createdTime>
+<createdTime>2018-11-28 09:43:26 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Waehrung" id="6C48EAA7-F749-1B6D-08EC-F23A8EA7F94B">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-28 09:43:33 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Auftragswert_HW" id="AF6AC111-E0E9-8EE7-C6BC-ADEB709C88C5">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-28 09:43:37 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
@@ -208,9 +202,9 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="Buchungsperiode " id="3ED6C17A-3B12-16EB-0919-EDDDFF29BD2B">
+<Attribute name="Belegnr" id="804A06BB-1DE5-6954-3C35-9CFAA74F7804">
 <createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 12:32:00 UTC</createdTime>
+<createdTime>2018-11-28 09:43:41 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
@@ -219,9 +213,9 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="Buchungstext  " id="391DEF51-8F4D-E5B1-24A8-E1C4D402740C">
+<Attribute name="Belegtyp" id="8B863392-F127-D8B6-4A2B-DA3FDE5C2D17">
 <createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 12:32:04 UTC</createdTime>
+<createdTime>2018-11-28 09:43:45 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
@@ -230,9 +224,9 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="Budget_BW " id="78CE39E9-3EA2-F615-7C89-4AF07113BF65">
+<Attribute name="Buchungsperiode" id="CE2BC25D-2A22-1AD7-531A-3ED09EA7E568">
 <createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 12:32:07 UTC</createdTime>
+<createdTime>2018-11-28 09:43:48 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
@@ -241,9 +235,9 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="Budget_EUR " id="FE917FCB-BA98-20FF-FF16-6B48A94620B4">
+<Attribute name="Buchungstext " id="DA9DCB9B-B2F5-048B-4C1F-806EEA84BABF">
 <createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 12:32:10 UTC</createdTime>
+<createdTime>2018-11-28 09:43:51 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
@@ -252,9 +246,9 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="Budget_HW " id="6D48978A-F509-62E1-977E-863DC4D7D84E">
+<Attribute name="Budget_BW" id="6F0230C4-7025-6348-622D-2D748DD65C69">
 <createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 12:32:13 UTC</createdTime>
+<createdTime>2018-11-28 09:43:54 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
@@ -263,9 +257,9 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="Budget_USD " id="FFB56A47-CF6C-32C7-293D-3603D065475F">
+<Attribute name="Budget_EUR" id="8C5EF16C-620D-7B44-C38F-AF0FCB93FFB8">
 <createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 12:32:16 UTC</createdTime>
+<createdTime>2018-11-28 09:43:57 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
@@ -274,9 +268,9 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="SystemCode " id="D68D86BB-32EC-B9B7-306B-E2D311DCDDBD">
+<Attribute name="Budget_HW" id="10F7FEBA-AEDF-5896-D4DF-AF0EFB47DBDB">
 <createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 12:32:20 UTC</createdTime>
+<createdTime>2018-11-28 09:44:00 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
@@ -285,20 +279,9 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="Aktivitätencode " id="4D4BFBF2-4089-3632-5D24-3CA9CEAE20EB">
+<Attribute name="SystemCode" id="CA6B601B-4A22-024D-1D0D-DE2B8B13B316">
 <createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 12:32:23 UTC</createdTime>
-<ownerDesignName>ILF_Datenmodell</ownerDesignName>
-<engineerTo>
-<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
-</engineerTo>
-<nullsAllowed>true</nullsAllowed>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="Arbeitsauftrag " id="97CE0849-3A35-2C26-7A5A-2802B15A2D59">
-<createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 12:32:26 UTC</createdTime>
+<createdTime>2018-11-28 09:44:02 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>

@@ -15,27 +15,25 @@
 <minVolumes>0</minVolumes>
 <normalForm>Third</normalForm>
 <attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
-<Attribute name="Hauptprojektnr " id="4E0BA396-39DA-4FCA-C015-D7F551A4CCA8">
+<Attribute name="Hauptprojekt_Firmencode  " id="9E4C5C6F-D0EE-C7FD-CC58-998858741241">
 <createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 10:23:03 UTC</createdTime>
+<createdTime>2018-11-28 08:40:53 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Hauptprojektnr " id="43F236EF-2134-36F5-BEFC-52B6EC826170">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-28 08:34:35 UTC</createdTime>
 <generatorID>3EDB7A09-672D-739A-F741-7317E3E05C94</generatorID>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
 </engineerTo>
 <referedAttribute>F8D9C026-245A-8100-8D1C-D0E1921C85A3</referedAttribute>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="Hauptprojekt_Firmencode " id="94DAC217-14A5-2831-DA82-7CDD82D4F740">
-<createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 10:23:15 UTC</createdTime>
-<generatorID>3EDB7A09-672D-739A-F741-7317E3E05C94</generatorID>
-<ownerDesignName>ILF_Datenmodell</ownerDesignName>
-<engineerTo>
-<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
-</engineerTo>
-<referedAttribute>DE932555-5423-BB61-6F02-A10E3B0C4910</referedAttribute>
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>

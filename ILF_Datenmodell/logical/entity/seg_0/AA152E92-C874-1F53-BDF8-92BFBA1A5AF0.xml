@@ -1,5 +1,5 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="AA152E92-C874-1F53-BDF8-92BFBA1A5AF0" name="KundeLieferant">
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="AA152E92-C874-1F53-BDF8-92BFBA1A5AF0" name="Kunde">
 <createdBy>gaspe</createdBy>
 <createdTime>2018-11-18 20:50:30 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
@@ -15,7 +15,7 @@
 <minVolumes>0</minVolumes>
 <normalForm>Third</normalForm>
 <attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
-<Attribute name="KundeLieferant_Firmencode " id="74FAD450-D830-0307-088A-9E5B86610C56">
+<Attribute name="Kunde_Firmencode " id="74FAD450-D830-0307-088A-9E5B86610C56">
 <createdBy>fmarkoja</createdBy>
 <createdTime>2018-11-23 13:50:26 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
@@ -25,7 +25,7 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="KundeLieferantennr " id="EFF8E341-8102-963D-9F93-215E8C6F0F23">
+<Attribute name="Kunde_Nr " id="EFF8E341-8102-963D-9F93-215E8C6F0F23">
 <createdBy>fmarkoja</createdBy>
 <createdTime>2018-11-23 13:50:30 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
@@ -35,7 +35,7 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="KundeLieferant_Typ " id="B755C97C-A5D6-E051-9D38-A1BB38DE1AFD">
+<Attribute name="Kunde_Typ " id="B755C97C-A5D6-E051-9D38-A1BB38DE1AFD">
 <createdBy>fmarkoja</createdBy>
 <createdTime>2018-11-23 13:50:33 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
@@ -45,7 +45,7 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="KundeLieferant_Waehrung " id="FFB51927-91E9-F28E-7402-E08FBC1B7480">
+<Attribute name="Kunde_Waehrung " id="FFB51927-91E9-F28E-7402-E08FBC1B7480">
 <createdBy>fmarkoja</createdBy>
 <createdTime>2018-11-23 13:50:39 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
@@ -56,7 +56,7 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="KundeLieferantenname " id="A5774F2C-BDB2-A2E1-9A50-81198F0AE088">
+<Attribute name="Kunde_Name " id="A5774F2C-BDB2-A2E1-9A50-81198F0AE088">
 <createdBy>fmarkoja</createdBy>
 <createdTime>2018-11-23 13:50:42 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
@@ -67,7 +67,7 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="KundeLieferant_Gruppennr " id="A9B004C6-4D55-3CE7-CF9B-1C80D3E3EAFC">
+<Attribute name="Kunde_Gruppennr " id="A9B004C6-4D55-3CE7-CF9B-1C80D3E3EAFC">
 <createdBy>fmarkoja</createdBy>
 <createdTime>2018-11-23 13:50:44 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
@@ -78,7 +78,7 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="KundeLieferant_Gruppenname " id="5F7F0D86-4E60-CBB5-3B88-BA89C8036187">
+<Attribute name="Kunde_Gruppenname " id="5F7F0D86-4E60-CBB5-3B88-BA89C8036187">
 <createdBy>fmarkoja</createdBy>
 <createdTime>2018-11-23 13:50:47 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
@@ -89,7 +89,7 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="KundeLieferant_Kurzname " id="2D5CDCD8-BB0B-6740-251F-6755BAF2DCB0">
+<Attribute name="Kunde_Kurzname " id="2D5CDCD8-BB0B-6740-251F-6755BAF2DCB0">
 <createdBy>fmarkoja</createdBy>
 <createdTime>2018-11-23 13:50:50 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
@@ -100,9 +100,9 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="KundeLieferant_Land " id="35DD6D4B-63FC-63A9-0C43-73635F027370">
+<Attribute name="Kunde_Land " id="3296D8BD-E3BC-8560-BDDB-6E2DF3E01435">
 <createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-23 13:50:53 UTC</createdTime>
+<createdTime>2018-11-28 09:01:35 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
@@ -111,9 +111,9 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="KundeLieferant_Ort " id="12237D6C-B457-3E4A-382C-4B7915E726EF">
+<Attribute name="Kunde_Ort " id="0782B3B8-11C0-2ED5-E45A-F2C96A497F90">
 <createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-23 13:50:56 UTC</createdTime>
+<createdTime>2018-11-28 09:01:45 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
@@ -122,9 +122,9 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="KundeLieferant_PLZ " id="4742C7A1-7ACB-7C66-8563-0B545F5DE05D">
+<Attribute name="Kunde_PLZ " id="1214A808-0C36-7752-B071-FDFAB4D0C244">
 <createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-23 13:51:01 UTC</createdTime>
+<createdTime>2018-11-28 09:01:48 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
@@ -133,9 +133,9 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="KundeLieferant_Adresse " id="28DEBDFE-559C-BC08-26B4-2DA2AC2A504B">
+<Attribute name="Kunde_Adresse " id="BF437DF9-0BF9-0086-CCC4-78A01DE22DE9">
 <createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-23 13:51:04 UTC</createdTime>
+<createdTime>2018-11-28 09:01:52 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
@@ -144,9 +144,9 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="KundeLieferant_Konzernnr " id="7A721965-AF57-48B3-7A6F-EB9C4DD3FD13">
+<Attribute name="Kunde_Konzernnr " id="3C706899-6E90-FC4B-77B1-F48EE69DFE46">
 <createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-23 13:51:09 UTC</createdTime>
+<createdTime>2018-11-28 09:01:55 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
@@ -155,9 +155,9 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="KundeLieferant_Konzernname " id="A384CDF4-13CB-D614-2488-5290AD7056DD">
+<Attribute name="Kunde_Konzernname " id="03442A5A-D52B-6B5B-1F3A-CB4086F77147">
 <createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-23 13:51:13 UTC</createdTime>
+<createdTime>2018-11-28 09:01:58 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
@@ -166,9 +166,9 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="KundeLieferant_Zahlbed_Kuerzel " id="9D437C49-6281-032F-B8C3-3E8349642F10">
+<Attribute name="Kunde_Zahlbed_Kuerzel " id="1EB2041C-D5A0-8AE5-5416-C9DF037B7A6B">
 <createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-23 13:51:16 UTC</createdTime>
+<createdTime>2018-11-28 09:02:00 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
@@ -177,9 +177,9 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="KundeLieferant_Zahlbed " id="42DB6C5F-43B3-661D-FCCB-06F43BEBB92A">
+<Attribute name="Kunde_Zahlbed " id="A267AC96-2AA1-7102-743A-91BE7EC1F085">
 <createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-23 13:51:19 UTC</createdTime>
+<createdTime>2018-11-28 09:02:03 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
@@ -188,9 +188,9 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="KundeLieferant_IC_Empfaenger " id="7294D272-96F6-7952-ABF9-7D2F2A678EC2">
+<Attribute name="Kunde_IC_Empfaenger " id="F749B0CC-2C4E-5768-04DB-75302329AD0B">
 <createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-23 13:51:22 UTC</createdTime>
+<createdTime>2018-11-28 09:02:05 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
@@ -199,9 +199,9 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="SystemCode " id="89AB874E-DEEF-7C3C-17CE-FC0A3212BBFD">
+<Attribute name="SystemCode" id="72DB2BCF-6CCC-3C39-9544-5E7A02E2435D">
 <createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-23 13:51:31 UTC</createdTime>
+<createdTime>2018-11-28 09:02:09 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>

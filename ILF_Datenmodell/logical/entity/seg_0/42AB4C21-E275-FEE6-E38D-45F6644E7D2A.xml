@@ -15,27 +15,6 @@
 <minVolumes>0</minVolumes>
 <normalForm>Third</normalForm>
 <attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
-<Attribute name="Aktivitaetencode  " id="8D8ED82C-1003-65C1-B8F8-9C883FF8938C">
-<createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 12:20:27 UTC</createdTime>
-<ownerDesignName>ILF_Datenmodell</ownerDesignName>
-<engineerTo>
-<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
-</engineerTo>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="Aktivitaetencode_Orig  " id="E2B13075-2788-DEEF-B1BE-41428DD7E3C9">
-<createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 12:20:31 UTC</createdTime>
-<ownerDesignName>ILF_Datenmodell</ownerDesignName>
-<engineerTo>
-<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
-</engineerTo>
-<nullsAllowed>true</nullsAllowed>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
 <Attribute name="Anfang  " id="030288DA-422E-BD7C-3943-260EB0F2E203">
 <createdBy>fmarkoja</createdBy>
 <createdTime>2018-11-21 12:20:49 UTC</createdTime>
@@ -250,6 +229,16 @@
 <Attribute name="Execute_AbteilungCode " id="16E97CF2-CC1B-C303-9C74-8C782E27CFD9">
 <createdBy>fmarkoja</createdBy>
 <createdTime>2018-11-21 12:22:05 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="SubFibuKontoCode " id="8AD55FB7-EE88-89F9-F04B-E5FF4477B727">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-28 09:36:39 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>

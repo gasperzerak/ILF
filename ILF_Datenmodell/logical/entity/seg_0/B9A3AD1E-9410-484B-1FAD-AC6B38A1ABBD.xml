@@ -25,9 +25,9 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="Belegdatum _1" id="3490147F-EAC5-17A3-A4C9-EA47526064DA">
+<Attribute name="Buchdatum" id="5B020298-3ACF-940C-973F-271EF8A61011">
 <createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-23 14:11:55 UTC</createdTime>
+<createdTime>2018-11-28 09:53:47 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
@@ -119,16 +119,6 @@
 <Attribute name="Arbeitsauftragsnr " id="8ACF545B-C250-59C2-5995-C30E3E0F5A7A">
 <createdBy>fmarkoja</createdBy>
 <createdTime>2018-11-23 14:13:09 UTC</createdTime>
-<ownerDesignName>ILF_Datenmodell</ownerDesignName>
-<engineerTo>
-<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
-</engineerTo>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="Aktivitaetencode " id="04BAA741-BC11-A263-860F-C06901386EEA">
-<createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-23 14:13:13 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
@@ -354,7 +344,7 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="KundeLieferantennr " id="2CFC3F58-392E-9873-F08F-A60C0B22C084">
+<Attribute name="Lieferant_Firmencode" id="2CFC3F58-392E-9873-F08F-A60C0B22C084">
 <createdBy>fmarkoja</createdBy>
 <createdTime>2018-11-23 14:14:41 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
@@ -364,9 +354,49 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="KundeLieferant_Typ " id="72A45E72-23DE-7515-1104-2A693EBC539C">
+<Attribute name="Lieferantennr " id="4E0A5646-4AC4-DDE4-33EE-FF2FFB4722BB">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-28 09:56:13 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Lieferant_Typ " id="72A45E72-23DE-7515-1104-2A693EBC539C">
 <createdBy>fmarkoja</createdBy>
 <createdTime>2018-11-23 14:14:44 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Kunde_Firmencode " id="6AD3225D-ADAC-DF21-2FE3-DFBF6432A6E8">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-28 09:56:45 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Kundennr " id="C2D1AAF3-3F98-1F13-30CD-8200896399E0">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-28 09:57:14 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Kunde_Typ " id="885E56CF-81B1-E26A-1B85-D2B1B44FB50A">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-28 09:57:36 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
@@ -418,6 +448,17 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
+<Attribute name="SubFibuKontoCode " id="979CC302-FA21-EC87-29F2-2A2563FD383D">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-28 09:58:20 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
 <Attribute name="SystemCode " id="A320D8F0-FBCC-98ED-FDDA-D31DEA46AF78">
 <createdBy>fmarkoja</createdBy>
 <createdTime>2018-11-23 14:14:59 UTC</createdTime>
@@ -425,7 +466,6 @@
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
 </engineerTo>
-<nullsAllowed>true</nullsAllowed>
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>

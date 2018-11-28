@@ -42,7 +42,6 @@
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
 </engineerTo>
-<nullsAllowed>true</nullsAllowed>
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
@@ -134,6 +133,270 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
+<Attribute name="Unterprojekt_Projektcontrollernr " id="0460DA43-8DC8-5ACB-FF6C-1DA1BA2E88F3">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-28 08:39:03 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Unterprojekt_Projektcontrollername " id="3BBF1049-4209-9508-DF18-6A2BD72BCABE">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-28 08:39:22 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Unterprojekt_AccountManagerNr " id="3478A316-F282-45E0-D7DB-F5360ECEF676">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-28 08:35:49 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Unterprojekt_AccountManagerName " id="5457C930-BFE0-D22A-3B7D-7FA6D7A40D9A">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-28 08:35:55 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Unterprojekt_AcquisitionProjektleiternr " id="17C34633-20B7-CD60-1C5B-8662EA4CBC78">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-28 08:35:59 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Unterprojekt_AcquisitionProjektleitername " id="7ABDD624-F504-848B-0C6A-220BF6D83406">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-28 08:36:02 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Unterprojekt_DeputyProjektleiternr " id="D0410628-43E7-1D0B-2E3C-CB6DD03425B8">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-28 08:36:05 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Unterprojekt_DeputyProjektleitername " id="EAE6AEF9-E912-33CA-73A3-94FC383B7CC8">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-28 08:36:08 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Unterprojekt_EngineeringManagernr " id="3D10FD61-F230-1312-2C76-9E81D5B12329">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-28 08:36:11 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Unterprojekt_EngineeringManagername " id="34664629-1766-A2DE-CAA0-40F08484B56C">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-28 08:36:15 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Unterprojekt_ConstructionManagernr " id="BDB6D14F-5A7D-DC05-6BDD-C697BACB6A8E">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-28 08:36:18 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Unterprojekt_ConstructionManagername " id="725A1409-04D9-FCFC-4F83-FC4C6C961137">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-28 08:36:21 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Unterprojekt_ProcurementManagernr " id="011F26F2-9E2E-A0EC-2DBA-8D2FD5DE658E">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-28 08:36:24 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Unterprojekt_ProcurementManagername " id="DC7506E8-ED6F-ACEE-B982-76F33307EFAD">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-28 08:36:27 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Unterprojekt_CommissioningManagernr " id="2746E252-546D-EBFD-3674-1D0FD7CC944D">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-28 08:36:30 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Unterprojekt_CommissioningManagername " id="BA8CD459-D271-673A-6328-7E50225FF813">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-28 08:36:34 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Unterprojekt_ProjectTeamMemberrnr " id="1142636F-4311-7DD3-D392-D99A889AE30F">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-28 08:36:37 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Unterprojekt_ProjectTeamMembername " id="D813A3D8-7F77-DCD3-11E0-FBEB60DFCF70">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-28 08:36:40 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Unterprojekt_GMBSupervisornr " id="C2CECB06-9953-3C8F-98B0-7672C89D140F">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-28 08:36:43 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Unterprojekt_GMBSupervisorname " id="6423A76F-46A5-15A2-FE53-4EF4AB61C030">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-28 08:36:45 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Unterprojekt_ManagingDirectornr " id="19C67436-67D2-C34E-8B90-76B47344BD00">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-28 08:36:48 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Unterprojekt_ManagingDirectorname " id="D1706520-C67F-C26C-D191-9B0B50C82CB1">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-28 08:36:51 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Unterprojekt_DepartmentManagernr " id="10AB680D-9BD4-273E-3028-1710DA8A813D">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-28 08:36:54 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Unterprojekt_DepartmentManagername " id="A3173E73-1264-3D2D-D289-7F5D4006A9F5">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-28 08:36:57 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
 <Attribute name="Unterprojekt_Projektstatus  " id="15302FC3-0B7F-B370-A313-73F9176C67FA">
 <createdBy>fmarkoja</createdBy>
 <createdTime>2018-11-21 11:51:53 UTC</createdTime>
@@ -190,7 +453,6 @@
 <pk>true</pk>
 <usedAttributes>
 <attributeRef>F8D9C026-245A-8100-8D1C-D0E1921C85A3</attributeRef>
-<attributeRef>DE932555-5423-BB61-6F02-A10E3B0C4910</attributeRef>
 </usedAttributes>
 </identifier>
 </identifiers>
