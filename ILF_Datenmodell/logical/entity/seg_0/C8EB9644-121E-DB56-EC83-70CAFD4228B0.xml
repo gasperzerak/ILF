@@ -56,5 +56,38 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
+<Attribute name="ProjektbeteiligterTyp_Name_DE  " id="1630065B-FC86-D560-9317-062E811BEF73">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-28 16:22:20 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="ProjektbeteiligterTyp_Name_EN " id="FC056E00-A0D0-C24D-2924-A40EDDBA5FCB">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-28 16:22:24 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="SystemCode " id="5BB3FC8C-6483-B7D2-5DBE-AD32561E1C2E">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-28 16:22:29 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
 </attributes>
 </Entity>
