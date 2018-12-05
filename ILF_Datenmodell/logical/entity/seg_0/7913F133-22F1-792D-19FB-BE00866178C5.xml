@@ -35,21 +35,29 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="Hauptprojektnr " id="E682B8F5-41E4-57B7-9360-367900F6EC89">
+<Attribute name="Hauptprojektnr" id="8DF14F29-B63C-04C8-F87E-DB0B825BA4BA">
 <createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-28 08:34:35 UTC</createdTime>
-<generatorID>FD89F9F1-EEA1-827E-58E0-DFB7279580FF</generatorID>
+<createdTime>2018-12-05 12:45:06 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
 </engineerTo>
-<referedAttribute>F8D9C026-245A-8100-8D1C-D0E1921C85A3</referedAttribute>
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="Kontennr " id="22881321-736B-F0A1-8132-55AEC821F09D">
 <createdBy>fmarkoja</createdBy>
 <createdTime>2018-11-21 12:31:05 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Unterprojektnr" id="4CB088CF-877C-E9CE-CF31-B768D5970191">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-28 09:43:26 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
@@ -171,16 +179,6 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="Unterprojektnr" id="4CB088CF-877C-E9CE-CF31-B768D5970191">
-<createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-28 09:43:26 UTC</createdTime>
-<ownerDesignName>ILF_Datenmodell</ownerDesignName>
-<engineerTo>
-<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
-</engineerTo>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
 <Attribute name="Waehrung" id="6C48EAA7-F749-1B6D-08EC-F23A8EA7F94B">
 <createdBy>fmarkoja</createdBy>
 <createdTime>2018-11-28 09:43:33 UTC</createdTime>
@@ -287,6 +285,18 @@
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
 </engineerTo>
 <nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Hauptprojektnr " id="05D50454-CF41-BBDB-6079-317B194A9D5F">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-12-05 12:46:39 UTC</createdTime>
+<generatorID>B5F22D39-3F80-ACE1-E8B7-CF7B1511695B</generatorID>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<referedAttribute>F8D9C026-245A-8100-8D1C-D0E1921C85A3</referedAttribute>
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
