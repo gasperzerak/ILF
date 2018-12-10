@@ -25,18 +25,6 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="Ressource_Firmencode" id="5365025E-9D63-3AE2-1890-C60BDDFE0DEC">
-<createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 09:07:37 UTC</createdTime>
-<ownerDesignName>ILF_Datenmodell</ownerDesignName>
-<engineerTo>
-<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
-</engineerTo>
-<nullsAllowed>true</nullsAllowed>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
 <Attribute name="Ressource_Stammkostenstelle" id="8B9C9A3B-767A-D366-8000-FBF4C49A7F4D">
 <createdBy>fmarkoja</createdBy>
 <createdTime>2018-11-21 09:10:16 UTC</createdTime>
@@ -44,7 +32,6 @@
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
 </engineerTo>
-<nullsAllowed>true</nullsAllowed>
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
@@ -55,8 +42,19 @@
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
 </engineerTo>
-<nullsAllowed>true</nullsAllowed>
 <use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Ressource_Firmencode" id="5365025E-9D63-3AE2-1890-C60BDDFE0DEC">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 09:07:37 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="Ressource_Eintritt " id="C3F3D5EB-B345-D5C7-3D7E-E3F9BA209520">
