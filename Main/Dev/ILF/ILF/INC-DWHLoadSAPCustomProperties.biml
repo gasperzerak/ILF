@@ -1,0 +1,90 @@
+﻿<CustomProperties>
+    <CustomProperty Description="Specify the SAP table to be extracted" Name="TableName" DataType="String"><#=table#></CustomProperty>
+    <CustomProperty Description="Reserved" Name="Reserved" DataType="String"></CustomProperty>
+    <CustomProperty Description="Specify the maximum number of rows to be extracted (0 is unlimited)" Name="MaxRows" DataType="Int32">0</CustomProperty>
+    <CustomProperty Description="Specify the package size for large data extraction (0 is unlimited)" Name="PackageSize" DataType="Int32">5000</CustomProperty>
+    <CustomProperty Description="Specify WHERE clause for extraction" Name="WhereClause" DataType="String"><# if(!table.GetTag("DataFilter").Trim().Equals("")) { #><#=table.GetTag("DataFilter")#><# } #></CustomProperty>
+    <CustomProperty Description="Name of the SAP custom function module if you like to use it" Name="CustomFunctionName" DataType="String">Z_XTRACT_IS_TABLE_COMPRESSION</CustomProperty>
+    <CustomProperty Description="Defines if a custom function module should be used" Name="UseCustomFunction" DataType="Boolean">true</CustomProperty>
+    <CustomProperty Description="String Conversion" Name="StringConversion" DataType="Int32">0</CustomProperty>
+    <CustomProperty Description="Delimiter" Name="Delimiter" DataType="String"></CustomProperty>
+    <CustomProperty Description="Order By clause" Name="OrderBy" DataType="String"></CustomProperty>
+    <CustomProperty Description="Internal Mappings, Please use the editor" Name="InternalXML" DataType="String">
+        &lt;StorageTableBase xmlns="http://tempuri.org/StorageTableBase.xsd"&gt;
+        <# 
+        foreach (var column in table.Columns) { 
+        
+        string ABAPType = "";
+        
+            if (column.DataType.ToString() == "Int64") {
+                ABAPType = "i";
+            }
+            else if (column.DataType.ToString() == "AnsiString") {
+                ABAPType = "c";
+            }
+            else {
+                ABAPType = "p";
+                
+            }
+        
+        int columnLengthSap;
+            if (column.DataType.ToString() == "Int64") {
+                columnLengthSap = 10;
+            }
+            else if (column.DataType.ToString() == "AnsiString") {
+                columnLengthSap = column.Length;
+            }
+            else {
+                columnLengthSap = column.Precision;
+                
+            }        
+        
+        #>
+            &lt;TableColumns&gt;
+              &lt;ColName&gt;<#=column.Name#>&lt;/ColName&gt;
+              &lt;ColDescription&gt;N/A&lt;/ColDescription&gt;
+              &lt;ColLength&gt;<#=columnLengthSap#>&lt;/ColLength&gt;
+              &lt;ColSelected&gt;true&lt;/ColSelected&gt;
+              &lt;ABAPType&gt;<#=ABAPType#>&lt;/ABAPType&gt;
+              &lt;Decimals&gt;<#=column.Scale.ToString() == "-1" ? "0" : column.Scale.ToString()#>&lt;/Decimals&gt;                                        
+            &lt;/TableColumns&gt;                    
+        <# } #>
+          &lt;XtractProperties&gt;
+            &lt;PropName&gt;PRIMARYKEYPACKAGING&lt;/PropName&gt;
+            &lt;PropValue xml:space="preserve"&gt; &lt;/PropValue&gt;
+          &lt;/XtractProperties&gt;
+          &lt;XtractProperties&gt;
+            &lt;PropName&gt;BACKGROUNDEXTRACTION&lt;/PropName&gt;
+            &lt;PropValue xml:space="preserve"&gt; &lt;/PropValue&gt;
+          &lt;/XtractProperties&gt;
+          &lt;XtractProperties&gt;
+            &lt;PropName&gt;BUFFERLOCATION&lt;/PropName&gt;
+            &lt;PropValue /&gt;
+          &lt;/XtractProperties&gt;
+          &lt;XtractProperties&gt;
+            &lt;PropName&gt;AUTOMATICDATECONVERSION&lt;/PropName&gt;
+            &lt;PropValue xml:space="preserve"&gt; &lt;/PropValue&gt;
+          &lt;/XtractProperties&gt;
+          &lt;XtractProperties&gt;
+            &lt;PropName&gt;SUBSTITUTIONDATEVALUE&lt;/PropName&gt;
+            &lt;PropValue /&gt;
+          &lt;/XtractProperties&gt;
+          &lt;XtractProperties&gt;
+            &lt;PropName&gt;USECOMPRESSION&lt;/PropName&gt;
+            &lt;PropValue&gt;X&lt;/PropValue&gt;
+          &lt;/XtractProperties&gt;
+          &lt;XtractProperties&gt;
+            &lt;PropName&gt;USEFIELDEXITS&lt;/PropName&gt;
+            &lt;PropValue xml:space="preserve"&gt; &lt;/PropValue&gt;
+          &lt;/XtractProperties&gt;
+          &lt;XtractProperties&gt;
+            &lt;PropName&gt;MAXROWSVARIABLE&lt;/PropName&gt;
+            &lt;PropValue /&gt;
+          &lt;/XtractProperties&gt;
+          &lt;XtractProperties&gt;
+            &lt;PropName&gt;PACKAGESIZEVARIABLE&lt;/PropName&gt;
+            &lt;PropValue /&gt;
+          &lt;/XtractProperties&gt;
+        &lt;/StorageTableBase&gt;
+    </CustomProperty>
+</CustomProperties>

@@ -1,0 +1,23 @@
+﻿<!-- Variables for logging the execution status -->
+<Variable Name="LoadMode" DataType="String" Namespace="User">F</Variable>
+<Variable Name="CurrentDate" DataType="DateTime" Namespace="User">9999-12-31</Variable>
+<Variable Name="ExecutionStatus" DataType="String" Namespace="User">started</Variable>
+<Variable Name="LastLoadDate" DataType="DateTime" Namespace="User">1753-01-01</Variable>
+<Variable Name="PackageSID" DataType="Int32" Namespace="User">0</Variable>
+<Variable Name="LoadIDChanged" DataType="Int64" Namespace="User">0</Variable>
+<Variable Name="LoadDTChanged" DataType="DateTime" Namespace="User">9999-12-31</Variable>
+
+
+<!-- Variables for logging impact on record count and table size -->
+<Variable Name="Operation" DataType="String" Namespace="User">I</Variable>
+<Variable Name="SourceRowCount" DataType="Int64" Namespace="User">0</Variable>
+<Variable Name="OperationRowCount" DataType="Int64" Namespace="User">0</Variable>
+<Variable Name="FinalRows" DataType="Int64" Namespace="User">0</Variable>
+<Variable Name="FinalBytes" DataType="Int64" Namespace="User">0</Variable>
+
+<!-- Variables for logging error information -->
+<Variable Name="ErrorNumber" DataType="Int32" Namespace="User">0</Variable>
+<Variable Name="ErrorSeverity" DataType="Int32" Namespace="User">0</Variable>
+<Variable Name="ErrorState" DataType="Int32" Namespace="User">0</Variable>
+<Variable Name="ErrorLine" DataType="Int32" Namespace="User">0</Variable>
+<Variable Name="ErrorMessage" DataType="String" Namespace="User">0</Variable>

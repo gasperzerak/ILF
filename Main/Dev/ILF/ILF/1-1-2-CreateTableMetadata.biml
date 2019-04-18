@@ -1,0 +1,97 @@
+﻿<Biml xmlns="http://schemas.varigence.com/biml.xsd">
+	<Tables>
+    <#
+    var metadataConnectionString = ((AstDbConnectionNode)RootNode.Connections["DWHMTA"]).ConnectionString;
+    var tables = ExternalDataAccess.GetDataTable(metadataConnectionString,"select t.[SourceTable_ID],c.[DatabaseName],c.[ConnectionName],c.[ConnectionName] + '_Archive' as ArchiveConnectionName, c.[ConnectionName] + '_Error' as ErrorConnectionName, t.[SourceSchemaName],t.[SourceTableName],t.[DataFilter],t.[DeleteSource],[SourceTable_ID_Formated] = right('0000'+convert(varchar,t.[SourceTable_ID]),4),t.[SCDType],t.[IsBiml],t.[IsIncluded],c.[ConnectionIndex],c.[ConnectorType],fff.[FilePath], fff.[ArchivePath], t.[IsDimensionTable] from [structure].[SourceTable] as t inner join [structure].[Connection] as c on t.[Source_Connection_ID] = c.[Connection_ID] left join [structure].[FlatFileFormat_SourceTable] as l on t.[SourceTable_ID] = l.[SourceTable_ID] left join [structure].[FlatFileFormat] as fff on l.[FlatFileFormat_ID] = fff.[FlatFileFormat_ID] where (t.IsBiml=1) ;");
+    foreach (DataRow tableRow in tables.Rows)
+    { #>
+    <#
+    int pointPosition = tableRow["ConnectionName"].ToString().IndexOf(".");
+    int underscorePosition = tableRow["ConnectionName"].ToString().IndexOf("_");
+    int position = underscorePosition < pointPosition ? underscorePosition : pointPosition;
+    String srcConn = position != -1 ? tableRow["ConnectionName"].ToString().Substring(0, position) : tableRow["ConnectionName"].ToString();
+    #>
+        <Table Name="<#=tableRow["SourceTableName"]#>" SchemaName="DWHSTG_<#=srcConn#>.sta">
+    		<Columns>
+    		<#
+    		var attributes = ExternalDataAccess.GetDataTable(metadataConnectionString,"select [ColumnName],[OrdinalPosition],[DataType],[CharacterMaximumLength],ISNULL([NumericPrecision],9) AS NumericPrecision,ISNULL([NumericScale],2) AS NumericScale,[IsBusinessKey],[IsDeltaIndicator] from [structure].[SourceTableAttribute] where [SourceTable_ID] = "+tableRow["SourceTable_ID"]+" order by [OrdinalPosition]");
+    		var deltaIndicator = "";
+    		foreach (DataRow columnRow in attributes.Rows)
+    		{
+    			if (columnRow["IsDeltaIndicator"].ToString().Equals("True"))
+    			{
+    		    	deltaIndicator = columnRow["ColumnName"].ToString();
+    			}
+    			#>
+    			<#
+    			String dataType = HelperMethods.convertDBType2Biml(columnRow["DataType"].ToString());
+    			String precision = columnRow["NumericPrecision"].ToString();
+    			String scale = columnRow["NumericScale"].ToString();
+    			#>
+    			<Column Name="<#=columnRow["ColumnName"]#>" DataType="<#=dataType#>" <#=(dataType.Substring(0,4).Equals("Stri")?"Length=\""+columnRow["CharacterMaximumLength"]+"\"":"")#><#=(dataType.Substring(0,4).Equals("Ansi")?"Length=\""+columnRow["CharacterMaximumLength"]+"\"":"")#><#=(dataType.Substring(0,4).Equals("Bina")?"Length=\"8\"":"")#><#=(dataType.Substring(0,4).Equals("Deci")?"Precision=\""+precision+"\" Scale=\""+scale+"\"":"")#> IsNullable="true"/>
+    		<# } #>
+    		</Columns>
+    		<Annotations>
+    		    <Annotation AnnotationType="Tag" Tag="PureDatabaseName"><#=srcConn#></Annotation>
+                <Annotation AnnotationType="Tag" Tag="SourceConnection"><#=tableRow["ConnectionName"]#></Annotation>
+                <Annotation AnnotationType="Tag" Tag="ArchiveConnection"><#=tableRow["ArchiveConnectionName"]#></Annotation>
+                <Annotation AnnotationType="Tag" Tag="ErrorConnection"><#=tableRow["ErrorConnectionName"]#></Annotation>
+    		    <Annotation AnnotationType="Tag" Tag="ConnectionIndex"><#=tableRow["ConnectionIndex"]#></Annotation>
+    		    <Annotation AnnotationType="Tag" Tag="ConnectorType"><#=tableRow["ConnectorType"]#></Annotation>
+    			<Annotation AnnotationType="Tag" Tag="SourceSchemaQualifiedName"><#=tableRow["SourceSchemaName"]+"."+tableRow["SourceTableName"]#></Annotation>
+    			<Annotation AnnotationType="Tag" Tag="Table_ID"><#=tableRow["SourceTable_ID"]#></Annotation>
+    			<Annotation AnnotationType="Tag" Tag="Table_ID_formatted"><#=tableRow["SourceTable_ID_Formated"]#></Annotation>
+    			<Annotation AnnotationType="Tag" Tag="DeleteSource"><#=tableRow["DeleteSource"]#></Annotation>
+    			<Annotation AnnotationType="Tag" Tag="SCDType"><#=tableRow["SCDType"]#></Annotation>
+    			<Annotation AnnotationType="Tag" Tag="IsBiml"><#=tableRow["IsBiml"]#></Annotation>
+    			<Annotation AnnotationType="Tag" Tag="IsDimensionTable"><#=tableRow["IsDimensionTable"]#></Annotation>
+    			<Annotation AnnotationType="Tag" Tag="IsIncluded"><#=tableRow["IsIncluded"]#></Annotation>
+    			<Annotation AnnotationType="Tag" Tag="DeltaIndicator"><#=deltaIndicator#></Annotation>
+    			<Annotation AnnotationType="Tag" Tag="FilePath"><#=tableRow["FilePath"]#></Annotation>
+    			<Annotation AnnotationType="Tag" Tag="ArchivePath"><#=tableRow["ArchivePath"]#></Annotation>
+    			<Annotation AnnotationType="Tag" Tag="DataFilter"><#=System.Net.WebUtility.HtmlEncode(Convert.ToString(tableRow["DataFilter"]))#></Annotation>
+    		</Annotations>
+    	</Table>
+    	<Table Name="<#=tableRow["SourceTableName"]#>" SchemaName="DWHSTG_<#=srcConn#>.<#=(Convert.ToInt32(tableRow["SCDType"]) == 1?"psta":"hsta")#>">
+    		<Columns>
+    		<#
+    		attributes = ExternalDataAccess.GetDataTable(metadataConnectionString,"select [ColumnName],[OrdinalPosition],[DataType],[CharacterMaximumLength],ISNULL([NumericPrecision],9) AS NumericPrecision,ISNULL([NumericScale],2) AS NumericScale,[IsBusinessKey],[IsDeltaIndicator] from [structure].[SourceTableAttribute] where [SourceTable_ID] = "+tableRow["SourceTable_ID"]+" order by [OrdinalPosition]");
+    		deltaIndicator = "";
+    		foreach (DataRow columnRow in attributes.Rows)
+    		{
+    		    String precision = columnRow["NumericPrecision"].ToString();
+     		    String scale = columnRow["NumericScale"].ToString();
+    			if (columnRow["IsDeltaIndicator"].ToString().Equals("True"))
+    			{
+    			    deltaIndicator = columnRow["ColumnName"].ToString();
+    			}
+    			#>
+    			<#String dataType = HelperMethods.convertDBType2Biml(columnRow["DataType"].ToString());#>
+    			<Column Name="<#=columnRow["ColumnName"]#>" DataType="<#=dataType#>" <#=(dataType.Substring(0,4).Equals("Stri")?"Length=\""+columnRow["CharacterMaximumLength"]+"\"":"")#><#=(dataType.Substring(0,4).Equals("Ansi")?"Length=\""+columnRow["CharacterMaximumLength"]+"\"":"")#><#=(dataType.Substring(0,4).Equals("Bina")?"Length=\"8\"":"")#><#=(dataType.Substring(0,4).Equals("Deci")?"Precision=\""+precision+"\" Scale=\""+scale+"\"":"")#> IsNullable="true"/>
+    		<# } #>
+    		</Columns>
+    		<Annotations>
+    		    <Annotation AnnotationType="Tag" Tag="PureDatabaseName"><#=srcConn#></Annotation>
+    		    <Annotation AnnotationType="Tag" Tag="SourceConnection"><#=tableRow["ConnectionName"]#></Annotation>
+                <Annotation AnnotationType="Tag" Tag="ArchiveConnection"><#=tableRow["ArchiveConnectionName"]#></Annotation>
+                <Annotation AnnotationType="Tag" Tag="ErrorConnection"><#=tableRow["ErrorConnectionName"]#></Annotation>
+
+    		    <Annotation AnnotationType="Tag" Tag="ConnectionIndex"><#=tableRow["ConnectionIndex"]#></Annotation>
+    		    <Annotation AnnotationType="Tag" Tag="ConnectorType"><#=tableRow["ConnectorType"]#></Annotation>
+    			<Annotation AnnotationType="Tag" Tag="SourceSchemaQualifiedName"><#=tableRow["SourceSchemaName"]+"."+tableRow["SourceTableName"]#></Annotation>
+    			<Annotation AnnotationType="Tag" Tag="Table_ID"><#=tableRow["SourceTable_ID"]#></Annotation>
+    			<Annotation AnnotationType="Tag" Tag="Table_ID_formatted"><#=tableRow["SourceTable_ID_Formated"]#></Annotation>
+    			<Annotation AnnotationType="Tag" Tag="SCDType"><#=tableRow["SCDType"]#></Annotation>
+    			<Annotation AnnotationType="Tag" Tag="DeltaIndicator"><#=deltaIndicator#></Annotation>
+    			<Annotation AnnotationType="Tag" Tag="FilePath"><#=tableRow["FilePath"]#></Annotation>
+    			<Annotation AnnotationType="Tag" Tag="ArchivePath"><#=tableRow["ArchivePath"]#></Annotation>
+    			<Annotation AnnotationType="Tag" Tag="DataFilter"><#=System.Net.WebUtility.HtmlEncode(Convert.ToString(tableRow["DataFilter"]))#></Annotation>
+    		</Annotations>
+    	</Table>
+    <# } #>
+	</Tables>
+</Biml>
+<#@ template tier="2" #>
+<#@ code file="HelperMethods.cs" #>
+<#@ import namespace="System.Data" #>
+<#@ import namespace="System.Data.SqlClient" #>

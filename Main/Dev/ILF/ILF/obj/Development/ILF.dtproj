@@ -26,7 +26,7 @@
           <SSIS:Property SSIS:Name="CreatorComputerName">ATIBKSBI002</SSIS:Property>
           <SSIS:Property SSIS:Name="Description">
           </SSIS:Property>
-          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAWOXufeGsUUGV+UijzyaDsgAAAAACAAAAAAADZgAAwAAAABAAAAD/BPVK1PWMw8xsfrdkJKHNAAAAAASAAACgAAAAEAAAAAI0SHFSPyMDsHFVm18gnDuIAAAAKrp+oUAJQWd0+tVuLNkkbFD+AjjII1duBgmvcUDTR+izqtsZCFzLw1a9MFADCSyfNQv3DXME+p8Exu2fzUil/Vpht+ZbPHu4zwrnPYpxLmUosZdO4QUwdCisHd4UB7wapu9zkXAiYEIO38SI87fVVpP2ua5z5I2A6XbQ7V1rqmT1R28wjANosxQAAADuUEGq3PL/Eg6EHAkLHRzFy2Z0rg==</SSIS:Property>
+          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAWOXufeGsUUGV+UijzyaDsgAAAAACAAAAAAADZgAAwAAAABAAAAClFjiKE8WfMBRjzlboJq5VAAAAAASAAACgAAAAEAAAAORYDaaI2JVJo7pbfFmMWDeIAAAAURFYhIqPacaHWFcFADKngXX/9NRiVO5yDCe5TRi2jlY0iRja6vRzvp6izrk8KDFg81W1DQ4/FkhStZDv4jFImRmRoMnDk4vct/mj4ozyssI7wYsprbvRmpJ/cKIK+qD9pM8Xv0I1r2v/YqzNofgQWLTaE/QaCjqX/vyqn3QEsZ5qe5+lPRq/LBQAAADZvW59WOJXYM3vGqke6cQnzubmiw==</SSIS:Property>
           <SSIS:Property SSIS:Name="FormatVersion">1</SSIS:Property>
         </SSIS:Properties>
         <SSIS:Packages>
@@ -68,74 +68,6 @@
       <Name>1-1-2-CreateTableMetadata_INT.biml</Name>
       <FullPath>1-1-2-CreateTableMetadata_INT.biml</FullPath>
     </ProjectItem>
-    <ProjectItem>
-      <Name>1-1-3-DeployTables_INT.biml</Name>
-      <FullPath>1-1-3-DeployTables_INT.biml</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>1-1-3-DeployTables_STA.biml</Name>
-      <FullPath>1-1-3-DeployTables_STA.biml</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>1-1-Environment.biml</Name>
-      <FullPath>1-1-Environment.biml</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>INC-DWHLoadPackageEventsStage_TAGETIK.biml</Name>
-      <FullPath>INC-DWHLoadPackageEventsStage_TAGETIK.biml</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>HelperMethods.cs</Name>
-      <FullPath>HelperMethods.cs</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>INC-DWHLoadBigQueryCustomProperties.biml</Name>
-      <FullPath>INC-DWHLoadBigQueryCustomProperties.biml</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>INC-DWHLoadPackageEvents.biml</Name>
-      <FullPath>INC-DWHLoadPackageEvents.biml</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>INC-DWHLoadPackageEventsIntegration.biml</Name>
-      <FullPath>INC-DWHLoadPackageEventsIntegration.biml</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>INC-DWHLoadPackageEventsMart.biml</Name>
-      <FullPath>INC-DWHLoadPackageEventsMart.biml</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>INC-DWHLoadPackageEventsStage.biml</Name>
-      <FullPath>INC-DWHLoadPackageEventsStage.biml</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>INC-DWHLoadPackageEventsStage_CSV.biml</Name>
-      <FullPath>INC-DWHLoadPackageEventsStage_CSV.biml</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>INC-DWHLoadPackageEventsStage_MDS.biml</Name>
-      <FullPath>INC-DWHLoadPackageEventsStage_MDS.biml</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>INC-DWHLoadPackageParameters.biml</Name>
-      <FullPath>INC-DWHLoadPackageParameters.biml</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>INC-DWHLoadPackageVariables.biml</Name>
-      <FullPath>INC-DWHLoadPackageVariables.biml</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>INC-DWHLoadSAPCustomProperties.biml</Name>
-      <FullPath>INC-DWHLoadSAPCustomProperties.biml</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>INC-DWHLoadScriptProjects.biml</Name>
-      <FullPath>INC-DWHLoadScriptProjects.biml</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>x-2-CreateLoadPackages.biml</Name>
-      <FullPath>x-2-CreateLoadPackages.biml</FullPath>
-    </ProjectItem>
   </Miscellaneous>
   <Configurations>
     <Configuration>
@@ -147,13 +79,7 @@
         <ConnectionSecurityMappings />
         <DatabaseStorageLocations />
         <TargetServerVersion>SQLServer2017</TargetServerVersion>
-        <ParameterConfigurationValues>
-          <ConfigurationSetting>
-            <Id>LastModifiedTime</Id>
-            <Name>LastModifiedTime</Name>
-            <Value xsi:type="xsd:dateTime">2019-04-18T13:45:19.9888952Z</Value>
-          </ConfigurationSetting>
-        </ParameterConfigurationValues>
+        <ParameterConfigurationValues />
       </Options>
     </Configuration>
   </Configurations>
