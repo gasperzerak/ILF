@@ -1,0 +1,99 @@
+﻿<Biml xmlns="http://schemas.varigence.com/biml.xsd">
+    <ScriptProjects>
+        <ScriptTaskProject ProjectCoreName="ST_e2413073a67e497eb8a02c607cc0ad65" Name="Simple Task Script Project">
+            <AssemblyReferences>
+                <AssemblyReference AssemblyPath="System" />
+                <AssemblyReference AssemblyPath="System.Data" />
+                <AssemblyReference AssemblyPath="System.Windows.Forms" />
+                <AssemblyReference AssemblyPath="System.Xml" />
+                <AssemblyReference AssemblyPath="Microsoft.SqlServer.ManagedDTS.dll" />
+                <AssemblyReference AssemblyPath="Microsoft.SqlServer.ScriptTask.dll" />
+            </AssemblyReferences>
+            <Files>
+                <File Path="Properties\AssemblyInfo.cs" BuildAction="Compile">
+                    using System.Reflection;
+                    using System.Runtime.CompilerServices;
+                    
+                    [assembly: AssemblyVersion("1.0.*")]
+                </File>
+                <File Path="ScriptMain.cs" BuildAction="Compile">
+ 
+                using System;
+                using System.Data;
+                using Microsoft.SqlServer.Dts.Runtime;
+                using System.Windows.Forms;
+                using System.IO;
+                using System.Threading;
+                
+                namespace ST_e2413073a67e497eb8a02c607cc0ad65
+                {
+
+                	[Microsoft.SqlServer.Dts.Tasks.ScriptTask.SSISScriptTaskEntryPointAttribute]
+                	public partial class ScriptMain : Microsoft.SqlServer.Dts.Tasks.ScriptTask.VSTARTScriptObjectModelBase
+                	{
+                
+                        enum ScriptResults
+                        {
+                            Success = Microsoft.SqlServer.Dts.Runtime.DTSExecResult.Success,
+                            Failure = Microsoft.SqlServer.Dts.Runtime.DTSExecResult.Failure
+                        };
+     
+                		public void Main()
+                		{
+             		            String fileName = Dts.Variables["User::InputFileFullyQualifiedName"].Value.ToString();
+                	            int loops = 1;
+                                bool b = IsFileReady(fileName);
+                                while (!b &amp;&amp; loops++ &lt; 10)
+                                {
+                                    Thread.Sleep(2000);
+                                    b = IsFileReady(fileName);
+                                }
+                	            
+                                if (!b &amp;&amp; loops++ == 10)
+                                {
+                                    Dts.TaskResult = (int)ScriptResults.Failure;
+                                }
+                                else
+                                {
+                                    Dts.TaskResult = (int)ScriptResults.Success;
+                                }
+                		}
+                		
+                        public static bool IsFileReady(String sFilename)
+                        {
+                            // If the file can be opened for exclusive access it means that the file
+                            // is no longer locked by another process.
+                            try
+                            {
+                                using (FileStream inputStream = File.Open(sFilename, FileMode.Open, FileAccess.Read, FileShare.None))
+                                {
+                                    if (inputStream.Length > 0)
+                                    {
+                                        return true;
+                                    }
+                                    else
+                                    {
+                                        return false;
+                                    }
+                
+                                }
+                            }
+                            catch (Exception)
+                            {
+                                return false;
+                            }
+                        }
+    
+                    }
+                    
+                }
+    
+                </File>
+            </Files>
+            <ReadOnlyVariables>
+                <Variable Namespace="User" DataType="String" VariableName="InputFileFullyQualifiedName" />
+            </ReadOnlyVariables>
+            <ReadWriteVariables />
+        </ScriptTaskProject>
+    </ScriptProjects>
+</Biml>

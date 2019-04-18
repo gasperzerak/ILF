@@ -1,0 +1,143 @@
+﻿<Biml xmlns="http://schemas.varigence.com/biml.xsd">
+    <# 
+    string conString_DWHMTA = "Provider=SQLNCLI11.1;Data Source=localhost;Initial Catalog=DWHMTA;Integrated Security=SSPI;";
+    string conExcel;
+    DataTable tables = ExternalDataAccess.GetDataTable(conString_DWHMTA,"SELECT s.[SourceTable_ID], f.[Name] as FormatPrefix, f.[Name] + '.' + s.[SourceTableName] AS Name, f.[CodePage], f.[RowDelimiter], CASE WHEN f.[ColumnNamesInFirstDataRow] = 1 THEN 'true' ELSE 'false' END AS ColumnNamesInFirstDataRow, CASE WHEN f.[IsUnicode] = 1 THEN 'true' ELSE 'false' END AS IsUnicode, f.[FlatFileType], s.[IsBiml] FROM [structure].[SourceTable] AS s INNER JOIN [structure].[FlatFileFormat_SourceTable] AS fff_st ON fff_st.[SourceTable_ID] = s.[SourceTable_ID] INNER JOIN [structure].[FlatFileFormat] AS f ON f.[FlatFileFormat_ID] = fff_st.[FlatFileFormat_ID] INNER JOIN [structure].[Connection] as c on s.Source_Connection_ID = c.Connection_ID where c.ConnectorType = 'Flat File' and s.IsBiml = 1");
+    #>
+
+    <FileFormats>
+        <# foreach (DataRow tableRow in tables.Rows)
+        { #>
+        <FlatFileFormat Name="<#=tableRow["Name"]#>" CodePage="<#=tableRow["CodePage"]#>" RowDelimiter="<#=tableRow["RowDelimiter"]#>" ColumnNamesInFirstDataRow="<#=tableRow["ColumnNamesInFirstDataRow"]#>" IsUnicode="<#=tableRow["IsUnicode"]#>" FlatFileType="<#=tableRow["FlatFileType"]#>">
+            <Columns>
+		    <# DataTable attributes = ExternalDataAccess.GetDataTable(conString_DWHMTA,"SELECT [ColumnName], [CharacterMaximumLength], [DataType], [ColumnType], [CodePage], [Delimiter], CASE WHEN [TextQualified] = 1 THEN 'true' ELSE 'false' END AS TextQualified FROM [structure].[SourceTableAttribute] WHERE SourceTable_ID = "+tableRow["SourceTable_ID"]+" ORDER BY [OrdinalPosition]");
+	        foreach (DataRow columnRow in attributes.Rows)
+		    { #> 
+		        <Column Name="<#=columnRow["ColumnName"]#>" Length="<#=columnRow["CharacterMaximumLength"]#>" InputLength="<#=columnRow["CharacterMaximumLength"]#>" MaximumWidth="<#=columnRow["CharacterMaximumLength"]#>" DataType="<#=HelperMethods.convertDBType2Biml(columnRow["DataType"].ToString())#>" ColumnType="<#=columnRow["ColumnType"]#>" CodePage="<#=columnRow["CodePage"]#>" Delimiter="<#=columnRow["Delimiter"]#>" TextQualified="<#=columnRow["TextQualified"]#>" />
+	        <# } #>    
+            </Columns>
+        </FlatFileFormat>
+        <# } #>
+    </FileFormats>
+    <# 
+    DataTable connTables = ExternalDataAccess.GetDataTable(conString_DWHMTA,"SELECT distinct c.[Connection_ID]," + 
+                                                                                    "c.[ConnectionValue]," +
+	                                                                                "c.[ConnectionName]," + 
+	                                                                                "c.[ConnectionName] + '_Archive' as ArchiveConnectionName," + 
+	                                                                                "c.[ConnectionName] + '_Error' as ErrorConnectionName," + 
+	                                                                                "c.[DatabaseName]," +
+	                                                                                "c.[ConnectionType]," +
+	                                                                                "c.[ConnectionIndex]," +
+	                                                                                "c.[ConnectorType]," +
+	                                                                                "ISNULL(p.[Size], '') AS P_Size," +
+	                                                                                "ISNULL(p.[MaximumSize], '') AS P_MaximumSize," +
+	                                                                                "ISNULL(p.[FileGrowth], '') AS P_FileGrowth," +
+	                                                                                "ISNULL(d.[Size], '') AS D_Size," +
+	                                                                                "ISNULL(d.[MaximumSize], '') AS D_MaximumSize," +
+	                                                                                "ISNULL(d.[FileGrowth], '') AS D_FileGrowth," +
+	                                                                                "ISNULL(l.[Size], '') AS L_Size," +
+	                                                                                "ISNULL(l.[MaximumSize], '') AS L_MaximumSize," +
+	                                                                                "ISNULL(l.[FileGrowth], '') AS L_FileGrowth, " +
+                                                                            		"ff.[FilePath], " +
+                                                                            		"ff.[ArchivePath], " +
+                                                                            		"ff.[ErrorPath], " +
+                                                                            		"[FileName] = case when c.[ConnectorType] = 'Flat File' then " +
+                                                                            						"ff.[FilePath] + '' + SUBSTRING(c.[ConnectionName],charindex('.',c.[ConnectionName])+1, len(c.[ConnectionName])) + '.csv' " +
+                                                                            						"when c.[ConnectorType] = 'Excel File' then " +
+                                                                            						"ff.[FilePath] + '' + SUBSTRING(c.[ConnectionName],charindex('.',c.[ConnectionName])+1, len(c.[ConnectionName])) + '.xlsx' " +
+                                                                            					  "end " +
+                                                                            "FROM [DWHMTA].[structure].[Connection] AS c " +
+                                                                            "LEFT OUTER JOIN [DWHMTA].[structure].[Database] AS p ON p.[Connection_ID] = c.[Connection_ID] AND p.[Filegroup] = 'P' " +
+                                                                            "LEFT OUTER JOIN [DWHMTA].[structure].[Database] AS d ON d.[Connection_ID] = c.[Connection_ID] AND d.[Filegroup] = 'D' " +
+                                                                            "LEFT OUTER JOIN [DWHMTA].[structure].[Database] AS l ON l.[Connection_ID] = c.[Connection_ID] AND l.[Filegroup] = 'L'" + 
+                                                                            "LEFT OUTER JOIN [DWHMTA].[structure].[SourceTable] as s on s.[Source_Connection_ID] = c.[Connection_ID] " +
+                                                                            "LEFT OUTER JOIN [DWHMTA].[structure].[FlatFileFormat_SourceTable] as f on f.SourceTable_ID = s.SourceTable_ID " +
+                                                                            "LEFT OUTER JOIN [DWHMTA].[structure].[FlatFileFormat] as ff on ff.FlatFileFormat_ID = f.FlatFileFormat_ID " );
+    #>
+    <Connections>
+    <# foreach (DataRow columnRow in connTables.Rows)
+    { #>
+    <# if (columnRow["ConnectorType"].ToString().Equals("OLE DB")) { #>
+        <OleDbConnection Name="<#=columnRow["ConnectionName"]#>" ConnectionString="<#=columnRow["ConnectionValue"]#>" />
+    <# } else if (columnRow["ConnectorType"].ToString().Equals("ODBC_O")) { #>
+        <OdbcConnection Name="<#=columnRow["ConnectionName"]#>" ConnectionString="<#=columnRow["ConnectionValue"]#>" RetainSameConnection="true">
+            <Expressions>
+                <Expression ExternalProperty="ConnectionString">"<#=columnRow["ConnectionValue"]#>"</Expression>
+            </Expressions>
+        </OdbcConnection>
+    <# } else if (columnRow["ConnectorType"].ToString().Equals("ODBC")) { #>
+        <OdbcConnection Name="<#=columnRow["ConnectionName"]#>" ConnectionString="<#=columnRow["ConnectionValue"]#>" RetainSameConnection="true" >
+            <Expressions>
+                <Expression ExternalProperty="ConnectionString">"<#=columnRow["ConnectionValue"]#>"</Expression>
+            </Expressions>
+        </OdbcConnection>
+    <# } else if (columnRow["ConnectorType"].ToString().Equals("Flat File")) { #>
+        <FlatFileConnection Name="<#=columnRow["ConnectionName"]#>" FileFormat="<#=columnRow["ConnectionName"]#>" FilePath="xyz">
+             <Expressions>
+                 <Expression PropertyName="ConnectionString">@[User::InputFileFullyQualifiedName]</Expression>
+              </Expressions>
+        </FlatFileConnection>
+        
+        <FileConnection Name="<#=columnRow["ArchiveConnectionName"]#>" FilePath="<#=columnRow["ArchivePath"]#>" RelativePath="true" FileUsageType="ExistingFolder" />
+        <FileConnection Name="<#=columnRow["ErrorConnectionName"]#>" FilePath="<#=columnRow["ErrorPath"]#>" RelativePath="true" FileUsageType="ExistingFolder" />
+
+
+    <# } else if (columnRow["ConnectorType"].ToString().Equals("Excel File")) { #>
+    <# conExcel = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + columnRow["FileName"] + ";Extended Properties=&quot;Excel 12.0 Xml;HDR=YES&quot;;"; #>
+        <ExcelConnection Name="<#=columnRow["ConnectionName"]#>" ConnectionString="<#=conExcel#>">
+             <Expressions>
+                 <Expression PropertyName="ExcelFilePath">@[User::InputFileFullyQualifiedName]</Expression>
+              </Expressions>
+        </ExcelConnection>
+    <# } else if (columnRow["ConnectorType"].ToString().Equals("GoogleBigQuery")) { #>        
+        <CustomSsisConnection Name="<#=columnRow["ConnectionName"]#>" CreationName="CDATA_GOOGLEBIGQUERY" ObjectData="<#=columnRow["ConnectionValue"]#>" />    
+
+    <# } else if (columnRow["ConnectorType"].ToString().Equals("SAP")) { #>        
+        <CustomSsisConnection Name="<#=columnRow["ConnectionName"]#>" CreationName="XTRACT" ObjectData="<#=columnRow["ConnectionValue"]#>" />    
+    <# } } #>
+    </Connections>
+	<Databases>
+    <# foreach (DataRow columnRow in connTables.Rows)
+    { #>
+        <# if (columnRow["ConnectionType"].ToString().Equals("Stage")) { #>
+        <Database Name="<#=columnRow["ConnectionName"]#>" ConnectionName="<#=columnRow["ConnectionName"]#>" >
+		    <Annotations>
+		        <Annotation AnnotationType="Tag" Tag="DatabaseIndex"><#=columnRow["ConnectionIndex"]#></Annotation>
+		        <Annotation AnnotationType="Tag" Tag="P_Size"><#=columnRow["P_Size"]#></Annotation>
+		        <Annotation AnnotationType="Tag" Tag="P_MaximumSize"><#=columnRow["P_MaximumSize"]#></Annotation>
+		        <Annotation AnnotationType="Tag" Tag="P_FileGrowth"><#=columnRow["P_FileGrowth"]#></Annotation>
+		        <Annotation AnnotationType="Tag" Tag="D_Size"><#=columnRow["D_Size"]#></Annotation>
+		        <Annotation AnnotationType="Tag" Tag="D_MaximumSize"><#=columnRow["D_MaximumSize"]#></Annotation>
+		        <Annotation AnnotationType="Tag" Tag="D_FileGrowth"><#=columnRow["D_FileGrowth"]#></Annotation>
+		        <Annotation AnnotationType="Tag" Tag="L_Size"><#=columnRow["L_Size"]#></Annotation>
+		        <Annotation AnnotationType="Tag" Tag="L_MaximumSize"><#=columnRow["L_MaximumSize"]#></Annotation>
+		        <Annotation AnnotationType="Tag" Tag="L_FileGrowth"><#=columnRow["L_FileGrowth"]#></Annotation>
+		    </Annotations>
+		</Database>
+    <# } } #>
+        <Database Name="DWHINT" ConnectionName="DWHINT" />
+	</Databases>
+	<Schemas>
+    <# foreach (DataRow columnRow in connTables.Rows)
+    { #>
+        <# if (columnRow["ConnectionType"].ToString().Equals("Stage")) { #>
+		<Schema Name="sta" DatabaseName="<#=columnRow["DatabaseName"]#>" />
+		<Schema Name="psta" DatabaseName="<#=columnRow["DatabaseName"]#>" />
+		<Schema Name="hsta" DatabaseName="<#=columnRow["DatabaseName"]#>" />
+        <# } else if (columnRow["ConnectionType"].ToString().Equals("Integration Data")) { #>
+
+        <# DataTable schema = ExternalDataAccess.GetDataTable(conString_DWHMTA,"SELECT distinct TargetTableSchemaName FROM [DWHMTA].[structure].[TargetTable]");#>
+        <# foreach (DataRow tableRow in schema.Rows){ #>
+		    <Schema Name="<#=tableRow["TargetTableSchemaName"]#>" DatabaseName="<#=columnRow["DatabaseName"]#>" />
+        <#  } #>
+
+        <#  } #>
+
+    <#  } #>
+
+	</Schemas>
+</Biml>
+<#@ import namespace="System.Data" #>
+<#@ import namespace="System.Data.SqlClient" #>
+<#@ code file="HelperMethods.cs" #>
+<#@ template tier="1" #>

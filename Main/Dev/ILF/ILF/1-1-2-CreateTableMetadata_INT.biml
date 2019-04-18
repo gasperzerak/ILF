@@ -1,0 +1,142 @@
+﻿<Biml xmlns="http://schemas.varigence.com/biml.xsd">
+	<Tables>
+    <#
+    var metadataConnectionString = ((AstDbConnectionNode)RootNode.Connections["DWHMTA"]).ConnectionString;
+    var tables = ExternalDataAccess.GetDataTable(metadataConnectionString,"select  a.TargetTable_ID, [DatabaseName] = 'DWHINT', [ConnectionName] = 'DWHINT', a.TargetTableSchemaName, a.TargetTableName, a.IsBiml, a.IsIncluded, [IsSKMap] = 0, [IsSCD2] = 0, [IsDimensionTable] = a.[IsDimensionTable] from structure.TargetTable as a where a.IntProc = 1 union all select  a.TargetTable_ID, [DatabaseName] = 'DWHINT', [ConnectionName] = 'DWHINT', a.TargetTableSchemaName, (a.TargetTableName + 'SKMap') as TargetTableName, a.IsBiml, a.IsIncluded, [IsSKMap] = 1,  [IsSCD2] = 0, a.[IsDimensionTable]  from structure.TargetTable as a where a.KeyProc = 1 union all select  a.TargetTable_ID, [DatabaseName] = 'DWHINT', [ConnectionName] = 'DWHINT', a.TargetTableSchemaName, (a.TargetTableName + 'History') as TargetTableName, a.IsBiml, a.IsIncluded, [IsSKMap] = 0 , [IsSCD2] = 1, a.[IsDimensionTable]  from structure.TargetTable as a where a.SCDProc = 1");
+    foreach (DataRow tableRow in tables.Rows)
+    { #>
+
+    <#
+    int pointPosition = tableRow["ConnectionName"].ToString().IndexOf(".");
+    int underscorePosition = tableRow["ConnectionName"].ToString().IndexOf("_");
+    int position = underscorePosition < pointPosition ? underscorePosition : pointPosition;
+    String srcConn = position != -1 ? tableRow["ConnectionName"].ToString().Substring(0, position) : tableRow["ConnectionName"].ToString();
+    var attributes = ExternalDataAccess.GetDataTable(metadataConnectionString,"select [ColumnName],[OrdinalPosition],[DataType],[CharacterMaximumLength],ISNULL([NumericPrecision],9) AS NumericPrecision,ISNULL([NumericScale],2) AS NumericScale,[IsBusinessKey],[IsDeltaIndicator], [IsPrimaryKey], [IsNullable] from [structure].[TargetTableAttribute] where [IsBusinessKey] = 0 and [TargetTable_ID] = "+tableRow["TargetTable_ID"]+" order by [OrdinalPosition]");
+	var deltaIndicator = "";
+    #>
+    
+    <#if (tableRow["ISSKMap"].Equals(0) && tableRow["IsSCD2"].Equals(0)) {#>
+    
+        <Table Name="<#=tableRow["TargetTableName"]#>" SchemaName="<#=srcConn#>.<#=tableRow["TargetTableSchemaName"]#>">
+    		<Columns>
+    		<#
+    		foreach (DataRow columnRow in attributes.Rows)
+    		{
+    			if (columnRow["IsDeltaIndicator"].ToString().Equals("True"))
+    			{
+    		    	deltaIndicator = columnRow["ColumnName"].ToString();
+    			}
+    			#>
+    			<#
+    			String dataType = HelperMethods.convertDBType2Biml(columnRow["DataType"].ToString());
+    			String precision = columnRow["NumericPrecision"].ToString();
+    			String scale = columnRow["NumericScale"].ToString();
+    			#>
+        	
+			<Column Name="<#=columnRow["ColumnName"]#>" DataType="<#=dataType#>" <#=(dataType.Substring(0,4).Equals("Stri")?"Length=\""+columnRow["CharacterMaximumLength"]+"\"":"")#><#=(dataType.Substring(0,4).Equals("Ansi")?"Length=\""+columnRow["CharacterMaximumLength"]+"\"":"")#><#=(dataType.Substring(0,4).Equals("Bina")?"Length=\"8\"":"")#><#=(dataType.Substring(0,4).Equals("Deci")?"Precision=\""+precision+"\" Scale=\""+scale+"\"":"")#> IsNullable="<#=columnRow["IsNullable"]#>"/>
+    		<# } #>
+    		
+		    <#if (tableRow["IsDimensionTable"].ToString().Equals("True")) {#>
+		        <Column Name="IsDeletedFromSource" DataType="Int16" IsNullable="true"/>
+		    <#}#>
+
+    		</Columns>
+
+        	
+
+    		<Annotations>
+    		    <Annotation AnnotationType="Tag" Tag="PureDatabaseName"><#=srcConn#></Annotation>
+                <Annotation AnnotationType="Tag" Tag="SourceConnection"><#=tableRow["ConnectionName"]#></Annotation>
+    			<Annotation AnnotationType="Tag" Tag="SourceSchemaQualifiedName"><#=tableRow["TargetTableSchemaName"]+"."+tableRow["TargetTableName"]#></Annotation>
+    			<Annotation AnnotationType="Tag" Tag="Table_ID"><#=tableRow["TargetTable_ID"]#></Annotation>
+    			<Annotation AnnotationType="Tag" Tag="IsBiml"><#=tableRow["IsBiml"]#></Annotation>
+    			<Annotation AnnotationType="Tag" Tag="IsIncluded"><#=tableRow["IsIncluded"]#></Annotation>
+    			<Annotation AnnotationType="Tag" Tag="IsDimensionTable"><#=tableRow["IsDimensionTable"]#></Annotation>
+    		</Annotations>
+    	</Table>
+
+
+        <#} else if (tableRow["ISSCD2"].Equals(1)) {#>
+
+
+        	<Table Name="<#=tableRow["TargetTableName"]#>" SchemaName="<#=srcConn#>.<#=tableRow["TargetTableSchemaName"]#>">
+            		<Columns>
+            		    <Column Name="<#=tableRow["TargetTableName"]#>_SID" DataType="Int64"  IsNullable="false"/>
+
+            		<#
+            		attributes = ExternalDataAccess.GetDataTable(metadataConnectionString,"select [ColumnName],[OrdinalPosition],[DataType],[CharacterMaximumLength],ISNULL([NumericPrecision],9) AS NumericPrecision,ISNULL([NumericScale],2) AS NumericScale,[IsBusinessKey],[IsDeltaIndicator], [IsPrimaryKey], [IsNullable] from [structure].[TargetTableAttribute] where [IsBusinessKey] = 0 and [TargetTable_ID] = "+tableRow["TargetTable_ID"]+" order by [OrdinalPosition]");
+            		deltaIndicator = "";
+            		foreach (DataRow columnRow in attributes.Rows)
+            		{
+            		    String precision = columnRow["NumericPrecision"].ToString();
+             		    String scale = columnRow["NumericScale"].ToString();
+            			if (columnRow["IsDeltaIndicator"].ToString().Equals("True"))
+            			{
+            			    deltaIndicator = columnRow["ColumnName"].ToString();
+            			}
+            			#>
+            			<#String dataType = HelperMethods.convertDBType2Biml(columnRow["DataType"].ToString());#>
+            			<Column Name="<#=columnRow["ColumnName"]#>" DataType="<#=dataType#>" <#=(dataType.Substring(0,4).Equals("Stri")?"Length=\""+columnRow["CharacterMaximumLength"]+"\"":"")#><#=(dataType.Substring(0,4).Equals("Ansi")?"Length=\""+columnRow["CharacterMaximumLength"]+"\"":"")#><#=(dataType.Substring(0,4).Equals("Bina")?"Length=\"8\"":"")#><#=(dataType.Substring(0,4).Equals("Deci")?"Precision=\""+precision+"\" Scale=\""+scale+"\"":"")#> IsNullable="<#=columnRow["IsNullable"]#>"/>
+        
+            		<# } #>
+            		    <Column Name="ValidFrom" DataType="DateTime"  IsNullable="false"/>
+            		    <Column Name="ValidTo" DataType="DateTime"  IsNullable="false"/>
+            		    <Column Name="IsCurrent" DataType="Boolean"  IsNullable="false"/>
+
+            		</Columns>
+            		<Annotations>
+            		    <Annotation AnnotationType="Tag" Tag="PureDatabaseName"><#=srcConn#></Annotation>
+            		    <Annotation AnnotationType="Tag" Tag="SourceConnection"><#=tableRow["ConnectionName"]#></Annotation>
+            			<Annotation AnnotationType="Tag" Tag="SourceSchemaQualifiedName"><#=tableRow["TargetTableSchemaName"]+"."+tableRow["TargetTableName"]#></Annotation>
+            			<Annotation AnnotationType="Tag" Tag="Table_ID"><#=tableRow["TargetTable_ID"]#></Annotation>
+            			<Annotation AnnotationType="Tag" Tag="IsBiml"><#=tableRow["IsBiml"]#></Annotation>
+            			<Annotation AnnotationType="Tag" Tag="IsIncluded"><#=tableRow["IsIncluded"]#></Annotation>
+    			        <Annotation AnnotationType="Tag" Tag="IsDimensionTable"><#=tableRow["IsDimensionTable"]#></Annotation>
+
+            		</Annotations>
+            	</Table>
+
+
+
+        <# } else {#>
+    	<Table Name="<#=tableRow["TargetTableName"]#>" SchemaName="<#=srcConn#>.<#=tableRow["TargetTableSchemaName"]#>">
+    		<Columns>
+    		<#
+    		attributes = ExternalDataAccess.GetDataTable(metadataConnectionString,"select [ColumnName],[OrdinalPosition],[DataType],[CharacterMaximumLength],ISNULL([NumericPrecision],9) AS NumericPrecision,ISNULL([NumericScale],2) AS NumericScale,[IsBusinessKey],[IsDeltaIndicator], [IsPrimaryKey], [IsNullable] from [structure].[TargetTableAttribute] where  ([IsBusinessKey] = 1 or [IsPrimaryKey] = 1)  and [TargetTable_ID] = "+tableRow["TargetTable_ID"]+" order by [OrdinalPosition]");
+    		deltaIndicator = "";
+    		foreach (DataRow columnRow in attributes.Rows)
+    		{
+    		    String precision = columnRow["NumericPrecision"].ToString();
+     		    String scale = columnRow["NumericScale"].ToString();
+    			if (columnRow["IsDeltaIndicator"].ToString().Equals("True"))
+    			{
+    			    deltaIndicator = columnRow["ColumnName"].ToString();
+    			}
+    			#>
+    			<#String dataType = HelperMethods.convertDBType2Biml(columnRow["DataType"].ToString());#>
+    			<Column Name="<#=columnRow["ColumnName"]#>" DataType="<#=dataType#>" <#=(dataType.Substring(0,4).Equals("Stri")?"Length=\""+columnRow["CharacterMaximumLength"]+"\"":"")#><#=(dataType.Substring(0,4).Equals("Ansi")?"Length=\""+columnRow["CharacterMaximumLength"]+"\"":"")#><#=(dataType.Substring(0,4).Equals("Bina")?"Length=\"8\"":"")#><#=(dataType.Substring(0,4).Equals("Deci")?"Precision=\""+precision+"\" Scale=\""+scale+"\"":"")#> IsNullable="<#=columnRow["IsNullable"]#>"/>
+
+    		<# } #>
+
+
+    		</Columns>
+    		<Annotations>
+    		    <Annotation AnnotationType="Tag" Tag="PureDatabaseName"><#=srcConn#></Annotation>
+    		    <Annotation AnnotationType="Tag" Tag="SourceConnection"><#=tableRow["ConnectionName"]#></Annotation>
+    			<Annotation AnnotationType="Tag" Tag="SourceSchemaQualifiedName"><#=tableRow["TargetTableSchemaName"]+"."+tableRow["TargetTableName"]#></Annotation>
+    			<Annotation AnnotationType="Tag" Tag="Table_ID"><#=tableRow["TargetTable_ID"]#></Annotation>
+    			<Annotation AnnotationType="Tag" Tag="IsBiml"><#=tableRow["IsBiml"]#></Annotation>
+    			<Annotation AnnotationType="Tag" Tag="IsIncluded"><#=tableRow["IsIncluded"]#></Annotation>
+    			<Annotation AnnotationType="Tag" Tag="IsDimensionTable"><#=tableRow["IsDimensionTable"]#></Annotation>
+
+    		</Annotations>
+    	</Table>
+    <# } #>
+
+    <# } #>
+	</Tables>
+</Biml>
+<#@ template tier="2" #>
+<#@ code file="HelperMethods.cs" #>
+<#@ import namespace="System.Data" #>
+<#@ import namespace="System.Data.SqlClient" #>

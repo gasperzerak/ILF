@@ -1,0 +1,2209 @@
+﻿<Biml xmlns="http://schemas.varigence.com/biml.xsd">
+    <!-- Wird nicht verwendet, aber für spätere Anforderungen zu Skript Tasks wird der Code nur Auskommentiert
+    <ScriptProjects>
+        <ScriptTaskProject ProjectCoreName="ST_e2413073a67e497eb8a02c607cc0ad65" Name="WaitFileHandle">
+            <AssemblyReferences>
+                <AssemblyReference AssemblyPath="System" />
+                <AssemblyReference AssemblyPath="System.Data" />
+                <AssemblyReference AssemblyPath="System.Windows.Forms" />
+                <AssemblyReference AssemblyPath="System.Xml" />
+                <AssemblyReference AssemblyPath="Microsoft.SqlServer.ManagedDTS.dll" />
+                <AssemblyReference AssemblyPath="Microsoft.SqlServer.ScriptTask.dll" />
+            </AssemblyReferences>
+            <Files>
+                <File Path="Properties\AssemblyInfo.cs" BuildAction="Compile">
+                    using System.Reflection;
+                    using System.Runtime.CompilerServices;
+                    
+                    [assembly: AssemblyVersion("1.0.*")]
+                </File>
+                <File Path="ScriptMain.cs" BuildAction="Compile">
+                using System;
+                using System.Data;
+                using Microsoft.SqlServer.Dts.Runtime;
+                using System.Windows.Forms;
+                using System.IO;
+                using System.Threading;
+                
+                namespace ST_e2413073a67e497eb8a02c607cc0ad65
+                {
+                	[Microsoft.SqlServer.Dts.Tasks.ScriptTask.SSISScriptTaskEntryPointAttribute]
+                	public partial class ScriptMain : Microsoft.SqlServer.Dts.Tasks.ScriptTask.VSTARTScriptObjectModelBase
+                	{
+                
+                        enum ScriptResults
+                        {
+                            Success = Microsoft.SqlServer.Dts.Runtime.DTSExecResult.Success,
+                            Failure = Microsoft.SqlServer.Dts.Runtime.DTSExecResult.Failure
+                        };
+        
+                		public void Main()
+                		{
+             		            String fileName = Dts.Variables["User::InputFileFullyQualifiedName"].Value.ToString();
+                	            int loops = 1;
+                                bool b = IsFileReady(fileName);
+                                while (!b &amp;&amp; loops++ &lt; 10)
+                                {
+                                    Thread.Sleep(2000);
+                                    b = IsFileReady(fileName);
+                                }
+                	            
+                                if (!b &amp;&amp; loops++ == 10)
+                                {
+                                    Dts.TaskResult = (int)ScriptResults.Failure;
+                                }
+                                else
+                                {
+                                    Dts.TaskResult = (int)ScriptResults.Success;
+                           
+                		
+                        public static bool IsFileReady(String sFilename)
+                        {
+                            // If the file can be opened for exclusive access it means that the file
+                            // is no longer locked by another process.
+                            try
+                            {
+                                using (FileStream inputStream = File.Open(sFilename, FileMode.Open, FileAccess.Read, FileShare.None))
+                                {
+                                    if (inputStream.Length > 0)
+                                    {
+                                        return true;
+                                    }
+                                    else
+                                    {
+                                        return false;
+                                    }
+                
+                                }
+                            }
+                            catch (Exception)
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                    
+                }
+                </File>
+            </Files>
+            <ReadOnlyVariables>
+                <Variable Namespace="User" DataType="String" VariableName="InputFileFullyQualifiedName" />
+            </ReadOnlyVariables>
+            <ReadWriteVariables />
+        </ScriptTaskProject>
+    </ScriptProjects>
+    -->
+	<Packages>
+	
+		<!-- Define root (level 1) package 00_00_0000-DWHLoad -->	
+		<Package Name="00_00_0000-DWHLoad" ConstraintMode="Linear" Disabled="false">
+			<Parameters>
+				<Parameter Name="ParentPackageSID" DataType="Int32">0</Parameter>
+			</Parameters>
+			<Variables>
+				<Variable Name="LoadID" DataType="Int64" Namespace="User">0</Variable>
+				<Variable Name="CurrentDate" DataType="DateTime" Namespace="User">9999-12-31</Variable>
+				<Variable Name="ExecutionStatus" DataType="String" Namespace="User">started</Variable>
+				<Variable Name="PackageSID" DataType="Int32" Namespace="User">0</Variable>				
+			</Variables>
+			<Events>
+				<Event Name="OnPreExecute" EventType="OnPreExecute" ConstraintMode="Parallel">
+					<Tasks>
+						<ExecuteSQL Name="GetLoadID" ConnectionName="DWHMTA" ResultSet="SingleRow">
+							<Parameters>
+								<Parameter Name="0" VariableName="System.StartTime" DataType="DateTime" Direction="Input"/>
+							</Parameters>
+							<Results>
+								<Result Name="Res" VariableName="User.LoadID"/>
+							</Results>
+							<DirectInput>declare @Load_Dt datetime = ?; select Res = convert(bigint,year(@Load_Dt))*10000000000 + month(@Load_Dt)*100000000 + day(@Load_Dt)*1000000 + datepart(hour,@Load_Dt)*10000 + datepart(minute,@Load_Dt)*100 + datepart(second,@Load_Dt)</DirectInput>
+						</ExecuteSQL>
+						<ExecuteSQL Name="Init Load" ConnectionName="DWHMTA">
+							<PrecedenceConstraints LogicalType="And">
+								<Inputs>
+									<Input Expression="@[System::SourceName] == @[System::PackageName]" EvaluationOperation="Expression" OutputPathName="GetLoadID.Output"/>
+								</Inputs>
+							</PrecedenceConstraints>
+							<Parameters>
+								<Parameter Name="0" VariableName="User.LoadID" DataType="Int64" Direction="Input"/>
+								<Parameter Name="1" VariableName="System.StartTime" DataType="DateTime" Direction="Input"/>
+							</Parameters>
+							<DirectInput>insert into [logging].[Load] (Load_ID,LoadDate, LoadLevel) values (?,?, 'Master');</DirectInput>
+						</ExecuteSQL>
+						<ExecuteSQL Name="CommitExecutionStatus" ConnectionName="DWHMTA" BypassPrepare="true">
+							<PrecedenceConstraints LogicalType="And">
+								<Inputs>
+									<Input OutputPathName="Init Load.Output"/>
+								</Inputs>
+							</PrecedenceConstraints>
+							<Parameters>
+								<Parameter Name="0" VariableName="User.PackageSID" DataType="Int32" Direction="Output"/>
+								<Parameter Name="1" VariableName="User.LoadID" DataType="Int64" Direction="Input"/>
+								<Parameter Name="2" VariableName="System.ExecutionInstanceGUID" DataType="Guid" Direction="Input"/>
+								<Parameter Name="3" VariableName="00_00_0000-DWHLoad.ParentPackageSID" DataType="Int32" Direction="Input"/>
+								<Parameter Name="4" VariableName="System.PackageName" DataType="String" Direction="Input"/>
+								<Parameter Name="5" VariableName="User.ExecutionStatus" DataType="String" Direction="Input"/>
+								<Parameter Name="6" VariableName="System.StartTime" DataType="DateTime" Direction="Input"/>
+							</Parameters>
+							<DirectInput>exec ? = [logging].[SetPackageExecutionStatus]?,?,?,?,?,?</DirectInput>
+						</ExecuteSQL>
+						<Expression Name="SetExecutionStatus" Expression="@[User::ExecutionStatus] = &quot;ended&quot;">
+							<PrecedenceConstraints LogicalType="And">
+								<Inputs>
+									<Input OutputPathName="CommitExecutionStatus.Output"/>
+								</Inputs>
+							</PrecedenceConstraints>
+						</Expression>
+					</Tasks>
+				</Event>
+				<Event Name="OnError" EventType="OnError" ConstraintMode="Parallel">
+					<Tasks>
+						<Expression Name="GetCurrentDate" Expression="@[User::CurrentDate] = GETDATE()"></Expression>
+						<Expression Name="SetExecutionStatus" Expression="@[User::ExecutionStatus] = &quot;aborted&quot;">
+							<PrecedenceConstraints LogicalType="And">
+								<Inputs>
+									<Input Expression="@[System::SourceName] == @[System::PackageName]" EvaluationOperation="Expression" OutputPathName="GetCurrentDate.Output"/>
+								</Inputs>
+							</PrecedenceConstraints>							
+						</Expression>
+					</Tasks>
+				</Event>
+				<Event Name="OnPostExecute" EventType="OnPostExecute" ConstraintMode="Parallel">
+					<Tasks>
+						<Expression Name="GetCurrentDate" Expression="@[User::CurrentDate] = GETDATE()"></Expression>
+						<ExecuteSQL Name="CommitExecutionStatus" ConnectionName="DWHMTA" BypassPrepare="true">
+							<PrecedenceConstraints LogicalType="And">
+								<Inputs>
+									<Input Expression="@[System::SourceName] == @[System::PackageName]" EvaluationOperation="Expression" OutputPathName="GetCurrentDate.Output"/>
+								</Inputs>
+							</PrecedenceConstraints>
+							<Parameters>
+								<Parameter Name="0" VariableName="User.PackageSID" DataType="Int32" Direction="Output"/>
+								<Parameter Name="1" VariableName="User.LoadID" DataType="Int64" Direction="Input"/>
+								<Parameter Name="2" VariableName="System.ExecutionInstanceGUID" DataType="Guid" Direction="Input"/>
+								<Parameter Name="3" VariableName="00_00_0000-DWHLoad.ParentPackageSID" DataType="Int32" Direction="Input"/>
+								<Parameter Name="4" VariableName="System.PackageName" DataType="String" Direction="Input"/>
+								<Parameter Name="5" VariableName="User.ExecutionStatus" DataType="String" Direction="Input"/>
+								<Parameter Name="6" VariableName="User.CurrentDate" DataType="DateTime" Direction="Input"/>
+							</Parameters>
+							<DirectInput>exec ? = [logging].[SetPackageExecutionStatus]?,?,?,?,?,?</DirectInput>
+						</ExecuteSQL>
+					</Tasks>
+				</Event>
+			</Events>
+			<Tasks>
+				<ExecutePackage Name="Stage">
+					<ExternalProjectPackage Package="01_00_0000-DWHLoad_Stage.dtsx"></ExternalProjectPackage>
+					<ParameterBindings>
+						<ParameterBinding Name="LoadID" VariableName="User.LoadID"/>
+						<ParameterBinding Name="LoadDt" VariableName="System.StartTime"/>						
+						<ParameterBinding Name="ParentPackageSID" VariableName="User.PackageSID"/>
+					</ParameterBindings>
+				</ExecutePackage>
+				<ExecutePackage Name="Integration">
+					<ExternalProjectPackage Package="02_00_0000-DWHLoad_Integration.dtsx"></ExternalProjectPackage>
+					<ParameterBindings>
+						<ParameterBinding Name="LoadID" VariableName="User.LoadID"/>
+						<ParameterBinding Name="LoadDt" VariableName="System.StartTime"/>						
+						<ParameterBinding Name="ParentPackageSID" VariableName="User.PackageSID"/>
+					</ParameterBindings>
+				</ExecutePackage>
+				<ExecutePackage Name="Mart">
+					<ExternalProjectPackage Package="03_00_0000-DWHLoad_Mart.dtsx"></ExternalProjectPackage>
+					<ParameterBindings>
+						<ParameterBinding Name="LoadID" VariableName="User.LoadID"/>
+						<ParameterBinding Name="LoadDt" VariableName="System.StartTime"/>						
+						<ParameterBinding Name="ParentPackageSID" VariableName="User.PackageSID"/>
+					</ParameterBindings>
+				</ExecutePackage>
+			</Tasks>
+		</Package>
+		
+		<!-- Define all packages of level 2 e. g. 01_00_0000-DWHLoad_Stage -->
+		<# string[] teilprozessNames = {"Stage","Integration", "Mart"}; #>
+		<# string[] subprozessNames = {"Raw","Val","Ref","Key","Int", "SCD", "Src"}; #>
+		<# string[] subprozessNamesMrt = {"Key", "Mrt"}; #>
+		<# for (var i = 0; i < teilprozessNames.Length; i++) { #>
+	        <# var packageName = "0"+(i+1)+"_00_0000-DWHLoad_"+teilprozessNames[i]; #>
+		    <Package Name="<#=packageName#>" ConstraintMode="<#="Linear"#>" Disabled="false" MaxConcurrentExecutables="4">
+		    	<Parameters>
+		            <#@ include file="INC-DWHLoadPackageParameters.biml" #>
+			    </Parameters>
+		    	<Variables>
+		            <#@ include file="INC-DWHLoadPackageVariables.biml" #>
+			    </Variables>
+		    	<Events>
+		    	     <# if (teilprozessNames[i] == "Stage") { #>
+		                <#@ include file="INC-DWHLoadPackageEventsStage.biml" #>
+		            <# } #>
+
+		    	    <# if (teilprozessNames[i] == "Integration") { #>
+		                <#@ include file="INC-DWHLoadPackageEventsIntegration.biml" #>
+		            <# } #>
+
+		    	    <# if (teilprozessNames[i] == "Mart") { #>
+		                <#@ include file="INC-DWHLoadPackageEventsMart.biml" #>
+		            <# } #>
+		    	</Events>			
+		    	<Tasks>
+		    	    <!-- special part for 01_00_0000-DWHLoad_Stage -->
+		    	    <# if (i == 0) { #>
+		    	        <# foreach (var database in RootNode.Databases.Where(x => x.Name.Substring(0,6).Equals("DWHSTG"))) { #>
+		    	        <# var sourceSystemName = database.Name.Substring(7,database.Name.Length-7); #>
+				            <ExecutePackage Name="<#=sourceSystemName#>">
+				            	<ExternalProjectPackage Package="0<#=(i+1)#>_<#=database.GetTag("DatabaseIndex")#>_0000-DWHLoad_<#=teilprozessNames[i]#>_<#=sourceSystemName#>.dtsx" />
+				            	<ParameterBindings>
+				            		<ParameterBinding Name="LoadID" VariableName="User.LoadIDChanged"/>
+				            		<ParameterBinding Name="LoadDt" VariableName="User.LoadDTChanged"/>
+				            		<ParameterBinding Name="ParentPackageSID" VariableName="User.PackageSID"/>
+				            	</ParameterBindings>
+				            </ExecutePackage>
+				        <# } #>
+				    <!-- special part for 02_00_0000-DWHLoad_Integration -->
+				    <# } else if (i == 1) { #>
+		                <# for (var j = 0; j < subprozessNames.Length; j++) { #>
+				            <ExecutePackage Name="<#=subprozessNames[j]#>">
+				            	<ExternalProjectPackage Package="0<#=(i+1)#>_0<#=(j+1)#>_0000-DWHLoad_<#=teilprozessNames[i]#>_<#=subprozessNames[j]#>.dtsx" />
+				            	<ParameterBindings>
+				            		<ParameterBinding Name="LoadID" VariableName="User.LoadIDChanged"/>
+				            		<ParameterBinding Name="LoadDt" VariableName="User.LoadDTChanged"/>
+				            		<ParameterBinding Name="ParentPackageSID" VariableName="User.PackageSID"/>
+				            	</ParameterBindings>
+				            </ExecutePackage>		                
+		                <# } #>
+				    <!-- special part for 03_00_0000-DWHLoad_Mart -->
+				    <# } else if (i == 2) { #>
+		                <# for (var j = 0; j < subprozessNamesMrt.Length; j++) { #>
+				            <ExecutePackage Name="<#=subprozessNamesMrt[j]#>">
+				            	<ExternalProjectPackage Package="0<#=(i+1)#>_0<#=(j+1)#>_0000-DWHLoad_<#=teilprozessNames[i]#>_<#=subprozessNamesMrt[j]#>.dtsx" />
+				            	<ParameterBindings>
+				            		<ParameterBinding Name="LoadID" VariableName="User.LoadIDChanged"/>
+				            		<ParameterBinding Name="LoadDt" VariableName="User.LoadDTChanged"/>
+				            		<ParameterBinding Name="ParentPackageSID" VariableName="User.PackageSID"/>
+				            	</ParameterBindings>
+				            </ExecutePackage>		                
+		                <# } #>
+				    <# } #>    
+			    </Tasks>
+		    </Package>	
+		<# } #>
+
+		<!-- Define stage packages of level 3 e. g. 01_01_0000-DWHLoad_Stage_Matrix42 -->
+	<# foreach (var database in RootNode.Databases.Where(x => x.Name.Substring(0,6).Equals("DWHSTG"))) { #>
+		    <# var sourceSystemName = database.Name.Substring(7,database.Name.Length-7); #>
+	        <# var packageName = "01_"+database.GetTag("DatabaseIndex")+"_0000-DWHLoad_Stage_"+sourceSystemName; #>
+			<Package Name="<#=packageName#>" MaxConcurrentExecutables="4">
+				<Parameters>
+					<#@ include file="INC-DWHLoadPackageParameters.biml" #>
+				</Parameters>
+				<Variables>
+					<#@ include file="INC-DWHLoadPackageVariables.biml" #>
+				</Variables>
+
+
+				<Events>
+		    	    <# if (sourceSystemName == "CSV") { #>
+		                <#@ include file="INC-DWHLoadPackageEventsStage_CSV.biml" #>
+		            <# } #>
+
+		    	    <# if (sourceSystemName == "MDS") { #>
+		                <#@ include file="INC-DWHLoadPackageEventsStage_MDS.biml" #>
+		            <# } #>
+
+		    	    <# if (sourceSystemName == "TAGETIK") { #>
+		                <#@ include file="INC-DWHLoadPackageEventsStage_TAGETIK.biml" #>
+		            <# } #>
+				</Events>
+
+				<Tasks>
+			
+				<# foreach (var table in RootNode.Tables.Where(x => (x.GetTag("PureDatabaseName").Equals(sourceSystemName) ))) { #>
+					<# if (table.GetTag("IsIncluded").Equals("true")) { // only BIML generated Packages are recreated #>
+						<ExecutePackage Name="<#=table.Name#>">
+							<ExternalProjectPackage Package="01_<#=database.GetTag("DatabaseIndex")#>_<#=table.GetTag("Table_ID_formatted")#>-DWHLoad_Stage_<#=sourceSystemName#>_<#=table.Name#>.dtsx"></ExternalProjectPackage>
+							<ParameterBindings>
+								<ParameterBinding Name="LoadID" VariableName="User.LoadIDChanged"/>
+								<ParameterBinding Name="LoadDt" VariableName="User.LoadDTChanged"/>
+								<ParameterBinding Name="ParentPackageSID" VariableName="User.PackageSID"/>
+							</ParameterBindings>
+						</ExecutePackage>
+					<# } #>
+				<# } #>
+				</Tasks>        	    
+			</Package>
+		<# } #>
+		
+		<!-- Define integration packages of level 3 e. g. 02_01_0000-DWHLoad_Integration_Raw -->
+		<# for (var i = 0; i < subprozessNames.Length; i++) { #>
+		    <# if (subprozessNames[i] != "SCD") { #>
+
+		    <# var packageName = "02_0"+(i+1)+"_0000-DWHLoad_Integration_"+subprozessNames[i]; #>
+	        <Package Name="<#=packageName#>" MaxConcurrentExecutables="4">
+	            <Parameters>
+		            <#@ include file="INC-DWHLoadPackageParameters.biml" #>
+		        </Parameters>
+		    	<Variables>
+		            <#@ include file="INC-DWHLoadPackageVariables.biml" #>
+		    	</Variables>
+		    	<Events>
+		    	    <#@ include file="INC-DWHLoadPackageEventsIntegration.biml" #>
+		    	</Events>
+		    	<Tasks>	
+		    	<# var metadataConnectionString = ((AstDbConnectionNode)RootNode.Connections["DWHMTA"]).ConnectionString; #>
+		    	<# var query = "SELECT [IntLayer] = SUBSTRING([values],1,3),[TargetTablePrefix] = RIGHT(N'000'+CONVERT(NVARCHAR,[TargetTable_ID]),4),[TargetTableName] FROM [DWHMTA].[structure].[TargetTable] p UNPIVOT ([value] FOR [values] IN ([RawProc],[ValProc],[RefProc],[KeyProc],[IntProc],[SrcProc])) AS up WHERE [value] = 1 AND SUBSTRING([values],1,3) = '"+subprozessNames[i]+"' AND [IsIncluded] = 1 ORDER BY 1,2"; #>
+                <# var layerTables = ExternalDataAccess.GetDataTable(metadataConnectionString,query); #>
+		    	<# foreach (DataRow dataRow in layerTables.Rows) { #>
+		    		<ExecutePackage Name="<#=dataRow["IntLayer"]#>.<#=dataRow["TargetTableName"]#>">
+		    			<ExternalProjectPackage Package="02_0<#=(i+1)#>_<#=dataRow["TargetTablePrefix"]#>-DWHLoad_Integration_<#=subprozessNames[i]#>_<#=dataRow["TargetTableName"]#>.dtsx"></ExternalProjectPackage>
+		    			<ParameterBindings>
+		    				<ParameterBinding Name="LoadID" VariableName="User.LoadIDChanged"/>
+		    				<ParameterBinding Name="LoadDt" VariableName="User.LoadDTChanged"/>
+		    				<ParameterBinding Name="ParentPackageSID" VariableName="User.PackageSID"/>
+		    			</ParameterBindings>
+		    		</ExecutePackage>
+		    	<# } #>		    	
+		    	</Tasks>
+		    </Package>	
+		    <# } #>
+		<# } #>
+
+		<!-- Define mart packages of level 3 e. g. 03_01_0000-DWHLoad_Mart_Raw -->
+		<# for (var i = 0; i < subprozessNamesMrt.Length; i++) { #>
+		    <# var packageName = "03_0"+(i+1)+"_0000-DWHLoad_Mart_"+subprozessNamesMrt[i]; #>
+	        <Package Name="<#=packageName#>" MaxConcurrentExecutables="4">
+	            <Parameters>
+		            <#@ include file="INC-DWHLoadPackageParameters.biml" #>
+		        </Parameters>
+		    	<Variables>
+		            <#@ include file="INC-DWHLoadPackageVariables.biml" #>
+		    	</Variables>
+		    	<Events>
+		    	    <#@ include file="INC-DWHLoadPackageEvents.biml" #>
+		    	</Events>
+		    	<Tasks>	
+		    	<# var metadataConnectionString = ((AstDbConnectionNode)RootNode.Connections["DWHMTA"]).ConnectionString; #>
+		    	<# var query = "SELECT [MartLayer] = SUBSTRING([values],1,3),[TargetTablePrefix] = RIGHT(N'000'+CONVERT(NVARCHAR,[TargetTable_ID]),4),[TargetTableName] FROM [DWHMTA].[structure].[TargetTableMart] p UNPIVOT ([value] FOR [values] IN ([KeyProc], [MrtProc])) AS up WHERE [value] = 1 AND SUBSTRING([values],1,3) = '"+subprozessNamesMrt[i]+"' AND [IsIncluded] = 1 ORDER BY 1,2"; #>
+                <# var layerTables = ExternalDataAccess.GetDataTable(metadataConnectionString,query); #>
+		    	<# foreach (DataRow dataRow in layerTables.Rows) { #>
+		    		<ExecutePackage Name="<#=dataRow["MartLayer"]#>.<#=dataRow["TargetTableName"]#>">
+		    			<ExternalProjectPackage Package="03_0<#=(i+1)#>_<#=dataRow["TargetTablePrefix"]#>-DWHLoad_Mart_<#=subprozessNamesMrt[i]#>_<#=dataRow["TargetTableName"]#>.dtsx"></ExternalProjectPackage>
+		    			<ParameterBindings>
+		    				<ParameterBinding Name="LoadID" VariableName="User.LoadIDChanged"/>
+		    				<ParameterBinding Name="LoadDt" VariableName="User.LoadDTChanged"/>
+		    				<ParameterBinding Name="ParentPackageSID" VariableName="User.PackageSID"/>
+		    			</ParameterBindings>
+		    		</ExecutePackage>
+		    	<# } #>		    	
+		    	</Tasks>
+		    </Package>	
+		<# } #>
+
+		<!-- Define integration packages of level 4 e. g. 02_01_0001-DWHLoad_Integration_Raw_Contract -->	
+		<# for (var i = 0; i < subprozessNames.Length; i++) { #>
+		    <# var metadataConnectionString = ((AstDbConnectionNode)RootNode.Connections["DWHMTA"]).ConnectionString; #>
+		    <# var query = "SELECT [IntLayer] = SUBSTRING([values],1,3),[TargetTablePrefix] = RIGHT(N'000'+CONVERT(NVARCHAR,[TargetTable_ID]),4),[TargetTableName],[TargetTableSchemaName], [IsDelta], [IsBiml] FROM [DWHMTA].[structure].[TargetTable] p UNPIVOT ([value] FOR [values] IN ([RawProc],[ValProc],[RefProc],[KeyProc],[IntProc], [SrcProc])) AS up WHERE [value] = 1 AND SUBSTRING([values],1,3) = '"+subprozessNames[i]+"' ORDER BY 1,2"; #>
+		    <# var layerTables = ExternalDataAccess.GetDataTable(metadataConnectionString,query); #>
+		    <# foreach (DataRow dataRow in layerTables.Rows) { #>
+                <# if (dataRow["IsBiml"].Equals(true)) {#>		    
+    		        <# var packageName = "02_0"+(i+1)+"_"+dataRow["TargetTablePrefix"]+"-DWHLoad_Integration_"+subprozessNames[i]+"_"+dataRow["TargetTableName"]; #>
+    	            <Package Name="<#=packageName#>" ConstraintMode="Parallel">
+    	                <Parameters>
+    		                <#@ include file="INC-DWHLoadPackageParameters.biml" #>
+    		            </Parameters>
+    		        	<Variables>
+    		                <#@ include file="INC-DWHLoadPackageVariables.biml" #>
+    		        	</Variables>
+    		        	<Events>
+    		        	    <#@ include file="INC-DWHLoadPackageEvents.biml" #>
+    		        	</Events>
+    		        	<Tasks>	
+    		        	    <# if (subprozessNames[i].Equals("Int")) { #>
+                            <!-- This isn't dynamic since the meta modell currently doesn't support target tables. Must be changed for integration delta load. -->
+        					    <# if (dataRow["IsDelta"].Equals(true)) { #>
+        					        <Expression Name="get load mode" Expression="@[User::LoadMode] = &quot;D&quot;" />
+        					     <# } else { #>
+        					        <Expression Name="get load mode" Expression="@[User::LoadMode] = &quot;F&quot;" />
+        					     <# } #>
+    
+    				    	<!-- this gets only executed if it is a full load -->						
+    				    	<ExecuteSQL Name="truncate <#=dataRow["TargetTableSchemaName"]#>.<#=dataRow["TargetTableName"]#>" ConnectionName="DWHINT" BypassPrepare="true">
+    				    		<PrecedenceConstraints LogicalType="And">
+    				    			<Inputs>
+    				    				<Input Expression="@[User::LoadMode] == &quot;F&quot;" EvaluationOperation="Expression" OutputPathName="get load mode.Output"/>
+    				    			</Inputs>
+    				    		</PrecedenceConstraints>
+    				    		<DirectInput>
+    				    			truncate table [<#=dataRow["TargetTableSchemaName"]#>].[<#=dataRow["TargetTableName"]#>];
+    				    	    </DirectInput>
+    				    	</ExecuteSQL>
+    				    	<# } #>
+    		        	
+    		        	    <ExecuteSQL Name="execute procedure <#=dataRow["IntLayer"]#>.<#=dataRow["TargetTableName"]#>" ConnectionName="DWHWRK" BypassPrepare="true">
+    		        	        <# if (subprozessNames[i].Equals("Int")) { #>
+    				    		<PrecedenceConstraints LogicalType="Or">
+    				    			<Inputs>
+    				    				<Input Expression="@[User::LoadMode] == &quot;D&quot;" EvaluationOperation="Expression" OutputPathName="get load mode.Output"/>
+    				    				<Input OutputPathName="truncate <#=dataRow["TargetTableSchemaName"]#>.<#=dataRow["TargetTableName"]#>.Output"/>
+    				    			</Inputs>
+    				    		</PrecedenceConstraints>
+    				    		<# } #> 
+    						    <Parameters>
+    		        				<Parameter Name="0" Length="-1" VariableName="<#=packageName#>.LoadID" DataType="Int64" Direction="Input"/>						    
+    						    	<Parameter Name="1" Length="-1" VariableName="User.Operation" DataType="String" Direction="Output"/>
+    						    	<Parameter Name="2" Length="-1" VariableName="User.OperationRowCount" DataType="Int64" Direction="Output"/>						    	    
+    						    </Parameters>
+    					    	<DirectInput>exec [<#=dataRow["IntLayer"]#>].[usp_<#=dataRow["TargetTableName"]#>] ?,? OUTPUT,? OUTPUT</DirectInput>
+    					    </ExecuteSQL>
+    					        
+    					    <ExecuteSQL Name="get table size" ConnectionName="DWHINT" BypassPrepare="true" ResultSet="SingleRow">
+    					    	<PrecedenceConstraints LogicalType="And">
+    					    		<Inputs>
+    					    			<Input OutputPathName="execute procedure <#=dataRow["IntLayer"]#>.<#=dataRow["TargetTableName"]#>.Output"/>
+    					    		</Inputs>
+    					    	</PrecedenceConstraints>
+    					    	<Results>
+    					    	    <Result Name="TotalRows" VariableName="User.FinalRows" />
+    					    	    <Result Name="TotalSpaceByte" VariableName="User.FinalBytes" />
+    					    	</Results>
+    					    	<DirectInput>
+                                 SELECT 
+                                  [TotalRows]      = sum(p.[rows])
+                                 ,[TotalSpaceByte] = sum(a.[total_pages])*8 
+                                 FROM 
+                                  [sys].[tables] AS t
+                                 INNER JOIN
+                                  [sys].[schemas] AS s ON
+                                  t.[schema_id] = s.[schema_id]
+                                 INNER JOIN      
+                                  [sys].[indexes] AS i ON 
+                                  t.[object_id] = i.[object_id]
+                                 INNER JOIN 
+                                  [sys].[partitions] AS p ON 
+                                  i.[object_id] = p.[object_id] AND 
+                                  i.[index_id] = p.[index_id]
+                                 INNER JOIN 
+                                  [sys].[allocation_units] AS a ON 
+                                  p.[partition_id] = a.[container_id]
+                                 WHERE 
+                                  s.[name] = &apos;<#=dataRow["TargetTableSchemaName"]#>&apos; AND
+                                  t.[name] = &apos;<#=dataRow["TargetTableName"]#>&apos; AND
+                                  i.[object_id] &gt; 255 AND   
+                                  i.[index_id] &lt;= 1
+                                 GROUP BY 
+                                  t.[object_id]
+                                 ;
+    					    	</DirectInput>
+    					    </ExecuteSQL>		        	
+    
+    		        	</Tasks>
+    		        </Package>
+    		    <# } #>		    	
+            <# } #>		    	<!-- here could be an alternative way added to build or fetch the current package (IsBiml == false) -->	
+    	<# } #>		
+
+
+		<!-- Define mart packages of level 4 e. g. 03_01_0001-DWHLoad_Mart_Dim_Contract -->	
+		<# for (var i = 0; i < subprozessNamesMrt.Length; i++) { #>
+		    <# var metadataConnectionString = ((AstDbConnectionNode)RootNode.Connections["DWHMTA"]).ConnectionString; #>
+		    <# var query = "SELECT [MartLayer] = SUBSTRING([values],1,3),[TargetTablePrefix] = RIGHT(N'000'+CONVERT(NVARCHAR,[TargetTable_ID]),4),[TargetTableName],[TargetTableSchemaName], [IsDelta], [IsBiml] FROM [DWHMTA].[structure].[TargetTableMart] p UNPIVOT ([value] FOR [values] IN ([KeyProc], [MrtProc])) AS up WHERE [value] = 1 AND SUBSTRING([values],1,3) = '"+subprozessNamesMrt[i]+"' ORDER BY 1,2"; #>
+		    <# var layerTables = ExternalDataAccess.GetDataTable(metadataConnectionString,query); #>
+		    <# foreach (DataRow dataRow in layerTables.Rows) { #>
+		    <# if (dataRow["IsBiml"].Equals(true)) {#>
+    		        <# var packageName = "03_0"+(i+1)+"_"+dataRow["TargetTablePrefix"]+"-DWHLoad_Mart_"+subprozessNamesMrt[i]+"_"+dataRow["TargetTableName"]; #>
+    	            <Package Name="<#=packageName#>" ConstraintMode="Parallel">
+    	                <Parameters>
+    		                <#@ include file="INC-DWHLoadPackageParameters.biml" #>
+    		            </Parameters>
+    		        	<Variables>
+    		                <#@ include file="INC-DWHLoadPackageVariables.biml" #>
+    		        	</Variables>
+    		        	<Events>
+    		        	    <#@ include file="INC-DWHLoadPackageEvents.biml" #>
+    		        	</Events>
+    		        	<Tasks>	
+    		        	    <# if (subprozessNamesMrt[i].Equals("Mrt")) { #>
+                            <!-- This isn't dynamic since the meta modell currently doesn't support target tables. Must be changed for Mart delta load. -->
+        					    <# if (dataRow["IsDelta"].Equals(true)) { #>
+        					        <Expression Name="get load mode" Expression="@[User::LoadMode] = &quot;D&quot;" />
+        					     <# } else { #>
+        					        <Expression Name="get load mode" Expression="@[User::LoadMode] = &quot;F&quot;" />
+        					     <# } #>
+    					
+    				    	<!-- this gets only executed if it is a full load -->						
+    				    	<ExecuteSQL Name="truncate <#=dataRow["TargetTableSchemaName"]#>.<#=dataRow["TargetTableName"]#>" ConnectionName="DWHMRT" BypassPrepare="true">
+    				    		<PrecedenceConstraints LogicalType="And">
+    				    			<Inputs>
+    				    				<Input Expression="@[User::LoadMode] == &quot;F&quot;" EvaluationOperation="Expression" OutputPathName="get load mode.Output"/>
+    				    			</Inputs>
+    				    		</PrecedenceConstraints>
+    				    		<DirectInput>
+    				    			truncate table [<#=dataRow["TargetTableSchemaName"]#>].[<#=dataRow["TargetTableName"]#>];
+    				    	    </DirectInput>
+    				    	</ExecuteSQL>
+    				    	<# } #>
+    		        	
+    		        	    <ExecuteSQL Name="execute procedure <#=dataRow["MartLayer"]#>.<#=dataRow["TargetTableName"]#>" ConnectionName="DWHWRK" BypassPrepare="true">
+    		        	        <# if (subprozessNamesMrt[i].Equals("Mrt")) { #>
+    				    		<PrecedenceConstraints LogicalType="Or">
+    				    			<Inputs>
+    				    				<Input Expression="@[User::LoadMode] == &quot;D&quot;" EvaluationOperation="Expression" OutputPathName="get load mode.Output"/>
+    				    				<Input OutputPathName="truncate <#=dataRow["TargetTableSchemaName"]#>.<#=dataRow["TargetTableName"]#>.Output"/>
+    				    			</Inputs>
+    				    		</PrecedenceConstraints>
+    				    		<# } #> 
+    						    <Parameters>
+    		        				<Parameter Name="0" Length="-1" VariableName="<#=packageName#>.LoadID" DataType="Int64" Direction="Input"/>						    
+    						    	<Parameter Name="1" Length="-1" VariableName="User.Operation" DataType="String" Direction="Output"/>
+    						    	<Parameter Name="2" Length="-1" VariableName="User.OperationRowCount" DataType="Int64" Direction="Output"/>						    	    
+    						    </Parameters>
+    					    	<DirectInput>exec [<#=dataRow["MartLayer"]#>].[usp_<#=dataRow["TargetTableName"]#>] ?,? OUTPUT,? OUTPUT</DirectInput>
+    					    </ExecuteSQL>
+    					        
+    					    <ExecuteSQL Name="get table size" ConnectionName="DWHMRT" BypassPrepare="true" ResultSet="SingleRow">
+    					    	<PrecedenceConstraints LogicalType="And">
+    					    		<Inputs>
+    					    			<Input OutputPathName="execute procedure <#=dataRow["MartLayer"]#>.<#=dataRow["TargetTableName"]#>.Output"/>
+    					    		</Inputs>
+    					    	</PrecedenceConstraints>
+    					    	<Results>
+    					    	    <Result Name="TotalRows" VariableName="User.FinalRows" />
+    					    	    <Result Name="TotalSpaceByte" VariableName="User.FinalBytes" />
+    					    	</Results>
+    					    	<DirectInput>
+                                 SELECT 
+                                  [TotalRows]      = sum(p.[rows])
+                                 ,[TotalSpaceByte] = sum(a.[total_pages])*8 
+                                 FROM 
+                                  [sys].[tables] AS t
+                                 INNER JOIN
+                                  [sys].[schemas] AS s ON
+                                  t.[schema_id] = s.[schema_id]
+                                 INNER JOIN      
+                                  [sys].[indexes] AS i ON 
+                                  t.[object_id] = i.[object_id]
+                                 INNER JOIN 
+                                  [sys].[partitions] AS p ON 
+                                  i.[object_id] = p.[object_id] AND 
+                                  i.[index_id] = p.[index_id]
+                                 INNER JOIN 
+                                  [sys].[allocation_units] AS a ON 
+                                  p.[partition_id] = a.[container_id]
+                                 WHERE 
+                                  s.[name] = &apos;<#=dataRow["TargetTableSchemaName"]#>&apos; AND
+                                  t.[name] = &apos;<#=dataRow["TargetTableName"]#>&apos; AND
+                                  i.[object_id] &gt; 255 AND   
+                                  i.[index_id] &lt;= 1
+                                 GROUP BY 
+                                  t.[object_id]
+                                 ;
+    					    	</DirectInput>
+    					    </ExecuteSQL>		        	
+    
+    		        	</Tasks>
+    		        </Package>
+    		  <# } #>	<!-- here could be added a alternative way to build or get your current package -->
+		    <# } #>		    	
+		<# } #>	
+
+
+
+
+		<!-- Define stage packages of level 4 e. g. 01_01_0001-DWHLoad_Stage_Matrix42_Ud_V_Tickets_Incident -->
+
+		<# foreach (var table in RootNode.Tables.Where(x => x.Schema.Name.Equals("sta"))) { #>
+		    <# string srcConn = table.GetTag("SourceConnection");
+		    if (srcConn.StartsWith("CSV")) {
+		        srcConn = "CSV";
+		    }
+		    #>
+			<#
+			if (table.GetTag("IsBiml").Equals("true")) { // only BIML generated Packages are recreated, must be with "true" otherwise is not working
+			#>
+		    <# var packageName = "01_"+table.GetTag("ConnectionIndex")+"_"+table.GetTag("Table_ID_formatted")+"-DWHLoad_Stage_"+srcConn+"_"+table.Name; #>
+				<Package Name="01_<#=table.GetTag("ConnectionIndex")#>_<#=table.GetTag("Table_ID_formatted")#>-DWHLoad_Stage_<#=srcConn#>_<#=table.Name#>" ConstraintMode="Parallel" Disabled="false">
+					<Parameters>
+						<#@ include file="INC-DWHLoadPackageParameters.biml" #>
+					</Parameters>
+					<Variables>
+						<Variable Name="InputFileFullyQualifiedName" DataType="String" Namespace="User" />
+						<Variable Name="OutputFileFullyQualifiedName" DataType="String" Namespace="User"><#=table.GetTag("ArchivePath")#></Variable>
+
+					  <!--GZ 26.02.2018: Auskommentiert - muss dynamisch erstellt werden
+                        <# if (table.GetTag("ConnectorType").Equals("Flat File")) { #>
+						<Variable Name="InputFileFullyQualifiedName" DataType="String" Namespace="User"><#=table.GetTag("FilePath")#><#=table.Name#>.csv</Variable>
+						<Variable Name="OutputFileFullyQualifiedName" DataType="String" Namespace="User"><#=table.GetTag("ArchivePath")#><#=table.Name#>.csv</Variable>
+                     
+                        <# } else { #>
+						<Variable Name="InputFileFullyQualifiedName" DataType="String" Namespace="User"><#=table.GetTag("FilePath")#><#=table.Name#>.xlsx</Variable>
+						<Variable Name="OutputFileFullyQualifiedName" DataType="String" Namespace="User"><#=table.GetTag("ArchivePath")#><#=table.Name#>.xlsx</Variable>
+                        <# } #>
+                        
+                        -->
+                        
+						<#@ include file="INC-DWHLoadPackageVariables.biml" #>
+					</Variables>
+					<Events>
+						<#@ include file="INC-DWHLoadPackageEvents.biml" #>
+					</Events>		
+					<Tasks>
+						<!-- this gets executed if its a SCD 1 table -->
+						<# if (table.GetTag("SCDType").Equals("1")) {  #>
+						<ExecuteSQL Name="truncate sta table" ConnectionName="DWHSTG_<#=srcConn#>" BypassPrepare="true">
+							<DirectInput>truncate table [sta].[<#=table.Name#>]</DirectInput>
+						</ExecuteSQL>
+						<ExecuteSQL Name="get load mode" ConnectionName="DWHMTA" BypassPrepare="true">
+							<PrecedenceConstraints LogicalType="And">
+								<Inputs>
+									<Input OutputPathName="truncate sta table.Output"/>
+								</Inputs>
+							</PrecedenceConstraints>
+							<Parameters>
+								<Parameter Name="0" Length="-1" VariableName="User.LoadMode" DataType="String" Direction="Output"/>
+							</Parameters>
+							<DirectInput>exec [logging].[GetLoadMode] <#=table.GetTag("Table_ID")#>,? OUTPUT</DirectInput>
+						</ExecuteSQL>
+						<!-- this gets executed if it is a delta load -->						
+						<ExecuteSQL Name="get last load date" ConnectionName="DWHMTA" BypassPrepare="true" ResultSet="SingleRow">
+							<PrecedenceConstraints LogicalType="And">
+								<Inputs>
+									<Input Expression="@[User::LoadMode] == &quot;D&quot;" EvaluationOperation="Expression" OutputPathName="get load mode.Output"/>
+								</Inputs>
+							</PrecedenceConstraints>
+							<Results>
+								<Result Name="Res1" VariableName="User.LastLoadDate"/>
+							</Results>
+							<DirectInput>
+								IF NOT EXISTS ( SELECT TOP 1
+														[Res1] = l.[LoadDate]
+												FROM    [logging].[LoadModeLog] AS lml
+														INNER JOIN [logging].[Load] AS l ON lml.[Load_ID] = l.[Load_ID]
+												WHERE   [Table_ID] = <#=table.GetTag("Table_ID")#>
+												ORDER BY l.[LoadDate] DESC )
+									BEGIN
+										SELECT [Res1] = GETDATE();
+									END;
+								ELSE
+									BEGIN
+										SELECT TOP 1
+												[Res1] = l.[LoadDate]
+										FROM    [logging].[LoadModeLog] AS lml
+												INNER JOIN [logging].[Load] AS l ON lml.[Load_ID] = l.[Load_ID]
+										WHERE   [Table_ID] = <#=table.GetTag("Table_ID")#>
+										ORDER BY l.[LoadDate] DESC;
+									END;						
+							</DirectInput>
+						</ExecuteSQL>
+						<Expression Name="set operation type" Expression="@[User::Operation] = &quot;M&quot;">
+							<PrecedenceConstraints LogicalType="And">
+								<Inputs>
+									<Input OutputPathName="get last load date.Output"/>
+								</Inputs>
+							</PrecedenceConstraints>					    
+						</Expression>
+						<!-- define loop container for Excel files -->
+						<# if(table.GetTag("ConnectorType").Equals("Excel File")) { #>
+						<ForEachFileLoop Name="Delta loop over Files" Folder="<#=table.GetTag("FilePath")#>" FileSpecification="*<#=table.Name#>*.xlsx" ConstraintMode="Parallel" RetrieveFileNameFormat="FullyQualified">
+							<VariableMappings>
+								<VariableMapping Name="Mapping" VariableName="User.InputFileFullyQualifiedName"/>
+								<VariableMapping Name="Mapping2" VariableName="User.OutputFileFullyQualifiedName"/>
+							</VariableMappings>
+							<PrecedenceConstraints LogicalType="And">
+								<Inputs>
+									<Input OutputPathName="set operation type.Output"/>
+								</Inputs>
+							</PrecedenceConstraints>
+							<Tasks>
+								<ExecuteSQL Name="truncate sta table before loop" ConnectionName="DWHSTG_<#=srcConn#>" BypassPrepare="true">
+									<DirectInput>truncate table [sta].[<#=table.Name#>]</DirectInput>
+								</ExecuteSQL>
+						<# } #>
+
+						
+						<!-- define loop container for flat files -->
+						<# if(table.GetTag("ConnectorType").Equals("Flat File")) { #>
+						<ForEachFileLoop Name="Delta loop over Files" Folder="<#=table.GetTag("FilePath")#>" FileSpecification="*<#=table.Name#>*.csv" ConstraintMode="Parallel" RetrieveFileNameFormat="FullyQualified">
+							<VariableMappings>
+								<VariableMapping Name="Mapping" VariableName="User.InputFileFullyQualifiedName"/>
+								<VariableMapping Name="Mapping2" VariableName="User.OutputFileFullyQualifiedName"/>
+        					</VariableMappings>
+
+							<PrecedenceConstraints LogicalType="And">
+								<Inputs>
+									<Input OutputPathName="set operation type.Output"/>
+								</Inputs>
+							</PrecedenceConstraints>
+							<Tasks>
+								<ExecuteSQL Name="truncate sta table before loop" ConnectionName="DWHSTG_<#=srcConn#>" BypassPrepare="true">
+									<DirectInput>truncate table [sta].[<#=table.Name#>]</DirectInput>
+								</ExecuteSQL>
+						<# } #>
+						
+						<Dataflow Name="load sta table">
+							<PrecedenceConstraints LogicalType="And">
+								<Inputs>
+								<# if(table.GetTag("ConnectorType").Equals("Flat File") || table.GetTag("ConnectorType").Equals("Excel File")) { #>
+									<Input OutputPathName="truncate sta table before loop.Output"/>
+								<# } else { #>
+									<Input OutputPathName="set operation type.Output"/>
+								<# } #>
+								</Inputs>
+							</PrecedenceConstraints>
+							<# if (!table.GetTag("DeltaIndicator").Trim().Equals("") && (table.GetTag("ConnectorType").Trim().Equals("ODBC") || table.GetTag("ConnectorType").Trim().Equals("ODBC_O"))) { #>
+							<Expressions>
+								<Expression ExternalProperty="[Retrieve Rows].[SqlCommand]">
+									"SELECT <#=table.GetColumnList().Replace("[","").Replace("]","")#> 
+								<# if (table.GetTag("ConnectorType").Trim().Equals("ODBC_O")) { #>
+									 FROM <#=table.GetTag("SourceSchemaQualifiedName")#> 
+									 WHERE <#=table.GetTag("DeltaIndicator")#> > TO_DATE('"
+										+ (DT_STR, 4, 1252) DATEPART("yy" , @[User::LastLoadDate]) + "-" 
+										+ RIGHT("0" + (DT_STR, 2, 1252) DATEPART("mm" , @[User::LastLoadDate]), 2) + "-"
+										+ RIGHT("0" + (DT_STR, 2, 1252) DATEPART("dd" ,@[User::LastLoadDate]), 2) + " "
+										+ RIGHT("0" + (DT_STR, 2, 1252) DATEPART("hh" ,@[User::LastLoadDate]), 2) + ":"
+										+ RIGHT("0" + (DT_STR, 2, 1252) DATEPART("mi" ,@[User::LastLoadDate]), 2) + ":"
+										+ RIGHT("0" + (DT_STR, 2, 1252) DATEPART("ss" ,@[User::LastLoadDate]), 2) + "','YYYY.MM.DD HH24:MI:SS') - 1"
+								<# } else if (table.GetTag("ConnectorType").Trim().Equals("ODBC")) { #>
+									 FROM <#=table.Name#>
+									 WHERE <#=table.GetTag("DeltaIndicator")#> > DATE_SUB(STR_TO_DATE('"
+										+ (DT_STR, 4, 1252) DATEPART("yy" , @[User::LastLoadDate]) + "-" 
+										+ RIGHT("0" + (DT_STR, 2, 1252) DATEPART("mm" , @[User::LastLoadDate]), 2) + "-"
+										+ RIGHT("0" + (DT_STR, 2, 1252) DATEPART("dd" ,@[User::LastLoadDate]), 2) + " "
+										+ RIGHT("0" + (DT_STR, 2, 1252) DATEPART("hh" ,@[User::LastLoadDate]), 2) + ":"
+										+ RIGHT("0" + (DT_STR, 2, 1252) DATEPART("mi" ,@[User::LastLoadDate]), 2) + ":"
+										+ RIGHT("0" + (DT_STR, 2, 1252) DATEPART("ss" ,@[User::LastLoadDate]), 2) + "','%Y-%m-%d %T'), INTERVAL 1 DAY)"
+								<# } #>
+								<# if(!table.GetTag("DataFilter").Trim().Equals("")) { #>
+										+ " AND (<#=table.GetTag("DataFilter")#>)"
+								<# } #>
+								</Expression>
+							</Expressions>
+							<# } #>
+							<Transformations>
+								<# if(table.GetTag("ConnectorType").Equals("OLE DB")) { #>
+								<OleDbSource Name="Retrieve Rows" ConnectionName="<#=table.GetTag("SourceConnection")#>">
+								<# if (!table.GetTag("DeltaIndicator").Trim().Equals("")) { #>
+									<Parameters>
+										<Parameter Name="0" VariableName="User.LastLoadDate"/>
+									</Parameters>
+									<DirectInput>
+										SELECT <#=table.GetColumnList()#> FROM <#=table.GetTag("SourceSchemaQualifiedName")#> where [<#=table.GetTag("DeltaIndicator")#>] > ?
+										<# if(!table.GetTag("DataFilter").Trim().Equals("")) { #>
+										AND (<#=table.GetTag("DataFilter")#>)
+										<# } #>								        
+									</DirectInput>
+								<# } else { #>
+									<DirectInput>
+										SELECT <#=table.GetColumnList()#> FROM <#=table.GetTag("SourceSchemaQualifiedName")#>
+										<# if(!table.GetTag("DataFilter").Trim().Equals("")) { #>
+										WHERE (<#=table.GetTag("DataFilter")#>)
+										<# } #>									    
+									</DirectInput>
+								<# } #>
+								</OleDbSource>
+								<# } else if(table.GetTag("ConnectorType").Equals("ODBC")) { #>
+								<OdbcSource Name="Retrieve Rows" Connection="<#=table.GetTag("SourceConnection")#>">
+									<DirectInput>
+										SELECT <#=table.GetColumnList().Replace("[","").Replace("]","")#> FROM <#=table.Name#>
+										<# if(!table.GetTag("DataFilter").Trim().Equals("")) { #>
+										WHERE (<#=table.GetTag("DataFilter")#>)
+										<# } #>									        
+									</DirectInput>
+									<DataflowOverrides>
+										<OutputPath OutputPathName="Output" ErrorRowDisposition="FailComponent" TruncationRowDisposition="FailComponent">
+											<Columns>  
+											<# foreach (var column in table.Columns) { #>
+												<Column ColumnName="<#=column.Name#>" DataType="<#=column.DataType#>" Length="<#=column.Length#>" />
+											<# } #>
+											</Columns>
+										</OutputPath>
+										<OutputPath OutputPathName="Error">
+											<Columns>
+											<# foreach (var column in table.Columns) { #>
+												<Column ColumnName="<#=column.Name#>" DataType="<#=column.DataType#>" Length="<#=column.Length#>" />
+											<# } #>
+											</Columns>
+										</OutputPath>
+									</DataflowOverrides>
+								</OdbcSource>
+								<# } else if(table.GetTag("ConnectorType").Equals("ODBC_O")) { #>
+								<OdbcSource Name="Retrieve Rows" Connection="<#=table.GetTag("SourceConnection")#>">
+									<DirectInput>
+										SELECT <#=table.GetColumnList().Replace("[","").Replace("]","")#> FROM <#=table.GetTag("SourceSchemaQualifiedName")#>
+										<# if(!table.GetTag("DataFilter").Trim().Equals("")) { #>
+										WHERE (<#=table.GetTag("DataFilter")#>)
+										<# } #>									        
+									</DirectInput>
+									<DataflowOverrides>
+										<OutputPath OutputPathName="Output" ErrorRowDisposition="FailComponent" TruncationRowDisposition="FailComponent">
+											<Columns>  
+											<# foreach (var column in table.Columns) { #>
+												<Column ColumnName="<#=column.Name#>" DataType="<#=column.DataType#>" Length="<#=column.Length#>" />
+											<# } #>
+											</Columns>
+										</OutputPath>
+										<OutputPath OutputPathName="Error">
+											<Columns>
+											<# foreach (var column in table.Columns) { #>
+												<Column ColumnName="<#=column.Name#>" DataType="<#=column.DataType#>" Length="<#=column.Length#>" />
+											<# } #>
+											</Columns>
+										</OutputPath>
+									</DataflowOverrides>		
+								</OdbcSource>
+
+								<# } else if(table.GetTag("ConnectorType").Equals("GoogleBigQuery")) { #>
+								  <CustomComponent Name="<#=table#>" UsesDispositions="true" ComponentTypeName="CData.SSIS.GoogleBigQuery.GoogleBigQuerySource, CData.SSIS2016.GoogleBigQuery, Version=1.2016.0.0, Culture=neutral, PublicKeyToken=cdc168f89cffe9cf">
+									<#@ include file="INC-DWHLoadBigQueryCustomProperties.biml" #>
+									<Connections>
+										<Connection Name="GoogleBigQuery Connection" ConnectionName="GoogleBigQuery" />
+									</Connections>
+										<OutputPaths>
+											<OutputPath Name="CDataOutput">
+												<ExternalColumns>
+													<# foreach (var column in table.Columns) { #>
+															<ExternalColumn DataType="<#=column.DataType#>" Precision="<#=column.Precision#>" Scale="<#=column.Scale#>" Name="<#=column.Name#>" Length="<#=column.Length#>" />
+														<#
+													} #>
+												</ExternalColumns>
+
+												<OutputColumns>
+													<# foreach (var column in table.Columns) { #>
+															<OutputColumn Scale="<#=column.Scale#>" Precision="<#=column.Precision#>" DataType="<#=column.DataType#>" Length="<#=column.Length#>" ExternalMetadataColumnName="<#=column.Name#>" Name="<#=column.Name#>" ErrorRowDisposition="FailComponent" TruncationRowDisposition="FailComponent"/>
+														<#
+													} #>
+												</OutputColumns>
+											</OutputPath>
+										</OutputPaths>
+
+									<DataflowOverrides>
+										<OutputPath OutputPathName="CDataOutput">
+											<Columns>
+												<# foreach (var column in table.Columns) { #>
+														<Column Scale="<#=column.Scale#>" Precision="<#=column.Precision#>" DataType="<#=column.DataType#>" ColumnName="<#=column.Name#>" Length="<#=column.Length#>"/>
+													<#
+												} #>
+											</Columns>
+										</OutputPath>
+									</DataflowOverrides>
+
+
+								</CustomComponent> 
+
+								<# } else if(table.GetTag("ConnectorType").Equals("Flat File")) { #>
+
+
+								<FlatFileSource Name="Retrieve Rows" ConnectionName="<#=table.GetTag("SourceConnection")#>" />
+
+         
+
+                                <DerivedColumns Name="DER Add CurrentFileName">
+                                    <Columns>
+                                        <Column DataType="String" Name="SourceSystem" Length="30">TOKEN(REPLACE(REPLACE(SUBSTRING(REVERSE(SUBSTRING( REVERSE ( @[User::InputFileFullyQualifiedName]  ),FINDSTRING(REVERSE ( @[User::InputFileFullyQualifiedName]   ),".",1)+1,FINDSTRING(Reverse( @[User::InputFileFullyQualifiedName] ),"\\",1)- FINDSTRING(Reverse( @[User::InputFileFullyQualifiedName] ),".",1) -1)),4,20),"-"," "),"_"," ")," ",1) </Column>
+                                        <Column DataType="String" Name="FileName" Length="4000">@[User::InputFileFullyQualifiedName]</Column>
+                                    </Columns>
+                                </DerivedColumns>
+
+
+
+								
+								<# } else if(table.GetTag("ConnectorType").Equals("Excel File")) { #>
+                                <ExcelSource ConnectionName="<#=table.GetTag("SourceConnection")#>" Name="Retrieve Rows">
+                                    <ExternalTableInput Table="PC$"></ExternalTableInput>
+                                </ExcelSource>
+
+                                <DerivedColumns Name="DER Add CurrentFileName">
+                                    <Columns>
+                                        <Column DataType="String" Name="SourceSystem" Length="30">TOKEN(REPLACE(REPLACE(SUBSTRING(REVERSE(SUBSTRING( REVERSE ( @[User::InputFileFullyQualifiedName]  ),FINDSTRING(REVERSE ( @[User::InputFileFullyQualifiedName]   ),".",1)+1,FINDSTRING(Reverse( @[User::InputFileFullyQualifiedName] ),"\\",1)- FINDSTRING(Reverse( @[User::InputFileFullyQualifiedName] ),".",1) -1)),4,20),"-"," "),"_"," ")," ",1)</Column>
+                                        <Column DataType="String" Name="FileName" Length="4000">@[User::InputFileFullyQualifiedName]</Column>
+                                    </Columns>
+                                </DerivedColumns>
+
+								
+								<# } else if(table.GetTag("ConnectorType").Equals("SAP")) { #>
+								<CustomComponent Name="<#=table#>" ComponentTypeName="XtractIS.XtractSourceTable, XtractIS2016, Version=1.0.0.0, Culture=neutral, PublicKeyToken=4b0cc842b94d345e">
+									<#@ include file="INC-DWHLoadSAPCustomProperties.biml" #>
+									<Connections>
+										<Connection Name="Xtract SAP Connection" ConnectionName="SAP" />
+									</Connections>
+									<OutputPaths>
+										<OutputPath Name="XtractOutput">
+											<ExternalColumns>
+											<# foreach (var column in table.Columns) { #>
+												<#if (column.Scale.ToString() == "-1"){
+													if (column.DataType.ToString() == "Int64") {#>
+														<ExternalColumn DataType="Int64" Name="<#=column.Name#>" />
+													<#}
+													else {#>
+														<ExternalColumn DataType="AnsiString" Length="<#=column.Length#>" Name="<#=column.Name#>" />
+													
+												<#     }
+												}
+												else {#>
+													<ExternalColumn DataType="Decimal" Scale="<#=column.Scale#>" Name="<#=column.Name#>" />
+													
+												<#}#>
+
+											<# } #>
+											</ExternalColumns>
+											<OutputColumns>
+											<# foreach (var column in table.Columns) { #>
+											
+												<#if (column.Scale.ToString() == "-1") {
+													if  (column.DataType.ToString() == "Int64") {#>
+														<OutputColumn DataType="Int64" ExternalMetadataColumnName="<#=column.Name#>" Name="<#=column.Name#>" />
+													<#}
+													else {#>
+														<OutputColumn CodePage="1252" DataType="AnsiString" ExternalMetadataColumnName="<#=column.Name#>" Length="<#=column.Length#>" Name="<#=column.Name#>" />
+												<#  }
+													
+												}
+												else {#>
+													<OutputColumn Scale="<#=column.Scale#>" DataType="Decimal" ExternalMetadataColumnName="<#=column.Name#>" Name="<#=column.Name#>" />
+													
+												<#}
+											} #>
+											</OutputColumns>
+										</OutputPath>
+									</OutputPaths>
+									<DataflowOverrides>
+										<OutputPath OutputPathName="XtractOutput">
+											<Columns>
+											<# foreach (var column in table.Columns) { #>
+												<Column ColumnName="<#=column.Name#>" CodePage="1252" />
+											<# } #>                                        
+											</Columns>
+										</OutputPath>
+									</DataflowOverrides>
+								</CustomComponent>
+								<# } #>
+								<RowCount Name="CountSourceRecords" VariableName="User.SourceRowCount"></RowCount>
+								<DerivedColumns Name="DerivedColumn">
+									<Columns>
+										<Column Name="Load_ID" DataType="Int64">@[$Package::LoadID]</Column>
+									</Columns>
+								</DerivedColumns>
+								<OleDbDestination Name="Load Rows" ConnectionName="DWHSTG_<#=srcConn#>">
+									<TableOutput TableName="DWHSTG_<#=srcConn#>.sta.<#=table.Name#>" />
+								</OleDbDestination>
+							</Transformations>
+						</Dataflow>
+						<#if (!table.GetTag("DeleteSource").Equals("")) {#> 
+							<ExecuteSQL Name="delete from source table" ConnectionName="<#=srcConn#>" BypassPrepare="true" ResultSet="SingleRow">
+								<PrecedenceConstraints LogicalType="And">
+									<Inputs>
+										<Input OutputPathName="load sta table.Output"/>
+									</Inputs>
+								</PrecedenceConstraints>
+								<!-- delete all records older then "LastLoadDate" -->
+								<DirectInput>
+									SELECT * FROM <#=table.GetTag("SourceSchemaQualifiedName")#>;
+								</DirectInput>
+							<Expressions>
+								<Expression ExternalProperty="SqlStatementSource">
+								<# if (table.GetTag("ConnectorType").Trim().Equals("ODBC_O")) { #>
+										"BEGIN EXECUTE IMMEDIATE 'DELETE FROM <#=table.GetTag("SourceSchemaQualifiedName")#> WHERE <#=table.GetTag("DeltaIndicator")#> &lt;= TO_DATE(''"
+											+ (DT_STR, 4, 1252) DATEPART("yy" , @[User::LastLoadDate]) + "-" 
+											+ RIGHT("0" + (DT_STR, 2, 1252) DATEPART("mm" , @[User::LastLoadDate]), 2) + "-"
+											+ RIGHT("0" + (DT_STR, 2, 1252) DATEPART("dd" ,@[User::LastLoadDate]), 2) + " "
+											+ RIGHT("0" + (DT_STR, 2, 1252) DATEPART("hh" ,@[User::LastLoadDate]), 2) + ":"
+											+ RIGHT("0" + (DT_STR, 2, 1252) DATEPART("mi" ,@[User::LastLoadDate]), 2) + ":"
+											+ RIGHT("0" + (DT_STR, 2, 1252) DATEPART("ss" ,@[User::LastLoadDate]), 2) + "'',''YYYY.MM.DD HH24:MI:SS'') - 1'; END;"
+									<# } else  { #>
+									  "DELETE 
+										 FROM <#=table.Name#>
+										 WHERE <#=table.GetTag("DeltaIndicator")#> &lt;= DATE_SUB(STR_TO_DATE('"
+											+ (DT_STR, 4, 1252) DATEPART("yy" , @[User::LastLoadDate]) + "-" 
+											+ RIGHT("0" + (DT_STR, 2, 1252) DATEPART("mm" , @[User::LastLoadDate]), 2) + "-"
+											+ RIGHT("0" + (DT_STR, 2, 1252) DATEPART("dd" ,@[User::LastLoadDate]), 2) + " "
+											+ RIGHT("0" + (DT_STR, 2, 1252) DATEPART("hh" ,@[User::LastLoadDate]), 2) + ":"
+											+ RIGHT("0" + (DT_STR, 2, 1252) DATEPART("mi" ,@[User::LastLoadDate]), 2) + ":"
+											+ RIGHT("0" + (DT_STR, 2, 1252) DATEPART("ss" ,@[User::LastLoadDate]), 2) + "','%Y-%m-%d %T'), INTERVAL 1 DAY)"
+									<# } #>
+									<# if(!table.GetTag("DataFilter").Trim().Equals("")) { #>
+											+ " AND (<#=table.GetTag("DataFilter")#>)"
+									<# } #>
+									</Expression>
+								</Expressions>
+							</ExecuteSQL>
+						<# } #>	
+						<ExecuteSQL Name="merge sta into psta" ConnectionName="DWHSTG_<#=srcConn#>" BypassPrepare="true" ResultSet="SingleRow">
+							<PrecedenceConstraints LogicalType="And">
+								<Inputs>
+									<Input OutputPathName="load sta table.Output"/>
+								</Inputs>
+							</PrecedenceConstraints>
+							<Parameters>
+								<Parameter Name="0" VariableName="<#=packageName#>.LoadID" DataType="Int64" Direction="Input"/>
+							</Parameters>
+							<Results>
+								<Result Name="ResultSetCount" VariableName="User.OperationRowCount" />
+							</Results>
+							<!-- get sql merge statement from stored procedure for sta to psta table -->
+							<DirectInput>
+							<#
+							var metadataConnectionString = ((AstDbConnectionNode)RootNode.Connections["DWHMTA"]).ConnectionString;
+							DataTable tables = ExternalDataAccess.GetDataTable(metadataConnectionString,"exec [meta].[usp_GetStageMergeStatement] @i_SourceTable_ID = "+table.GetTag("Table_ID").ToString()+",@i_LoadMode = 'D'");
+							foreach (DataRow row in tables.Rows)
+							{
+								WriteLine(row["Result"].ToString());
+							}
+							#>
+							SELECT @@ROWCOUNT as ResultSetCount;
+							</DirectInput>
+						</ExecuteSQL>
+						
+						<!-- define loop container for excel files -->
+						<# if(table.GetTag("ConnectorType").Equals("Excel File")) { #>
+							</Tasks>
+						</ForEachFileLoop>
+						<# } #>	
+
+						<!-- define loop container for flat files -->
+						<# if(table.GetTag("ConnectorType").Equals("Flat File")) { #>
+	<!-- Wird nicht verwendet, aber für spätere Anforderungen zu Skript Tasks wird der Code nur Auskommentiert
+								<Script Name="Await File Handle Delta">
+									<PrecedenceConstraints LogicalType="And">
+										<Inputs>
+											<Input OutputPathName="merge sta into psta.Output"/>
+										</Inputs>
+									</PrecedenceConstraints>
+									<ScriptTaskProjectReference ScriptTaskProjectName="WaitFileHandle" />
+								</Script>  -->  
+
+
+								<FileSystem Name="move input file" Operation="MoveFile" OverwriteDestination="true">
+									<PrecedenceConstraints LogicalType="And">
+										<Inputs>
+											<Input OutputPathName="merge sta into psta.Output"/>
+										</Inputs>
+									</PrecedenceConstraints>
+									<FlatFileInput ConnectionName="<#=table.GetTag("SourceConnection")#>" />
+	
+									<FileOutput ConnectionName="<#=table.GetTag("ArchiveConnection")#>" />
+
+
+									<!--<VariableOutput VariableName="User.OutputFileFullyQualifiedName" />-->
+								</FileSystem>
+
+
+
+							</Tasks>
+						</ForEachFileLoop>
+
+				        <!-- GZ 20180301: Error Handling -->
+						<FileSystem Name="move input file error" Operation="MoveFile" OverwriteDestination="true">
+							<PrecedenceConstraints LogicalType="Or">
+								<Inputs>
+									<Input OutputPathName="Delta loop over Files.Output" EvaluationValue="Failure"/>
+								</Inputs>
+							</PrecedenceConstraints>
+							<FlatFileInput ConnectionName="<#=table.GetTag("SourceConnection")#>" />
+
+							<FileOutput ConnectionName="<#=table.GetTag("ErrorConnection")#>" />
+						</FileSystem>
+
+						<# } #>
+
+
+
+						
+						<!-- this gets executed if it is a full load -->
+						
+						<!-- define loop container for Excel files -->
+						<# if(table.GetTag("ConnectorType").Equals("Excel File")) { #>
+						<ForEachFileLoop Name="Full loop over Files" Folder="<#=table.GetTag("FilePath")#>" FileSpecification="*<#=table.Name#>*.xlsx" ConstraintMode="Parallel" RetrieveFileNameFormat="FullyQualified">
+							<VariableMappings>
+								<VariableMapping Name="Mapping" VariableName="User.InputFileFullyQualifiedName"/>
+								<VariableMapping Name="Mapping2" VariableName="User.OutputFileFullyQualifiedName"/>
+							</VariableMappings>
+							<PrecedenceConstraints LogicalType="And">
+								<Inputs>
+									<Input Expression="@[User::LoadMode] == &quot;F&quot;" EvaluationOperation="Expression" OutputPathName="get load mode.Output"/>
+								</Inputs>
+							</PrecedenceConstraints>
+							<Tasks>
+						<# } #>
+
+						<!-- define loop container for flat files -->
+						<# if(table.GetTag("ConnectorType").Equals("Flat File")) { #>
+						<ForEachFileLoop Name="Full loop over Files" Folder="<#=table.GetTag("FilePath")#>" FileSpecification="*<#=table.Name#>*.csv" ConstraintMode="Parallel" RetrieveFileNameFormat="FullyQualified">
+							<VariableMappings>
+								<VariableMapping Name="Mapping" VariableName="User.InputFileFullyQualifiedName"/>
+								<VariableMapping Name="Mapping2" VariableName="User.OutputFileFullyQualifiedName"/>
+							</VariableMappings>
+							<PrecedenceConstraints LogicalType="And">
+								<Inputs>
+									<Input Expression="@[User::LoadMode] == &quot;F&quot;" EvaluationOperation="Expression" OutputPathName="get load mode.Output"/>
+								</Inputs>
+							</PrecedenceConstraints>
+							<Tasks>
+						<# } #>
+						<ExecuteSQL Name="truncate psta table" ConnectionName="DWHSTG_<#=srcConn#>" BypassPrepare="true">
+							<# if(!table.GetTag("ConnectorType").Equals("Flat File") && !table.GetTag("ConnectorType").Equals("Excel File")) { #>
+							<PrecedenceConstraints LogicalType="And">
+								<Inputs>
+									<Input Expression="@[User::LoadMode] == &quot;F&quot;" EvaluationOperation="Expression" OutputPathName="get load mode.Output"/>
+								</Inputs>
+							</PrecedenceConstraints>
+							<# } #>	
+							<DirectInput>truncate table [psta].[<#=table.Name#>]</DirectInput>
+						</ExecuteSQL>	
+						
+						<Dataflow Name="load psta table">
+							<PrecedenceConstraints LogicalType="And">
+								<Inputs>
+									<Input OutputPathName="truncate psta table.Output"/>
+								</Inputs>
+							</PrecedenceConstraints>
+
+							<Transformations>
+								<# if(table.GetTag("ConnectorType").Equals("OLE DB")) { #>
+								<OleDbSource Name="Retrieve Rows" ConnectionName="<#=table.GetTag("SourceConnection")#>">
+									<Parameters>
+										<Parameter Name="0" VariableName="User.LastLoadDate"/>
+									</Parameters>
+									<DirectInput>
+										SELECT <#=table.GetColumnList()#> FROM <#=table.GetTag("SourceSchemaQualifiedName")#>
+										<# if(!table.GetTag("DataFilter").Trim().Equals("")) { #>
+										WHERE <#=table.GetTag("DataFilter")#>
+										<# } #>
+									</DirectInput>
+								</OleDbSource>
+								<# } else if(table.GetTag("ConnectorType").Equals("ODBC")) { #>
+								<OdbcSource Name="Retrieve Rows" Connection="<#=table.GetTag("SourceConnection")#>">
+									<DirectInput>
+										SELECT <#=table.GetColumnList().Replace("[","").Replace("]","")#> FROM <#=table.Name#>
+										<# if(!table.GetTag("DataFilter").Trim().Equals("")) { #>
+										WHERE <#=table.GetTag("DataFilter")#>
+										<# } #>
+									</DirectInput>
+									<DataflowOverrides>
+										<OutputPath OutputPathName="Output" ErrorRowDisposition="FailComponent" TruncationRowDisposition="FailComponent">
+											<Columns>  
+											<# foreach (var column in table.Columns) { #>
+												<Column ColumnName="<#=column.Name#>" DataType="<#=column.DataType#>" Length="<#=column.Length#>" />
+											<# } #>
+											</Columns>
+										</OutputPath>
+										<OutputPath OutputPathName="Error">
+											<Columns>
+											<# foreach (var column in table.Columns) { #>
+												<Column ColumnName="<#=column.Name#>" DataType="<#=column.DataType#>" Length="<#=column.Length#>" />
+											<# } #>
+											</Columns>
+										</OutputPath>
+									</DataflowOverrides>
+								</OdbcSource>
+								<# } else if(table.GetTag("ConnectorType").Equals("ODBC_O")) { #>
+								<OdbcSource Name="Retrieve Rows" Connection="<#=table.GetTag("SourceConnection")#>">
+									<DirectInput>
+										SELECT <#=table.GetColumnList().Replace("[","").Replace("]","")#> FROM <#=table.GetTag("SourceSchemaQualifiedName")#>
+										<# if(!table.GetTag("DataFilter").Trim().Equals("")) { #>
+										WHERE <#=table.GetTag("DataFilter")#>
+										<# } #>								        
+									</DirectInput>
+									<DataflowOverrides>
+										<OutputPath OutputPathName="Output" ErrorRowDisposition="FailComponent" TruncationRowDisposition="FailComponent">
+											<Columns>  
+											<# foreach (var column in table.Columns) { #>
+												<Column ColumnName="<#=column.Name#>" DataType="<#=column.DataType#>" Length="<#=column.Length#>" />
+											<# } #>
+											</Columns>
+										</OutputPath>
+										<OutputPath OutputPathName="Error">
+											<Columns>
+											<# foreach (var column in table.Columns) { #>
+												<Column ColumnName="<#=column.Name#>" DataType="<#=column.DataType#>" Length="<#=column.Length#>" />
+											<# } #>
+											</Columns>
+										</OutputPath>
+									</DataflowOverrides>
+								</OdbcSource>
+
+								<# } else if(table.GetTag("ConnectorType").Equals("GoogleBigQuery")) { #>
+								  <CustomComponent Name="<#=table#>" UsesDispositions="true" ComponentTypeName="CData.SSIS.GoogleBigQuery.GoogleBigQuerySource, CData.SSIS2016.GoogleBigQuery, Version=1.2016.0.0, Culture=neutral, PublicKeyToken=cdc168f89cffe9cf">
+									<#@ include file="INC-DWHLoadBigQueryCustomProperties.biml" #>
+									<Connections>
+										<Connection Name="GoogleBigQuery Connection" ConnectionName="GoogleBigQuery" />
+									</Connections>
+										<OutputPaths>
+											<OutputPath Name="CDataOutput">
+												<ExternalColumns>
+													<# foreach (var column in table.Columns) { #>
+															<ExternalColumn DataType="<#=column.DataType#>" Precision="<#=column.Precision#>" Scale="<#=column.Scale#>" Name="<#=column.Name#>" Length="<#=column.Length#>"/>
+														<#
+													} #>
+												</ExternalColumns>
+
+
+												<OutputColumns>
+													<# foreach (var column in table.Columns) { #>
+															<OutputColumn Scale="<#=column.Scale#>" Precision="<#=column.Precision#>" DataType="<#=column.DataType#>" ExternalMetadataColumnName="<#=column.Name#>" Name="<#=column.Name#>" Length="<#=column.Length#>" ErrorRowDisposition="FailComponent" TruncationRowDisposition="FailComponent"/>
+														<#
+													} #>
+												</OutputColumns>
+											</OutputPath>
+										</OutputPaths>
+
+										<DataflowOverrides>
+											<OutputPath OutputPathName="CDataOutput">
+												<Columns>
+													<# foreach (var column in table.Columns) { #>
+															<Column Scale="<#=column.Scale#>" Precision="<#=column.Precision#>" DataType="<#=column.DataType#>" ColumnName="<#=column.Name#>" Length="<#=column.Length#>"/>
+														<#
+													} #>
+												</Columns>
+											</OutputPath>
+										</DataflowOverrides>
+
+								</CustomComponent>
+								<# } else if(table.GetTag("ConnectorType").Equals("Flat File")) { #>
+								<FlatFileSource Name="Retrieve Rows" ConnectionName="<#=table.GetTag("SourceConnection")#>" />
+
+                                <DerivedColumns Name="DER Add CurrentFileName">
+                                    <Columns>
+                                        <Column DataType="String" Name="SourceSystem" Length="30">TOKEN(REPLACE(REPLACE(SUBSTRING(REVERSE(SUBSTRING( REVERSE ( @[User::InputFileFullyQualifiedName]  ),FINDSTRING(REVERSE ( @[User::InputFileFullyQualifiedName]   ),".",1)+1,FINDSTRING(Reverse( @[User::InputFileFullyQualifiedName] ),"\\",1)- FINDSTRING(Reverse( @[User::InputFileFullyQualifiedName] ),".",1) -1)),4,20),"-"," "),"_"," ")," ",1)</Column>
+                                        <Column DataType="String" Name="FileName" Length="4000">@[User::InputFileFullyQualifiedName]</Column>
+                                    </Columns>
+                                </DerivedColumns>
+
+
+								<# } else if(table.GetTag("ConnectorType").Equals("Excel File")) { #>
+                                <ExcelSource Name="Retrieve Rows" ConnectionName="<#=table.GetTag("SourceConnection")#>">
+                                    <ExternalTableInput Table="PC$"></ExternalTableInput>
+                                </ExcelSource>
+
+                                <DerivedColumns Name="DER Add CurrentFileName">
+                                    <Columns>
+                                        <Column DataType="String" Name="SourceSystem" Length="30">TOKEN(REPLACE(REPLACE(SUBSTRING(REVERSE(SUBSTRING( REVERSE ( @[User::InputFileFullyQualifiedName]  ),FINDSTRING(REVERSE ( @[User::InputFileFullyQualifiedName]   ),".",1)+1,FINDSTRING(Reverse( @[User::InputFileFullyQualifiedName] ),"\\",1)- FINDSTRING(Reverse( @[User::InputFileFullyQualifiedName] ),".",1) -1)),4,20),"-"," "),"_"," ")," ",1)</Column>
+                                        <Column DataType="String" Name="FileName" Length="4000">@[User::InputFileFullyQualifiedName]</Column>
+                                    </Columns>
+                                </DerivedColumns>
+
+								<# } else if(table.GetTag("ConnectorType").Equals("SAP")) { #>
+								<CustomComponent Name="<#=table#>" ComponentTypeName="XtractIS.XtractSourceTable, XtractIS2016, Version=1.0.0.0, Culture=neutral, PublicKeyToken=4b0cc842b94d345e">
+									<#@ include file="INC-DWHLoadSAPCustomProperties.biml" #>
+									<Connections>
+										<Connection Name="Xtract SAP Connection" ConnectionName="SAP" />
+									</Connections>
+									<OutputPaths>
+										<OutputPath Name="XtractOutput">
+											<ExternalColumns>
+
+											<# foreach (var column in table.Columns) { 
+												if (column.Scale.ToString() == "-1") {
+													if (column.DataType.ToString() == "Int64") {#>
+														<ExternalColumn DataType="Int64" Name="<#=column.Name#>" />
+													<#}
+													else {#>
+														<ExternalColumn DataType="AnsiString" Length="<#=column.Length#>" Name="<#=column.Name#>" />
+													<#}
+												}
+												else {#>
+													<ExternalColumn DataType="Decimal" Precision="<#=column.Precision#>" Scale="<#=column.Scale#>" Name="<#=column.Name#>" />
+													
+												<#}
+
+											} #>
+										
+											</ExternalColumns>
+											<OutputColumns>
+											<# foreach (var column in table.Columns) { #>
+											
+												<#if (column.Scale.ToString() == "-1"){
+													if (column.DataType.ToString() == "Int64") {#>
+														<OutputColumn DataType="Int64" ExternalMetadataColumnName="<#=column.Name#>" Name="<#=column.Name#>" />
+													<#}
+													else {#>
+														<OutputColumn CodePage="1252" DataType="AnsiString" ExternalMetadataColumnName="<#=column.Name#>" Length="<#=column.Length#>" Name="<#=column.Name#>" />
+				
+													<#}
+												}
+												else {#>
+													<OutputColumn Scale="<#=column.Scale#>" Precision="<#=column.Precision#>" DataType="Decimal" ExternalMetadataColumnName="<#=column.Name#>" Name="<#=column.Name#>" />
+													
+												<#}
+											} #>
+
+											</OutputColumns>
+										</OutputPath>
+									</OutputPaths>
+									<DataflowOverrides>
+										<OutputPath OutputPathName="XtractOutput">
+											<Columns>
+											<# foreach (var column in table.Columns) { #>
+												<Column ColumnName="<#=column.Name#>" CodePage="1252" />
+											<# } #>                                        
+											</Columns>
+										</OutputPath>
+									</DataflowOverrides>
+								</CustomComponent>
+								<# } #>				
+								<RowCount Name="CountSourceRecords" VariableName="User.SourceRowCount"></RowCount>
+								<DerivedColumns Name="DerivedColumn1">
+									<Columns>
+										<Column Name="Create_Load_ID" DataType="Int64">@[$Package::LoadID]</Column>
+									</Columns>
+								</DerivedColumns>
+								<DerivedColumns Name="DerivedColumn2">
+									<Columns>
+										<Column Name="Change_Load_ID" DataType="Int64">@[$Package::LoadID]</Column>
+									</Columns>
+								</DerivedColumns>
+								<OleDbDestination Name="Load Rows" ConnectionName="DWHSTG_<#=srcConn#>">
+									<TableOutput TableName="DWHSTG_<#=srcConn#>.psta.<#=table.Name#>" />
+								</OleDbDestination>
+
+							</Transformations>
+
+						</Dataflow>
+
+						<!-- define loop container for excel files -->
+						<# if(table.GetTag("ConnectorType").Equals("Excel File")) { #>
+							</Tasks>
+						</ForEachFileLoop>
+						<# } #>					
+
+						
+						<!-- define loop container for flat files -->
+						<# if(table.GetTag("ConnectorType").Equals("Flat File")) { #>
+	<!-- Wird nicht verwendet, aber für spätere Anforderungen zu Skript Tasks wird der Code nur Auskommentiert
+								<Script Name="Await File Handle Full">
+									<PrecedenceConstraints LogicalType="And">
+										<Inputs>
+											<Input OutputPathName="load psta table.Output"/>
+										</Inputs>
+									</PrecedenceConstraints>
+									<ScriptTaskProjectReference ScriptTaskProjectName="WaitFileHandle" />
+								</Script> -->
+								<FileSystem Name="move input file full" Operation="MoveFile" OverwriteDestination="true">
+									<PrecedenceConstraints LogicalType="Or">
+										<Inputs>
+											<Input OutputPathName="load psta table.Output"/>
+										</Inputs>
+									</PrecedenceConstraints>
+									<FlatFileInput ConnectionName="<#=table.GetTag("SourceConnection")#>" />
+									<FileOutput ConnectionName="<#=table.GetTag("ArchiveConnection")#>" />
+
+								</FileSystem>
+
+							</Tasks>
+						</ForEachFileLoop>
+
+				        <!-- GZ 20180301: Error Handling -->
+						<FileSystem Name="move input file full error" Operation="MoveFile" OverwriteDestination="true">
+							<PrecedenceConstraints LogicalType="Or">
+								<Inputs>
+									<Input OutputPathName="Full loop over Files.Output" EvaluationValue="Failure"/>
+								</Inputs>
+							</PrecedenceConstraints>
+							<FlatFileInput ConnectionName="<#=table.GetTag("SourceConnection")#>" />
+
+							<FileOutput ConnectionName="<#=table.GetTag("ErrorConnection")#>" />
+						</FileSystem>
+
+						<# } #>					
+						
+
+                         <!-- GZ 20180709: Define IsDimensionTable -->
+                        <#if (table.GetTag("IsDimensionTable").Equals("true")) {#>     
+
+    						<ExecuteSQL Name="update non exist source record" ConnectionName="DWHSTG_<#=srcConn#>" BypassPrepare="true" ResultSet="None">
+    							<PrecedenceConstraints LogicalType="And">
+    								<Inputs>
+            								<# if(table.GetTag("ConnectorType").Equals("Flat File") || table.GetTag("ConnectorType").Equals("Excel File")) { #>
+            									<Input OutputPathName="Delta loop over Files.Output"/>
+            								<# } else { #>
+            									<Input OutputPathName="merge sta into psta.Output"/>							
+            								<# } #>							
+    								</Inputs>
+    							</PrecedenceConstraints>
+    							<!-- get sql update statement from stored procedure for sta to psta table -->
+    							<DirectInput>
+    							<#
+        							var metadataConnectionStringUpdate = ((AstDbConnectionNode)RootNode.Connections["DWHMTA"]).ConnectionString;
+        							DataTable tablesUpdate = ExternalDataAccess.GetDataTable(metadataConnectionStringUpdate,"exec [meta].[usp_GetStageUpdateDeleteStatement] @i_SourceTable_ID = "+table.GetTag("Table_ID").ToString());
+        							foreach (DataRow row in tablesUpdate.Rows)
+        							{
+        								WriteLine(row["Result"].ToString());
+        							}
+    							#>
+    							</DirectInput>
+    						</ExecuteSQL>
+                            
+                        <# } #>	
+                        
+						<Expression Name="set OperationRowCount to SourceRowCount" Expression="@[User::OperationRowCount] =  @[User::SourceRowCount]">
+							<PrecedenceConstraints LogicalType="Or">
+								<Inputs>
+								<!-- in case of flat file input the predecessor is different -->
+								<# if(table.GetTag("ConnectorType").Equals("Flat File") || table.GetTag("ConnectorType").Equals("Excel File")) { #>
+									<Input OutputPathName="Full loop over Files.Output"/>
+
+								<# } else { #>
+
+									<Input OutputPathName="load psta table.Output"/>							
+								<# } #>	
+								</Inputs>
+							</PrecedenceConstraints>					
+						</Expression>
+
+						<ExecuteSQL Name="set load mode" ConnectionName="DWHMTA" BypassPrepare="true">
+							<PrecedenceConstraints LogicalType="Or">
+								<Inputs>
+								<!-- in case of flat file input the predecessor is different -->
+								<# if(table.GetTag("ConnectorType").Equals("Flat File") || table.GetTag("ConnectorType").Equals("Excel File")) { #>
+
+                                    <#if (table.GetTag("IsDimensionTable").Equals("true")) {#>
+									    <Input OutputPathName="update non exist source record.Output"/>
+								    <# } else { #>
+									    <Input OutputPathName="Delta loop over Files.Output"/>
+                                    <# } #>
+
+								<# } else { #>
+								     <#if (table.GetTag("IsDimensionTable").Equals("true")) {#>
+									    <Input OutputPathName="update non exist source record.Output"/>							
+								     <# } else { #>
+									    <Input OutputPathName="merge sta into psta.Output"/>							
+                                     <# } #>
+								
+								<# } #>							
+									<Input OutputPathName="set OperationRowCount to SourceRowCount.Output"/>
+								</Inputs>
+							</PrecedenceConstraints>
+							<Parameters>
+								<Parameter Name="0" Length="-1" VariableName="<#=packageName#>.LoadID" DataType="Int64" Direction="Input"/>
+								<Parameter Name="1" Length="-1" VariableName="User.LoadMode" DataType="String" Direction="Input"/>							
+							</Parameters>
+							<DirectInput>exec [logging].[SetLoadMode] ?,<#=table.GetTag("Table_ID")#>,?</DirectInput>
+						</ExecuteSQL>
+						<ExecuteSQL Name="get table size" ConnectionName="DWHSTG_<#=srcConn#>" BypassPrepare="true" ResultSet="SingleRow">
+							<PrecedenceConstraints LogicalType="And">
+								<Inputs>
+									<Input OutputPathName="set load mode.Output"/>
+								</Inputs>
+							</PrecedenceConstraints>
+							<Results>
+								<Result Name="TotalRows" VariableName="User.FinalRows" />
+								<Result Name="TotalSpaceByte" VariableName="User.FinalBytes" />
+							</Results>
+							<DirectInput>
+							 SELECT 
+							  [TotalRows]      = sum(p.[rows])
+							 ,[TotalSpaceByte] = sum(a.[total_pages])*8 
+							 FROM 
+							  [sys].[tables] AS t
+							 INNER JOIN
+							  [sys].[schemas] AS s ON
+							  t.[schema_id] = s.[schema_id]
+							 INNER JOIN      
+							  [sys].[indexes] AS i ON 
+							  t.[object_id] = i.[object_id]
+							 INNER JOIN 
+							  [sys].[partitions] AS p ON 
+							  i.[object_id] = p.[object_id] AND 
+							  i.[index_id] = p.[index_id]
+							 INNER JOIN 
+							  [sys].[allocation_units] AS a ON 
+							  p.[partition_id] = a.[container_id]
+							 WHERE 
+							  s.[name] = &apos;psta&apos; AND
+							  t.[name] = &apos;<#=table.Name#>&apos; AND
+							  i.[object_id] &gt; 255 AND   
+							  i.[index_id] &lt;= 1
+							 GROUP BY 
+							  t.[object_id]
+							 ;
+							</DirectInput>
+						</ExecuteSQL>
+						<# } #>
+							
+							
+						<!-- this gets executed if its a SCD 2 table -->
+						<# if (table.GetTag("SCDType").Equals("2")) {  #>
+						<ExecuteSQL Name="truncate sta table" ConnectionName="DWHSTG_<#=srcConn#>" BypassPrepare="true">
+							<DirectInput>truncate table [sta].[<#=table.Name#>]</DirectInput>
+						</ExecuteSQL>
+
+
+						<Expression Name="set operation type" Expression="@[User::Operation] = &quot;M&quot;">
+							<PrecedenceConstraints LogicalType="And">
+								<Inputs>
+									<Input OutputPathName="truncate sta table.Output"/>
+								</Inputs>
+							</PrecedenceConstraints>					    
+						</Expression>				
+						<ExecuteSQL Name="get load mode" ConnectionName="DWHMTA" BypassPrepare="true">
+							<PrecedenceConstraints LogicalType="And">
+								<Inputs>
+									<Input OutputPathName="set operation type.Output"/>
+								</Inputs>
+							</PrecedenceConstraints>
+							<Parameters>
+								<Parameter Name="0" Length="-1" VariableName="User.LoadMode" DataType="String" Direction="Output"/>
+							</Parameters>
+							<DirectInput>exec [logging].[GetLoadMode] <#=table.GetTag("Table_ID")#>,? OUTPUT</DirectInput>
+						</ExecuteSQL>
+
+						<!-- define loop container for excel files -->
+						<# if(table.GetTag("ConnectorType").Equals("Excel File")) { #>
+						<ForEachFileLoop Name="Delta loop over Files" Folder="<#=table.GetTag("FilePath")#>" FileSpecification="*<#=table.Name#>*.xlsx" ConstraintMode="Parallel" RetrieveFileNameFormat="FullyQualified">
+							<VariableMappings>
+								<VariableMapping Name="Mapping" VariableName="User.InputFileFullyQualifiedName"/>
+								<VariableMapping Name="Mapping" VariableName="User.OutputFileFullyQualifiedName"/>
+							</VariableMappings>
+							<PrecedenceConstraints LogicalType="And">
+								<Inputs>
+									<Input OutputPathName="get load mode.Output"/>
+								</Inputs>
+							</PrecedenceConstraints>
+							<Tasks>
+								<ExecuteSQL Name="truncate sta table before loop" ConnectionName="DWHSTG_<#=srcConn#>" BypassPrepare="true">
+									<DirectInput>truncate table [sta].[<#=table.Name#>]</DirectInput>
+								</ExecuteSQL>
+						<# } #>
+						
+						<!-- define loop container for flat files -->
+						<# if(table.GetTag("ConnectorType").Equals("Flat File")) { #>
+						<ForEachFileLoop Name="Delta loop over Files" Folder="<#=table.GetTag("FilePath")#>" FileSpecification="*<#=table.Name#>*.csv" ConstraintMode="Parallel" RetrieveFileNameFormat="FullyQualified">
+							<VariableMappings>
+								<VariableMapping Name="Mapping" VariableName="User.InputFileFullyQualifiedName"/>
+								<VariableMapping Name="Mapping2" VariableName="User.OutputFileFullyQualifiedName"/>
+							</VariableMappings>
+							<PrecedenceConstraints LogicalType="And">
+								<Inputs>
+									<Input OutputPathName="get load mode.Output"/>
+								</Inputs>
+							</PrecedenceConstraints>
+							<Tasks>
+								<ExecuteSQL Name="truncate sta table before loop" ConnectionName="DWHSTG_<#=srcConn#>" BypassPrepare="true">
+									<DirectInput>truncate table [sta].[<#=table.Name#>]</DirectInput>
+								</ExecuteSQL>
+						<# } #>
+						
+						<Dataflow Name="load sta table delta">
+							<PrecedenceConstraints LogicalType="And">
+								<Inputs>
+								<# if(table.GetTag("ConnectorType").Equals("Flat File") || table.GetTag("ConnectorType").Equals("Excel File")) { #>
+									<Input OutputPathName="truncate sta table before loop.Output"/>
+								<# } else { #>
+									<Input OutputPathName="get load mode.Output"/>
+								<# } #>
+								</Inputs>
+							</PrecedenceConstraints>
+							<# if (!table.GetTag("DeltaIndicator").Trim().Equals("") && (table.GetTag("ConnectorType").Trim().Equals("ODBC") || table.GetTag("ConnectorType").Trim().Equals("ODBC_O"))) { #>
+							<Expressions>
+								<Expression ExternalProperty="[Retrieve Rows].[SqlCommand]">
+									"SELECT <#=table.GetColumnList().Replace("[","").Replace("]","")#> 
+								<# if (table.GetTag("ConnectorType").Trim().Equals("ODBC_O")) { #>
+									 FROM <#=table.GetTag("SourceSchemaQualifiedName")#> 
+									 WHERE <#=table.GetTag("DeltaIndicator")#> > TO_DATE('"
+										+ (DT_STR, 4, 1252) DATEPART("yy" , @[User::LastLoadDate]) + "-" 
+										+ RIGHT("0" + (DT_STR, 2, 1252) DATEPART("mm" , @[User::LastLoadDate]), 2) + "-"
+										+ RIGHT("0" + (DT_STR, 2, 1252) DATEPART("dd" ,@[User::LastLoadDate]), 2) + " "
+										+ RIGHT("0" + (DT_STR, 2, 1252) DATEPART("hh" ,@[User::LastLoadDate]), 2) + ":"
+										+ RIGHT("0" + (DT_STR, 2, 1252) DATEPART("mi" ,@[User::LastLoadDate]), 2) + ":"
+										+ RIGHT("0" + (DT_STR, 2, 1252) DATEPART("ss" ,@[User::LastLoadDate]), 2) + "','YYYY.MM.DD HH24:MI:SS') - 1"
+								<# } else if (table.GetTag("ConnectorType").Trim().Equals("ODBC")) { #>
+									 FROM <#=table.Name#>
+									 WHERE <#=table.GetTag("DeltaIndicator")#> > DATE_SUB(STR_TO_DATE('"
+										+ (DT_STR, 4, 1252) DATEPART("yy" , @[User::LastLoadDate]) + "-" 
+										+ RIGHT("0" + (DT_STR, 2, 1252) DATEPART("mm" , @[User::LastLoadDate]), 2) + "-"
+										+ RIGHT("0" + (DT_STR, 2, 1252) DATEPART("dd" ,@[User::LastLoadDate]), 2) + " "
+										+ RIGHT("0" + (DT_STR, 2, 1252) DATEPART("hh" ,@[User::LastLoadDate]), 2) + ":"
+										+ RIGHT("0" + (DT_STR, 2, 1252) DATEPART("mi" ,@[User::LastLoadDate]), 2) + ":"
+										+ RIGHT("0" + (DT_STR, 2, 1252) DATEPART("ss" ,@[User::LastLoadDate]), 2) + "','%Y-%m-%d %T'), INTERVAL 1 DAY)"
+								<# } #>
+								<# if(!table.GetTag("DataFilter").Trim().Equals("")) { #>
+										+ " AND (<#=table.GetTag("DataFilter")#>)"
+								<# } #>
+								</Expression>
+							</Expressions>
+							<# } #>
+							<Transformations>
+								<# if(table.GetTag("ConnectorType").Equals("OLE DB")) { #>
+								<OleDbSource Name="Retrieve Rows" ConnectionName="<#=table.GetTag("SourceConnection")#>">
+								<# if (!table.GetTag("DeltaIndicator").Trim().Equals("")) { #>
+									<Parameters>
+										<Parameter Name="0" VariableName="User.LastLoadDate"/>
+									</Parameters>
+									<DirectInput>
+										SELECT <#=table.GetColumnList()#> FROM <#=table.GetTag("SourceSchemaQualifiedName")#> where [<#=table.GetTag("DeltaIndicator")#>] > ?
+										<# if(!table.GetTag("DataFilter").Trim().Equals("")) { #>
+										AND (<#=table.GetTag("DataFilter")#>)
+										<# } #>								        
+									</DirectInput>
+								<# } else { #>
+									<DirectInput>
+										SELECT <#=table.GetColumnList()#> FROM <#=table.GetTag("SourceSchemaQualifiedName")#>
+										<# if(!table.GetTag("DataFilter").Trim().Equals("")) { #>
+										WHERE (<#=table.GetTag("DataFilter")#>)
+										<# } #>									    
+									</DirectInput>
+								<# } #>
+								</OleDbSource>
+								<# } else if(table.GetTag("ConnectorType").Equals("ODBC")) { #>
+								<OdbcSource Name="Retrieve Rows" Connection="<#=table.GetTag("SourceConnection")#>">
+									<DirectInput>
+										SELECT <#=table.GetColumnList().Replace("[","").Replace("]","")#> FROM <#=table.Name#>
+										<# if(!table.GetTag("DataFilter").Trim().Equals("")) { #>
+										WHERE (<#=table.GetTag("DataFilter")#>)
+										<# } #>									        
+									</DirectInput>
+									<DataflowOverrides>
+										<OutputPath OutputPathName="Output" ErrorRowDisposition="FailComponent" TruncationRowDisposition="FailComponent">
+											<Columns>  
+											<# foreach (var column in table.Columns) { #>
+												<Column ColumnName="<#=column.Name#>" DataType="<#=column.DataType#>" Length="<#=column.Length#>" />
+											<# } #>
+											</Columns>
+										</OutputPath>
+										<OutputPath OutputPathName="Error">
+											<Columns>
+											<# foreach (var column in table.Columns) { #>
+												<Column ColumnName="<#=column.Name#>" DataType="<#=column.DataType#>" Length="<#=column.Length#>" />
+											<# } #>
+											</Columns>
+										</OutputPath>
+									</DataflowOverrides>
+								</OdbcSource>
+								<# } else if(table.GetTag("ConnectorType").Equals("ODBC_O")) { #>
+								<OdbcSource Name="Retrieve Rows" Connection="<#=table.GetTag("SourceConnection")#>">
+									<DirectInput>
+										SELECT <#=table.GetColumnList().Replace("[","").Replace("]","")#> FROM <#=table.GetTag("SourceSchemaQualifiedName")#>
+										<# if(!table.GetTag("DataFilter").Trim().Equals("")) { #>
+										WHERE (<#=table.GetTag("DataFilter")#>)
+										<# } #>									        
+									</DirectInput>
+									<DataflowOverrides>
+										<OutputPath OutputPathName="Output" ErrorRowDisposition="FailComponent" TruncationRowDisposition="FailComponent">
+											<Columns>  
+											<# foreach (var column in table.Columns) { #>
+												<Column ColumnName="<#=column.Name#>" DataType="<#=column.DataType#>" Length="<#=column.Length#>" />
+											<# } #>
+											</Columns>
+										</OutputPath>
+										<OutputPath OutputPathName="Error">
+											<Columns>
+											<# foreach (var column in table.Columns) { #>
+												<Column ColumnName="<#=column.Name#>" DataType="<#=column.DataType#>" Length="<#=column.Length#>" />
+											<# } #>
+											</Columns>
+										</OutputPath>
+									</DataflowOverrides>		
+								</OdbcSource>
+								<# } else if(table.GetTag("ConnectorType").Equals("Flat File")) { #>
+								<FlatFileSource Name="Retrieve Rows" ConnectionName="<#=table.GetTag("SourceConnection")#>" />
+
+                                <DerivedColumns Name="DER Add CurrentFileName">
+                                    <Columns>
+                                        <Column DataType="String" Name="SourceSystem" Length="30">TOKEN(REPLACE(REPLACE(SUBSTRING(REVERSE(SUBSTRING( REVERSE ( @[User::InputFileFullyQualifiedName]  ),FINDSTRING(REVERSE ( @[User::InputFileFullyQualifiedName]   ),".",1)+1,FINDSTRING(Reverse( @[User::InputFileFullyQualifiedName] ),"\\",1)- FINDSTRING(Reverse( @[User::InputFileFullyQualifiedName] ),".",1) -1)),4,20),"-"," "),"_"," ")," ",1)</Column>
+                                        <Column DataType="String" Name="FileName" Length="4000">@[User::InputFileFullyQualifiedName]</Column>
+                                    </Columns>
+                                </DerivedColumns>
+
+								<# } else if(table.GetTag("ConnectorType").Equals("Excel File")) { #>
+                                <ExcelSource Name="Retrieve Rows" ConnectionName="<#=table.GetTag("SourceConnection")#>">
+                                    <ExternalTableInput Table="PC$"></ExternalTableInput>
+                                </ExcelSource>
+
+                                <DerivedColumns Name="DER Add CurrentFileName">
+                                    <Columns>
+                                        <Column DataType="String" Name="SourceSystem" Length="30">TOKEN(REPLACE(REPLACE(SUBSTRING(REVERSE(SUBSTRING( REVERSE ( @[User::InputFileFullyQualifiedName]  ),FINDSTRING(REVERSE ( @[User::InputFileFullyQualifiedName]   ),".",1)+1,FINDSTRING(Reverse( @[User::InputFileFullyQualifiedName] ),"\\",1)- FINDSTRING(Reverse( @[User::InputFileFullyQualifiedName] ),".",1) -1)),4,20),"-"," "),"_"," ")," ",1)</Column>
+                                        <Column DataType="String" Name="FileName" Length="4000">@[User::InputFileFullyQualifiedName]</Column>
+                                    </Columns>
+                                </DerivedColumns>
+
+
+								<# } else if(table.GetTag("ConnectorType").Equals("SAP")) { #>
+								<CustomComponent Name="<#=table#>" ComponentTypeName="XtractIS.XtractSourceTable, XtractIS2016, Version=1.0.0.0, Culture=neutral, PublicKeyToken=4b0cc842b94d345e">
+									<#@ include file="INC-DWHLoadSAPCustomProperties.biml" #>
+									<Connections>
+										<Connection Name="Xtract SAP Connection" ConnectionName="SAP" />
+									</Connections>
+									<OutputPaths>
+										<OutputPath Name="XtractOutput">
+											<ExternalColumns>
+											<# foreach (var column in table.Columns) { #>
+												<#if (column.Scale.ToString() == "-1"){
+													if (column.DataType.ToString() == "Int64") {#>
+														<ExternalColumn DataType="Int64" Name="<#=column.Name#>" />
+													<#}
+													else {#>
+														<ExternalColumn DataType="AnsiString" Length="<#=column.Length#>" Name="<#=column.Name#>" />
+													
+												<#     }
+												}
+												else {#>
+													<ExternalColumn DataType="Decimal" Scale="<#=column.Scale#>" Name="<#=column.Name#>" />
+													
+												<#}#>
+
+											<# } #>
+											</ExternalColumns>
+											<OutputColumns>
+											<# foreach (var column in table.Columns) { #>
+											
+												<#if (column.Scale.ToString() == "-1") {
+													if  (column.DataType.ToString() == "Int64") {#>
+														<OutputColumn DataType="Int64" ExternalMetadataColumnName="<#=column.Name#>" Name="<#=column.Name#>" />
+													<#}
+													else {#>
+														<OutputColumn CodePage="1252" DataType="AnsiString" ExternalMetadataColumnName="<#=column.Name#>" Length="<#=column.Length#>" Name="<#=column.Name#>" />
+												<#  }
+													
+												}
+												else {#>
+													<OutputColumn Scale="<#=column.Scale#>" DataType="Decimal" ExternalMetadataColumnName="<#=column.Name#>" Name="<#=column.Name#>" />
+													
+												<#}
+											} #>
+											</OutputColumns>
+										</OutputPath>
+									</OutputPaths>
+									<DataflowOverrides>
+										<OutputPath OutputPathName="XtractOutput">
+											<Columns>
+											<# foreach (var column in table.Columns) { #>
+												<Column ColumnName="<#=column.Name#>" CodePage="1252" />
+											<# } #>                                        
+											</Columns>
+										</OutputPath>
+									</DataflowOverrides>
+								</CustomComponent>
+								<# } #>
+								<RowCount Name="CountSourceRecords" VariableName="User.SourceRowCount"></RowCount>
+								<DerivedColumns Name="DerivedColumn">
+									<Columns>
+										<Column Name="Load_ID" DataType="Int64">@[$Package::LoadID]</Column>
+									</Columns>
+								</DerivedColumns>
+								<OleDbDestination Name="Load Rows" ConnectionName="DWHSTG_<#=srcConn#>">
+									<TableOutput TableName="DWHSTG_<#=srcConn#>.sta.<#=table.Name#>" />
+								</OleDbDestination>
+							</Transformations>
+						</Dataflow>
+						<ExecuteSQL Name="merge sta into hsta delta" ConnectionName="DWHSTG_<#=srcConn#>" BypassPrepare="true" ResultSet="SingleRow">
+							<PrecedenceConstraints LogicalType="And">
+								<Inputs>
+									<Input OutputPathName="load sta table delta.Output"/>
+								</Inputs>
+							</PrecedenceConstraints>
+							<Parameters>
+								<Parameter Name="0" VariableName="<#=packageName#>.LoadID" DataType="Int64" Direction="Input"/>
+								<Parameter Name="1" VariableName="<#=packageName#>.LoadDt" DataType="DateTime" Direction="Input"/>
+							</Parameters>
+							<Results>
+								<Result Name="ResultSetCount" VariableName="User.OperationRowCount" />
+							</Results>
+							<!-- get sql merge statement from stored procedure for sta to hsta table -->
+							<DirectInput>
+							<#
+							var metadataConnectionString = ((AstDbConnectionNode)RootNode.Connections["DWHMTA"]).ConnectionString;
+							DataTable tables = ExternalDataAccess.GetDataTable(metadataConnectionString,"exec [meta].[usp_GetStageMergeStatement] @i_SourceTable_ID = "+table.GetTag("Table_ID").ToString()+",@i_LoadMode = 'D'");
+							foreach (DataRow row in tables.Rows)
+							{
+								WriteLine(row["Result"].ToString());
+							}
+							#>
+							SELECT @@ROWCOUNT as ResultSetCount;
+							</DirectInput>
+						</ExecuteSQL>
+
+						<!-- define loop container for excel files -->
+						<# if(table.GetTag("ConnectorType").Equals("Excel File")) { #>
+							</Tasks>
+						</ForEachFileLoop>
+						<# } #>
+						
+						<!-- define loop container for flat files -->
+						<# if(table.GetTag("ConnectorType").Equals("Flat File")) { #>
+								<FileSystem Name="move input file" Operation="MoveFile" OverwriteDestination="true">
+									<PrecedenceConstraints LogicalType="And">
+										<Inputs>
+											<Input OutputPathName="merge sta into hsta delta.Output"/>
+										</Inputs>
+									</PrecedenceConstraints>
+
+									<FlatFileInput ConnectionName="<#=table.GetTag("SourceConnection")#>" />
+									<FileOutput ConnectionName="<#=table.GetTag("ArchiveConnection")#>" />
+
+									<!--<VariableOutput VariableName="User.OutputFileFullyQualifiedName" />-->
+
+								</FileSystem>
+
+
+
+							</Tasks>
+						</ForEachFileLoop>
+
+				        <!-- GZ 20180301: Error Handling -->
+						<FileSystem Name="move input file error" Operation="MoveFile" OverwriteDestination="true">
+							<PrecedenceConstraints LogicalType="Or">
+								<Inputs>
+									<Input OutputPathName="Delta loop over Files.Output" EvaluationValue="Failure"/>
+								</Inputs>
+							</PrecedenceConstraints>
+							<FlatFileInput ConnectionName="<#=table.GetTag("SourceConnection")#>" />
+
+							<FileOutput ConnectionName="<#=table.GetTag("ErrorConnection")#>" />
+						</FileSystem>
+
+						<# } #>
+
+
+						<!-- this gets executed if it is a full load -->
+
+						<!-- define loop container for excel files -->
+						<# if(table.GetTag("ConnectorType").Equals("Excel File")) { #>
+						<ForEachFileLoop Name="Full loop over Files" Folder="<#=table.GetTag("FilePath")#>" FileSpecification="*<#=table.Name#>*.xlsx" ConstraintMode="Parallel" RetrieveFileNameFormat="FullyQualified">
+							<VariableMappings>
+								<VariableMapping Name="Mapping" VariableName="User.InputFileFullyQualifiedName"/>
+								<VariableMapping Name="Mapping2" VariableName="User.OutputFileFullyQualifiedName"/>
+							</VariableMappings>
+							<PrecedenceConstraints LogicalType="And">
+								<Inputs>
+									<Input Expression="@[User::LoadMode] == &quot;F&quot;" EvaluationOperation="Expression" OutputPathName="get load mode.Output"/>
+								</Inputs>
+							</PrecedenceConstraints>
+							<Tasks>
+						<# } #>
+
+
+						<# if(table.GetTag("ConnectorType").Equals("Flat File") || table.GetTag("ConnectorType").Equals("Excel File")) { #>
+						
+						<!-- define loop container for flat files -->
+						<# if(table.GetTag("ConnectorType").Equals("Flat File")) { #>
+						<ForEachFileLoop Name="Full loop over Files" Folder="<#=table.GetTag("FilePath")#>" FileSpecification="*<#=table.Name#>*.csv" ConstraintMode="Parallel" RetrieveFileNameFormat="FullyQualified">
+							<VariableMappings>
+								<VariableMapping Name="Mapping" VariableName="User.InputFileFullyQualifiedName"/>
+								<VariableMapping Name="Mapping" VariableName="User.OutputFileFullyQualifiedName"/>
+							</VariableMappings>
+							<PrecedenceConstraints LogicalType="And">
+								<Inputs>
+									<Input Expression="@[User::LoadMode] == &quot;F&quot;" EvaluationOperation="Expression" OutputPathName="get load mode.Output"/>
+								</Inputs>
+							</PrecedenceConstraints>
+							<Tasks>
+						<# } #>
+
+
+
+						<Dataflow Name="load sta table full">
+							<PrecedenceConstraints LogicalType="And">
+								<Inputs>
+                                <!-- GZERAK Added  output truncate sta table-->
+
+								<# if(!table.GetTag("ConnectorType").Equals("Flat File") && !table.GetTag("ConnectorType").Equals("Excel File")) { #>
+									<Input OutputPathName="truncate sta table.Output"/>
+								<# } #>
+							</Inputs>
+							</PrecedenceConstraints>
+							<Transformations>
+								<# if(table.GetTag("ConnectorType").Equals("OLE DB")) { #>
+								<OleDbSource Name="Retrieve Rows" ConnectionName="<#=table.GetTag("SourceConnection")#>">
+									<Parameters>
+										<Parameter Name="0" VariableName="User.LastLoadDate"/>
+									</Parameters>
+									<DirectInput>
+										SELECT <#=table.GetColumnList()#> FROM <#=table.GetTag("SourceSchemaQualifiedName")#>
+										<# if(!table.GetTag("DataFilter").Trim().Equals("")) { #>
+										WHERE <#=table.GetTag("DataFilter")#>
+										<# } #>
+									</DirectInput>
+								</OleDbSource>
+								<# } else if(table.GetTag("ConnectorType").Equals("ODBC")) { #>
+								<OdbcSource Name="Retrieve Rows" Connection="<#=table.GetTag("SourceConnection")#>">
+									<DirectInput>
+										SELECT <#=table.GetColumnList().Replace("[","").Replace("]","")#> FROM <#=table.Name#>
+										<# if(!table.GetTag("DataFilter").Trim().Equals("")) { #>
+										WHERE <#=table.GetTag("DataFilter")#>
+										<# } #>
+									</DirectInput>
+									<DataflowOverrides>
+										<OutputPath OutputPathName="Output" ErrorRowDisposition="FailComponent" TruncationRowDisposition="FailComponent">
+											<Columns>  
+											<# foreach (var column in table.Columns) { #>
+												<Column ColumnName="<#=column.Name#>" DataType="<#=column.DataType#>" Length="<#=column.Length#>" />
+											<# } #>
+											</Columns>
+										</OutputPath>
+										<OutputPath OutputPathName="Error">
+											<Columns>
+											<# foreach (var column in table.Columns) { #>
+												<Column ColumnName="<#=column.Name#>" DataType="<#=column.DataType#>" Length="<#=column.Length#>" />
+											<# } #>
+											</Columns>
+										</OutputPath>
+									</DataflowOverrides>
+								</OdbcSource>
+								<# } else if(table.GetTag("ConnectorType").Equals("ODBC_O")) { #>
+								<OdbcSource Name="Retrieve Rows" Connection="<#=table.GetTag("SourceConnection")#>">
+									<DirectInput>
+										SELECT <#=table.GetColumnList().Replace("[","").Replace("]","")#> FROM <#=table.GetTag("SourceSchemaQualifiedName")#>
+										<# if(!table.GetTag("DataFilter").Trim().Equals("")) { #>
+										WHERE <#=table.GetTag("DataFilter")#>
+										<# } #>								        
+									</DirectInput>
+									<DataflowOverrides>
+										<OutputPath OutputPathName="Output" ErrorRowDisposition="FailComponent" TruncationRowDisposition="FailComponent">
+											<Columns>  
+											<# foreach (var column in table.Columns) { #>
+												<Column ColumnName="<#=column.Name#>" DataType="<#=column.DataType#>" Length="<#=column.Length#>" />
+											<# } #>
+											</Columns>
+										</OutputPath>
+										<OutputPath OutputPathName="Error">
+											<Columns>
+											<# foreach (var column in table.Columns) { #>
+												<Column ColumnName="<#=column.Name#>" DataType="<#=column.DataType#>" Length="<#=column.Length#>" />
+											<# } #>
+											</Columns>
+										</OutputPath>
+									</DataflowOverrides>
+								</OdbcSource>
+								<# } else if(table.GetTag("ConnectorType").Equals("Flat File")) { #>
+								<FlatFileSource Name="Retrieve Rows" ConnectionName="<#=table.GetTag("SourceConnection")#>"/>
+
+                                <DerivedColumns Name="DER Add CurrentFileName">
+                                    <Columns>
+                                        <Column DataType="String" Name="SourceSystem" Length="30">TOKEN(REPLACE(REPLACE(SUBSTRING(REVERSE(SUBSTRING( REVERSE ( @[User::InputFileFullyQualifiedName]  ),FINDSTRING(REVERSE ( @[User::InputFileFullyQualifiedName]   ),".",1)+1,FINDSTRING(Reverse( @[User::InputFileFullyQualifiedName] ),"\\",1)- FINDSTRING(Reverse( @[User::InputFileFullyQualifiedName] ),".",1) -1)),4,20),"-"," "),"_"," ")," ",1)</Column>
+                                        <Column DataType="String" Name="FileName" Length="4000">@[User::InputFileFullyQualifiedName]</Column>
+                                    </Columns>
+                                </DerivedColumns>
+
+
+								<# } else if(table.GetTag("ConnectorType").Equals("Excel File")) { #>
+                                <ExcelSource Name="Retrieve Rows" ConnectionName="<#=table.GetTag("SourceConnection")#>">
+                                    <ExternalTableInput Table="PC$"></ExternalTableInput>
+                                </ExcelSource>
+
+                                <DerivedColumns Name="DER Add CurrentFileName">
+                                    <Columns>
+                                        <Column DataType="String" Name="SourceSystem" Length="30">TOKEN(REPLACE(REPLACE(SUBSTRING(REVERSE(SUBSTRING( REVERSE ( @[User::InputFileFullyQualifiedName]  ),FINDSTRING(REVERSE ( @[User::InputFileFullyQualifiedName]   ),".",1)+1,FINDSTRING(Reverse( @[User::InputFileFullyQualifiedName] ),"\\",1)- FINDSTRING(Reverse( @[User::InputFileFullyQualifiedName] ),".",1) -1)),4,20),"-"," "),"_"," ")," ",1)</Column>
+                                        <Column DataType="String" Name="FileName" Length="4000">@[User::InputFileFullyQualifiedName]</Column>
+                                    </Columns>
+                                </DerivedColumns>
+
+								<# } else if(table.GetTag("ConnectorType").Equals("SAP")) { #>
+								<CustomComponent Name="<#=table#>" ComponentTypeName="XtractIS.XtractSourceTable, XtractIS2016, Version=1.0.0.0, Culture=neutral, PublicKeyToken=4b0cc842b94d345e">
+									<#@ include file="INC-DWHLoadSAPCustomProperties.biml" #>
+									<Connections>
+										<Connection Name="Xtract SAP Connection" ConnectionName="SAP" />
+									</Connections>
+									<OutputPaths>
+										<OutputPath Name="XtractOutput">
+											<ExternalColumns>
+
+											<# foreach (var column in table.Columns) { 
+												if (column.Scale.ToString() == "-1") {
+													if (column.DataType.ToString() == "Int64") {#>
+														<ExternalColumn DataType="Int64" Name="<#=column.Name#>" />
+													<#}
+													else {#>
+														<ExternalColumn DataType="AnsiString" Length="<#=column.Length#>" Name="<#=column.Name#>" />
+													<#}
+												}
+												else {#>
+													<ExternalColumn DataType="Decimal" Precision="<#=column.Precision#>" Scale="<#=column.Scale#>" Name="<#=column.Name#>" />
+													
+												<#}
+
+											} #>
+										
+											</ExternalColumns>
+											<OutputColumns>
+											<# foreach (var column in table.Columns) { #>
+											
+												<#if (column.Scale.ToString() == "-1"){
+													if (column.DataType.ToString() == "Int64") {#>
+														<OutputColumn DataType="Int64" ExternalMetadataColumnName="<#=column.Name#>" Name="<#=column.Name#>" />
+													<#}
+													else {#>
+														<OutputColumn CodePage="1252" DataType="AnsiString" ExternalMetadataColumnName="<#=column.Name#>" Length="<#=column.Length#>" Name="<#=column.Name#>" />
+				
+													<#}
+												}
+												else {#>
+													<OutputColumn Scale="<#=column.Scale#>" Precision="<#=column.Precision#>" DataType="Decimal" ExternalMetadataColumnName="<#=column.Name#>" Name="<#=column.Name#>" />
+													
+												<#}
+											} #>
+
+											</OutputColumns>
+										</OutputPath>
+									</OutputPaths>
+									<DataflowOverrides>
+										<OutputPath OutputPathName="XtractOutput">
+											<Columns>
+											<# foreach (var column in table.Columns) { #>
+												<Column ColumnName="<#=column.Name#>" CodePage="1252" />
+											<# } #>                                        
+											</Columns>
+										</OutputPath>
+									</DataflowOverrides>
+								</CustomComponent>
+								<# } #>				
+								<RowCount Name="CountSourceRecords" VariableName="User.SourceRowCount"></RowCount>
+								<DerivedColumns Name="DerivedColumn">
+									<Columns>
+										<Column Name="Load_ID" DataType="Int64">@[$Package::LoadID]</Column>
+									</Columns>
+								</DerivedColumns>
+								<OleDbDestination Name="Load Rows" ConnectionName="DWHSTG_<#=srcConn#>">
+									<TableOutput TableName="DWHSTG_<#=srcConn#>.sta.<#=table.Name#>" />
+								</OleDbDestination>
+							</Transformations>
+						</Dataflow>
+						
+						<ExecuteSQL Name="merge sta into hsta full" ConnectionName="DWHSTG_<#=srcConn#>" BypassPrepare="true" ResultSet="SingleRow">
+							<PrecedenceConstraints LogicalType="And">
+								<Inputs>
+									<Input OutputPathName="load sta table full.Output"/>
+								</Inputs>
+							</PrecedenceConstraints>
+							<Parameters>
+								<Parameter Name="0" VariableName="<#=packageName#>.LoadID" DataType="Int64" Direction="Input"/>
+								<Parameter Name="1" VariableName="<#=packageName#>.LoadDt" DataType="DateTime" Direction="Input"/>
+							</Parameters>
+							<Results>
+								<Result Name="ResultSetCount" VariableName="User.OperationRowCount" />
+							</Results>
+							<!-- get sql merge statement from stored procedure for sta to hsta table -->
+							<DirectInput>
+							<#
+							metadataConnectionString = ((AstDbConnectionNode)RootNode.Connections["DWHMTA"]).ConnectionString;
+							tables = ExternalDataAccess.GetDataTable(metadataConnectionString,"exec [meta].[usp_GetStageMergeStatement] @i_SourceTable_ID = "+table.GetTag("Table_ID").ToString()+",@i_LoadMode = 'F'");
+							foreach (DataRow row in tables.Rows)
+							{
+								WriteLine(row["Result"].ToString());
+							}
+							#>
+							SELECT @@ROWCOUNT as ResultSetCount;
+							</DirectInput>
+						</ExecuteSQL>
+
+						<!-- define loop container for excel files -->
+						<# if(table.GetTag("ConnectorType").Equals("Excel File")) { #>
+							</Tasks>
+						</ForEachFileLoop>
+						<# } #>									
+
+                        <# } #>
+                        
+                        
+						<!-- define loop container for flat files -->
+						<# if(table.GetTag("ConnectorType").Equals("Flat File")) { #>
+								<FileSystem Name="move input file full" Operation="MoveFile" OverwriteDestination="true">
+									<PrecedenceConstraints LogicalType="Or">
+										<Inputs>
+											<Input OutputPathName="merge sta into hsta full.Output"/>
+										</Inputs>
+									</PrecedenceConstraints>
+									<FlatFileInput ConnectionName="<#=table.GetTag("SourceConnection")#>" />
+									<FileOutput ConnectionName="<#=table.GetTag("ArchiveConnection")#>" />
+
+									<!--<VariableOutput VariableName="User.OutputFileFullyQualifiedName" />-->
+								</FileSystem>
+
+
+							</Tasks>
+						</ForEachFileLoop>
+
+    			        <!-- GZ 20180301: Error Handling -->
+    					<FileSystem Name="move input file full error" Operation="MoveFile" OverwriteDestination="true">
+    						<PrecedenceConstraints LogicalType="Or">
+    							<Inputs>
+    								<Input OutputPathName="Full loop over Files.Output" EvaluationValue="Failure"/>
+    							</Inputs>
+    						</PrecedenceConstraints>
+    						<FlatFileInput ConnectionName="<#=table.GetTag("SourceConnection")#>" />
+    						<FileOutput ConnectionName="<#=table.GetTag("ErrorConnection")#>" />
+    					</FileSystem>
+
+						<# } #>					
+
+
+
+                        <!-- GZERAK Expression Added -->
+						<Expression Name="set OperationRowCount to SourceRowCount" Expression="@[User::OperationRowCount] =  @[User::SourceRowCount]">
+							<PrecedenceConstraints LogicalType="Or">
+								<Inputs>
+								<!-- in case of flat file input the predecessor is different -->
+								<# if(table.GetTag("ConnectorType").Equals("Flat File") || table.GetTag("ConnectorType").Equals("Excel File")) { #>
+									<Input OutputPathName="Full loop over Files.Output"/>
+								<# } else { #>
+									<Input OutputPathName="load sta table delta.Output"/>							
+								<# } #>								
+								</Inputs>
+							</PrecedenceConstraints>					
+						</Expression>
+
+						
+						<ExecuteSQL Name="set load mode" ConnectionName="DWHMTA" BypassPrepare="true">
+							<PrecedenceConstraints LogicalType="Or">
+								<Inputs>
+								<!-- in case of flat file input the predecessor is different -->
+								<# if(table.GetTag("ConnectorType").Equals("Flat File") || table.GetTag("ConnectorType").Equals("Excel File")) { #>
+									<Input OutputPathName="Delta loop over Files.Output"/>
+								<# } else { #>
+									<Input OutputPathName="merge sta into hsta delta.Output"/>							
+								<# } #>							
+									<Input OutputPathName="set OperationRowCount to SourceRowCount.Output"/>
+									<!--<Input OutputPathName="merge sta into hsta full.Output"/> GZerak--> 
+								</Inputs>
+							</PrecedenceConstraints>
+							<Parameters>
+								<Parameter Name="0" Length="-1" VariableName="<#=packageName#>.LoadID" DataType="Int64" Direction="Input"/>
+								<Parameter Name="1" Length="-1" VariableName="User.LoadMode" DataType="String" Direction="Input"/>							
+							</Parameters>
+							<DirectInput>exec [logging].[SetLoadMode] ?,<#=table.GetTag("Table_ID")#>,?</DirectInput>
+						</ExecuteSQL>
+						<ExecuteSQL Name="get table size" ConnectionName="DWHSTG_<#=srcConn#>" BypassPrepare="true" ResultSet="SingleRow">
+							<PrecedenceConstraints LogicalType="And">
+								<Inputs>
+									<Input OutputPathName="set load mode.Output"/>
+								</Inputs>
+							</PrecedenceConstraints>
+							<Results>
+								<Result Name="TotalRows" VariableName="User.FinalRows" />
+								<Result Name="TotalSpaceByte" VariableName="User.FinalBytes" />
+							</Results>
+							<DirectInput>
+							 SELECT 
+							  [TotalRows]      = sum(p.[rows])
+							 ,[TotalSpaceByte] = sum(a.[total_pages])*8 
+							 FROM 
+							  [sys].[tables] AS t
+							 INNER JOIN
+							  [sys].[schemas] AS s ON
+							  t.[schema_id] = s.[schema_id]
+							 INNER JOIN      
+							  [sys].[indexes] AS i ON 
+							  t.[object_id] = i.[object_id]
+							 INNER JOIN 
+							  [sys].[partitions] AS p ON 
+							  i.[object_id] = p.[object_id] AND 
+							  i.[index_id] = p.[index_id]
+							 INNER JOIN 
+							  [sys].[allocation_units] AS a ON 
+							  p.[partition_id] = a.[container_id]
+							 WHERE 
+							  s.[name] = &apos;hsta&apos; AND
+							  t.[name] = &apos;<#=table.Name#>&apos; AND
+							  i.[object_id] &gt; 255 AND   
+							  i.[index_id] &lt;= 1
+							 GROUP BY 
+							  t.[object_id]
+							 ;
+							</DirectInput>
+						</ExecuteSQL>
+						<# } #>							
+					</Tasks>
+				</Package>
+			<# } #>
+	    <# } #>
+	</Packages>
+</Biml>
+<#@ import namespace="System.Data" #>
+<#@ import namespace="System.Data.SqlClient" #>
+<#@ template tier="3" #>
