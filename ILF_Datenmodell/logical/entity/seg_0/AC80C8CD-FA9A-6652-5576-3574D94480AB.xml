@@ -58,6 +58,17 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
+<Attribute name="Benutzer_ÜbergreifendRessourceNr" id="996EE8A5-AE29-CDCA-120E-593AE6B9326E">
+<createdBy>gaspe</createdBy>
+<createdTime>2019-04-30 14:17:48 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
 <Attribute name="Benutzer_Ressourcennr " id="D278ED3C-4836-C201-5255-D1BC86F1BD61">
 <createdBy>fmarkoja</createdBy>
 <createdTime>2018-11-23 14:05:26 UTC</createdTime>

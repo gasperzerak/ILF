@@ -48,6 +48,17 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
+<Attribute name="Übergreifend_RessourceNr" id="3784C731-EB50-18B5-41C1-787185B2BB5D">
+<createdBy>gaspe</createdBy>
+<createdTime>2019-04-30 14:19:08 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
 <Attribute name="AbteilungCode" id="994AF077-75E8-A05E-A4D9-BE0838C0BDAF">
 <createdBy>fmarkoja</createdBy>
 <createdTime>2018-11-21 09:10:41 UTC</createdTime>
