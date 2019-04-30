@@ -430,6 +430,17 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
+<Attribute name="UnterProjekt_LandExecution" id="2142A4A8-471D-5FCD-5308-CA0E32036944">
+<createdBy>gaspe</createdBy>
+<createdTime>2019-04-30 10:16:31 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
 <Attribute name="SystemCode " id="757EF48A-DF44-ADB8-0517-E99138C66621">
 <createdBy>fmarkoja</createdBy>
 <createdTime>2018-11-21 11:52:09 UTC</createdTime>

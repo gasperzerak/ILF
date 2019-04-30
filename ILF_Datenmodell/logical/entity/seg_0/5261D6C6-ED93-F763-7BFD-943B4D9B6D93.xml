@@ -57,6 +57,17 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
+<Attribute name="Aktivität_Code" id="BF581F9E-5779-B7E0-A430-E8498E9B6F47">
+<createdBy>gaspe</createdBy>
+<createdTime>2019-04-30 10:23:14 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
 <Attribute name="Arbeitsauftragsname " id="10B95154-7C50-2FBA-BA4D-7BB31DB78E67">
 <createdBy>fmarkoja</createdBy>
 <createdTime>2018-11-23 13:35:21 UTC</createdTime>

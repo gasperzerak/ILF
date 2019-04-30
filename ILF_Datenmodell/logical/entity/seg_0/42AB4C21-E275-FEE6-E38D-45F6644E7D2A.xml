@@ -1,5 +1,5 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="42AB4C21-E275-FEE6-E38D-45F6644E7D2A" name="Zeittransaktionen">
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="42AB4C21-E275-FEE6-E38D-45F6644E7D2A" name="ProjektBuchung">
 <createdBy>gaspe</createdBy>
 <createdTime>2018-11-04 12:05:34 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
@@ -15,119 +15,14 @@
 <minVolumes>0</minVolumes>
 <normalForm>Third</normalForm>
 <attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
-<Attribute name="Anfang  " id="030288DA-422E-BD7C-3943-260EB0F2E203">
-<createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 12:20:49 UTC</createdTime>
+<Attribute name="Eintragsummer" id="44C75C05-57CA-4171-0457-3E8436045C5B">
+<createdBy>gaspe</createdBy>
+<createdTime>2019-04-30 11:37:36 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
 </engineerTo>
 <nullsAllowed>true</nullsAllowed>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="Arbeitsauftragsnr  " id="4DE7965D-A06D-5C10-6F27-A90395F09FF6">
-<createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 12:20:52 UTC</createdTime>
-<ownerDesignName>ILF_Datenmodell</ownerDesignName>
-<engineerTo>
-<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
-</engineerTo>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="Belegnr " id="8B491097-E5A4-FB93-6174-4FD649339062">
-<createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 12:20:56 UTC</createdTime>
-<ownerDesignName>ILF_Datenmodell</ownerDesignName>
-<engineerTo>
-<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
-</engineerTo>
-<nullsAllowed>true</nullsAllowed>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="Belegzeilennr " id="797B26B8-1938-564E-5D91-5381FFD2C3FF">
-<createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 12:20:59 UTC</createdTime>
-<ownerDesignName>ILF_Datenmodell</ownerDesignName>
-<engineerTo>
-<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
-</engineerTo>
-<nullsAllowed>true</nullsAllowed>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="Buchdatum " id="C7D70309-EA6B-0211-340B-C6409A5ED9FD">
-<createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 12:21:02 UTC</createdTime>
-<ownerDesignName>ILF_Datenmodell</ownerDesignName>
-<engineerTo>
-<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
-</engineerTo>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="Buchungsperiode " id="3C5272BA-2AC6-8A39-4CA8-0A2C1995EB62">
-<createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 12:21:06 UTC</createdTime>
-<ownerDesignName>ILF_Datenmodell</ownerDesignName>
-<engineerTo>
-<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
-</engineerTo>
-<nullsAllowed>true</nullsAllowed>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="Ende " id="07C6A040-152E-55D7-A29A-7E5887B3792B">
-<createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 12:21:14 UTC</createdTime>
-<ownerDesignName>ILF_Datenmodell</ownerDesignName>
-<engineerTo>
-<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
-</engineerTo>
-<nullsAllowed>true</nullsAllowed>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="Firmencode " id="FA75C400-C7CA-AA53-E844-AEF35543835E">
-<createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 12:21:22 UTC</createdTime>
-<ownerDesignName>ILF_Datenmodell</ownerDesignName>
-<engineerTo>
-<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
-</engineerTo>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="Kosten  " id="7B95C0A9-427C-3406-C501-C9485DDB83AE">
-<createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 12:21:26 UTC</createdTime>
-<ownerDesignName>ILF_Datenmodell</ownerDesignName>
-<engineerTo>
-<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
-</engineerTo>
-<nullsAllowed>true</nullsAllowed>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="Kostenstellencode " id="1A767F32-8C40-26A4-D916-5A276931C350">
-<createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 12:21:29 UTC</createdTime>
-<ownerDesignName>ILF_Datenmodell</ownerDesignName>
-<engineerTo>
-<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
-</engineerTo>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="Leistungsdatum " id="55A49ADF-CDA9-82C8-3919-C91C05CDB20A">
-<createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 12:21:32 UTC</createdTime>
-<ownerDesignName>ILF_Datenmodell</ownerDesignName>
-<engineerTo>
-<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
-</engineerTo>
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
@@ -141,9 +36,92 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="Ressourceart  " id="08AC8425-953A-5F6D-1EA5-5C0C41B85F6C">
+<Attribute name="Arbeitsauftragsnr" id="4DE7965D-A06D-5C10-6F27-A90395F09FF6">
 <createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 12:21:37 UTC</createdTime>
+<createdTime>2018-11-21 12:20:52 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Execute_FirmaCode " id="A66056DB-6EBD-D1A1-24DD-E30C4E65678F">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 12:22:00 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="UnterProjekt_Firmencode " id="FA75C400-C7CA-AA53-E844-AEF35543835E">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 12:21:22 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Execute_AbteilungCode " id="16E97CF2-CC1B-C303-9C74-8C782E27CFD9">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 12:22:05 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Aktivität_Code" id="704CE0F5-5C76-1320-4738-4B0474F9C470">
+<createdBy>gaspe</createdBy>
+<createdTime>2019-04-30 10:21:46 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="FinanzDatum" id="030288DA-422E-BD7C-3943-260EB0F2E203">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 12:20:49 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="EintragsDatum" id="C7D70309-EA6B-0211-340B-C6409A5ED9FD">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 12:21:02 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Buchungsperiode" id="3C5272BA-2AC6-8A39-4CA8-0A2C1995EB62">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 12:21:06 UTC</createdTime>
+<ownerDesignName>ILF_Datenmodell</ownerDesignName>
+<engineerTo>
+<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Kosten  " id="7B95C0A9-427C-3406-C501-C9485DDB83AE">
+<createdBy>fmarkoja</createdBy>
+<createdTime>2018-11-21 12:21:26 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
@@ -163,82 +141,9 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="Unterprojektnr  " id="34DBF7FA-29A4-BEBC-8036-6F21EE1B6F60">
-<createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 12:21:44 UTC</createdTime>
-<ownerDesignName>ILF_Datenmodell</ownerDesignName>
-<engineerTo>
-<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
-</engineerTo>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
 <Attribute name="Waehrung " id="EF719D50-0C72-6C7B-9980-612132479D2B">
 <createdBy>fmarkoja</createdBy>
 <createdTime>2018-11-21 12:21:47 UTC</createdTime>
-<ownerDesignName>ILF_Datenmodell</ownerDesignName>
-<engineerTo>
-<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
-</engineerTo>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="Zeittransaktionsperiode " id="299EA929-2C38-020E-E143-24302FC60E91">
-<createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 12:21:50 UTC</createdTime>
-<ownerDesignName>ILF_Datenmodell</ownerDesignName>
-<engineerTo>
-<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
-</engineerTo>
-<nullsAllowed>true</nullsAllowed>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="Zeittransaktionsbelegnr  " id="FCE16E41-11A5-83D6-6184-FDF264BD7338">
-<createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 12:21:54 UTC</createdTime>
-<ownerDesignName>ILF_Datenmodell</ownerDesignName>
-<engineerTo>
-<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
-</engineerTo>
-<nullsAllowed>true</nullsAllowed>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="Zeittransaktionsbelegzeilennr " id="01DC856F-838D-FD82-7605-9C29A1F8D604">
-<createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 12:21:57 UTC</createdTime>
-<ownerDesignName>ILF_Datenmodell</ownerDesignName>
-<engineerTo>
-<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
-</engineerTo>
-<nullsAllowed>true</nullsAllowed>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="Execute_FirmaCode " id="A66056DB-6EBD-D1A1-24DD-E30C4E65678F">
-<createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 12:22:00 UTC</createdTime>
-<ownerDesignName>ILF_Datenmodell</ownerDesignName>
-<engineerTo>
-<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
-</engineerTo>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="Execute_AbteilungCode " id="16E97CF2-CC1B-C303-9C74-8C782E27CFD9">
-<createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 12:22:05 UTC</createdTime>
-<ownerDesignName>ILF_Datenmodell</ownerDesignName>
-<engineerTo>
-<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
-</engineerTo>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="SubFibuKontoCode " id="8AD55FB7-EE88-89F9-F04B-E5FF4477B727">
-<createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-28 09:36:39 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>

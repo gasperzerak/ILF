@@ -530,17 +530,6 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="Hauptprojekt_Urmarge " id="E24AE891-DB86-A281-DC8A-F531C9F915CA">
-<createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 10:04:36 UTC</createdTime>
-<ownerDesignName>ILF_Datenmodell</ownerDesignName>
-<engineerTo>
-<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
-</engineerTo>
-<nullsAllowed>true</nullsAllowed>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
 <Attribute name="Hauptprojekt_Hauptgeschaeftsfeldcode " id="0E15DC20-75B4-1C11-B530-A61CBEFB8902">
 <createdBy>fmarkoja</createdBy>
 <createdTime>2018-11-21 10:04:44 UTC</createdTime>
@@ -574,50 +563,6 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="Hauptprojekt_HFProjekte " id="51073B9F-9347-EB58-DEB5-3A72BC42D3C7">
-<createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 10:05:00 UTC</createdTime>
-<ownerDesignName>ILF_Datenmodell</ownerDesignName>
-<engineerTo>
-<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
-</engineerTo>
-<nullsAllowed>true</nullsAllowed>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="Hauptprojekt_Verrechnungscode " id="3180F6D1-4BD4-7DB6-FFFF-7B25E2FD24F8">
-<createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 10:05:03 UTC</createdTime>
-<ownerDesignName>ILF_Datenmodell</ownerDesignName>
-<engineerTo>
-<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
-</engineerTo>
-<nullsAllowed>true</nullsAllowed>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="Hauptprojekt_Verrechnung_DE " id="034EF2BC-046E-F0F1-DC39-E2C47E2C5E53">
-<createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 10:05:07 UTC</createdTime>
-<ownerDesignName>ILF_Datenmodell</ownerDesignName>
-<engineerTo>
-<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
-</engineerTo>
-<nullsAllowed>true</nullsAllowed>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="Hauptprojekt_Verrechnung_EN " id="49A742F0-333A-573F-0770-AA2C01E4E02F">
-<createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 10:05:11 UTC</createdTime>
-<ownerDesignName>ILF_Datenmodell</ownerDesignName>
-<engineerTo>
-<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
-</engineerTo>
-<nullsAllowed>true</nullsAllowed>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
 <Attribute name="Hauptprojekt_VTNL_EXT " id="D4F29622-5F7E-E672-BDBE-D67B1CADF0AC">
 <createdBy>fmarkoja</createdBy>
 <createdTime>2018-11-21 10:05:15 UTC</createdTime>
@@ -629,42 +574,9 @@
 <use>0</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="Hauptprojekt_Projektstatus_IFRS " id="CA46124F-3C2A-D39B-53C2-98B230776D80">
-<createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 10:05:18 UTC</createdTime>
-<ownerDesignName>ILF_Datenmodell</ownerDesignName>
-<engineerTo>
-<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
-</engineerTo>
-<nullsAllowed>true</nullsAllowed>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="Hauptprojekt_Fertigstatus " id="33284F16-874F-0612-C34B-BC54F93BA850">
-<createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 10:05:23 UTC</createdTime>
-<ownerDesignName>ILF_Datenmodell</ownerDesignName>
-<engineerTo>
-<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
-</engineerTo>
-<nullsAllowed>true</nullsAllowed>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="Hauptprojekt_Periode_HalbfertigAb " id="845EFEC0-B497-9F6C-CC36-468EACD65603">
-<createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 10:05:27 UTC</createdTime>
-<ownerDesignName>ILF_Datenmodell</ownerDesignName>
-<engineerTo>
-<item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
-</engineerTo>
-<nullsAllowed>true</nullsAllowed>
-<use>0</use>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="Hauptprojekt_Periode_FertigAb " id="D208A304-218D-545F-FC14-F571824EB72F">
-<createdBy>fmarkoja</createdBy>
-<createdTime>2018-11-21 10:05:31 UTC</createdTime>
+<Attribute name="HauptProjekt_LandExecution" id="823A92C2-028E-09C6-EED7-89F57A5245C8">
+<createdBy>gaspe</createdBy>
+<createdTime>2019-04-30 10:15:44 UTC</createdTime>
 <ownerDesignName>ILF_Datenmodell</ownerDesignName>
 <engineerTo>
 <item key="2B3881C3-1B43-1B13-52EF-F8AC99A11B8C" value="true"/>
